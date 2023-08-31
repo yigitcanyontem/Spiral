@@ -1,0 +1,90 @@
+@import "../node_modules/bootstrap/dist/css/bootstrap.min.css";
+@import "../node_modules/@flaticon/flaticon-uicons/css/all/all";
+@import '../node_modules/@taiga-ui/core/styles/taiga-ui-local.scss';
+@font-face {
+  font-family: Raleway;
+  src: url('https://fonts.googleapis.com/css2?family=Raleway:wght@200&display=swap') format("opentype");
+}
+@font-face {
+  font-family: anton;
+  src: url(assets/Anton-Regular.ttf) format("opentype");
+}
+$bg-color-dark: #122454;
+$bg-color-light: #0288d1;
+
+body {
+  margin: 0;
+}
+
+* {
+  font-family: 'Raleway', sans-serif;
+}
+
+html {
+  margin: 0;
+}
+::ng-deep .t-item {
+  padding: 0;
+}
+::ng-deep .t-items {
+  padding: 0;
+}
+
+.page-wrapper{
+  margin-right: 15%;
+  margin-left: 15%;
+}
+
+@media (max-width: 991px) {
+  .page-wrapper{
+    margin-right: 2%;
+    margin-left: 2%;
+  }
+}
+
+$tui-wrapper-bg-green: #33c573;
+$tui-wrapper-color-green: #fff;
+$tui-wrapper-bg-red: #e3554d;
+$tui-wrapper-color-red: #fff;
+[tuiWrapper][data-appearance='green'] {
+  background: $tui-wrapper-bg-green;
+  color: $tui-wrapper-color-green;
+  &:hover{
+    background: #006935;
+  }
+}
+
+[tuiWrapper][data-appearance='red'] {
+  background: $tui-wrapper-bg-red;
+  color: $tui-wrapper-color-red;
+  &:hover{
+    background: #ab2424;
+  }
+}
+
+.form-wrapper{
+  margin-right: 30%;
+  margin-left: 30%;
+}
+@media (max-width: 991px) {
+  .form-wrapper{
+    margin-right: 2%;
+    margin-left: 2%;
+  }
+}
+.flex-column{
+  display: flex;
+  flex-direction: column;
+}
+.flex-row{
+  display: flex;
+  flex-direction: row;
+}
+.spinner{
+  position: absolute;
+  height: 100px;
+  width: 100px;
+  left: 50%;
+  margin-left: -50px;
+  background-size: 100%;
+}

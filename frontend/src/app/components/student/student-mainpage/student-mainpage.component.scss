@@ -1,0 +1,41 @@
+ul{
+  list-style: none;
+  padding: 0;
+}
+
+
+.card-body{
+  background-color: #ffffff;
+}
+.card-header{
+  background-color: #1d3155;
+  color:white;
+}
+
+.info li{
+  margin: 10px;
+  padding: 5px;
+  box-shadow: 5px 5px 3px rgba(0, 0, 0, 0.1);
+  border-radius: 10px;
+}
+.field-data{
+  background-color: #fdfcfc;
+  width: 100%;
+  padding-top: 10px;
+  padding-bottom: 10px;
+  padding-left: 10px;
+  box-shadow: 0 1px 1px rgba(0, 0, 0, 0.1);
+  border:1px solid #7c818f;
+  border-radius: 15px;
+}
+.field-title{
+  padding-left: 3px;
+  color: #57585e;
+}
+#howto li{
+  margin: 10px;
+  padding: 5px;
+  box-shadow: 0 1px 1px rgba(0, 0, 0, 0.1);
+  border:1px solid #7c818f;
+  border-radius: 10px;
+}

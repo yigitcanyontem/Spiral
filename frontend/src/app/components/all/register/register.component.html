@@ -1,0 +1,155 @@
+<div class="register-wrapper mb-5">
+  <div class="card" id="registerCard">
+    <div class="card-title text-center  justify-content-center align-content-center   mt-2">
+      <h4>Sign Up</h4>
+      <hr/>
+    </div>
+    <div class="card-body">
+      <form [formGroup]="frm" (ngSubmit)="submitForm()">
+        <div class="tui-form__row tui-form__row_multi-fields">
+          <div class="tui-form__multi-field">
+            <div class="tui-form__row mb-3">
+              <tui-input
+                formControlName="firstName"
+              >
+                First Name
+                <input
+                  tuiTextfield
+                  placeholder="First Name"
+                />
+                <span class="tui-required"></span>
+              </tui-input>
+              <tui-error
+                formControlName="firstName"
+                [error]="[] | tuiFieldError | async"
+              ></tui-error>
+            </div>
+            <div class="tui-form__row mb-3">
+              <tui-input
+                formControlName="lastName"
+              >
+               Last Name
+                <input
+                  tuiTextfield
+                  placeholder="Last Name"
+                />
+                <span class="tui-required"></span>
+              </tui-input>
+              <tui-error
+                formControlName="lastName"
+                [error]="[] | tuiFieldError | async"
+              ></tui-error>
+            </div>
+            <div class="tui-form__row mb-3">
+              <tui-input-date
+                [max]="this.maxDate"
+                formControlName="date_of_birth"
+              >
+                Date of Birth
+                <input
+                  tuiTextfield
+                  placeholder="Date of Birth"
+                />
+                <span class="tui-required"></span>
+              </tui-input-date>
+              <tui-error
+                formControlName="date_of_birth"
+                [error]="[] | tuiFieldError | async"
+              ></tui-error>
+            </div>
+            <div class="tui-form__row mb-3">
+              <tui-select
+                class="b-form"
+                [valueContent]="countries ? stringify(countries) : loading"
+                [tuiDropdownDirection]="'bottom'"
+                formControlName="country"
+              >
+                Country
+                <ng-template tuiDataList>
+                  <tui-data-list *ngIf="countries; else loading" class="scroll">
+                    <button
+                      *ngFor="let item of countries"
+                      tuiOption
+                      [value]="item.id"
+                    >
+                      {{ item.name }}
+                    </button>
+                  </tui-data-list>
+                </ng-template>
+                <ng-template #loading>
+                  <tui-loader class="tui-space_vertical-3 loader"></tui-loader>
+                </ng-template>
+              </tui-select>
+
+            </div>
+            <div class="tui-form__row mb-3">
+              <tui-input
+                formControlName="email"
+              >
+                Email
+                <input
+                  tuiTextfield
+                  placeholder="Email"
+                />
+                <span class="tui-required"></span>
+              </tui-input>
+              <tui-error
+                formControlName="email"
+                [error]="[] | tuiFieldError | async"
+              ></tui-error>
+            </div>
+            <div class="tui-form__row mb-3">
+              <tui-input
+                formControlName="username"
+              >
+                Username
+                <input
+                  tuiTextfield
+                  placeholder="Username"
+                />
+                <span class="tui-required"></span>
+              </tui-input>
+              <tui-error
+                formControlName="username"
+                [error]="[] | tuiFieldError | async"
+              ></tui-error>
+            </div>
+            <div class="tui-form__row ">
+              <tui-input-password formControlName="password">
+                Password
+              </tui-input-password>
+              <tui-error
+                formControlName="password"
+                [error]="[] | tuiFieldError | async"
+              ></tui-error>
+            </div>
+          </div>
+        </div>
+        <div class="text-end">
+          <button
+            tuiButton
+            type="button"
+            appearance="flat"
+            size="s"
+            class="mt-1 "
+          >
+            Forgot password?
+          </button>
+        </div>
+        <div class="tui-form__buttons justify-content-center text-center align-items-center">
+          <button
+            tuiButton
+            size="l"
+            type="submit"
+            appearance="green"
+            class="tui-form__button w-50 "
+            [disabled]="!frm.valid"
+          >
+            Sign Up
+          </button>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>
+

@@ -1,0 +1,162 @@
+<ng-container *ngIf="!isLoaded">
+  <div class="spinner">
+    <div class="spinner-border spinner-border " style="width: 5rem; height: 5rem;" role="status">
+      <span class="visually-hidden">Loading...</span>
+    </div>
+  </div>
+</ng-container>
+<ng-container *ngIf="isLoaded">
+  <div class="lib_bg ">
+    <div>
+      <div class="top-wrapper ">
+        <div class="social-icons flex-row">
+          <a target="_blank" [href]="'https://www.instagram.com/' + socialMedia.instagram"><img src="https://ytuspark.com/wp-content/uploads/2020/09/instagram-logo-png-2428.png" alt="Instagram"></a>
+          <a target="_blank" [href]="'https://tr.pinterest.com/' + socialMedia.pinterest"><img src="https://www.freepnglogos.com/uploads/pinterest-logo-emblem-png-11.png" alt="Pinterest"></a>
+          <a target="_blank" [href]="'https://www.linkedin.com/in/' + socialMedia.linkedin"><img src="https://upload.wikimedia.org/wikipedia/commons/thumb/c/ca/LinkedIn_logo_initials.png/640px-LinkedIn_logo_initials.png" alt="LinkedIn"></a>
+          <a target="_blank" [href]="'https://twitter.com/' + socialMedia.twitter"><img src="https://png.pngtree.com/png-vector/20221018/ourmid/pngtree-twitter-social-media-round-icon-png-image_6315985.png" alt="Twitter"></a>
+        </div>
+        <div class="text-light list_container mt-5 text-center flex-row">
+          <img class="portrait flex-column" [src]="images" alt="portrait">
+          <div class="flex-column pt-3 ">
+            <div class="flex-row">
+              <ul class="text-start">
+                <li>
+                  <p>Username: {{ user.username }}</p>
+                </li>
+                <li>
+                  <p>First Name: {{ user.firstName }}</p>
+                </li>
+                <li>
+                  <p>Last Name: {{ user.lastName }}</p>
+                </li>
+                <li>
+                  <p>Email: {{ user.email }}</p>
+                </li>
+                <li>
+                  <p>Country: {{ user.country.name }}</p>
+                </li>
+                <li>
+                  <p>Date of Birth: {{ user.date_of_birth }}</p>
+                </li>
+              </ul>
+            </div>
+            <div class="flex-row">
+              <button [routerLink]="['/user/update']" class="log-button">Update</button>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <h1 class="display-6 text-light mt-5 text-center">Who am I?</h1>
+      <div class="container text-light text-center">
+        <h4>{{ description.description }}</h4>
+      </div>
+
+      <h1 class="display-5 text-light mt-5 text-center">Favorite Movies</h1>
+      <div class="carousel-wrapper flex-row align-items-center">
+        <tui-carousel
+          [style.--tui-carousel-padding]="0"
+          [draggable]="true"
+          [itemsCount]="movie_count"
+          [(index)]="movie_index"
+        >
+          <ng-container *ngFor="let item of  movies; let i = index">
+            <img
+              *tuiItem
+              alt=""
+              draggable="false"
+              [src]="item.poster_path"
+              class="item"
+              [class.item_active]="i === movie_index + 1"
+            />
+          </ng-container>
+        </tui-carousel>
+      </div>
+
+      <h1 class="display-5 text-light mt-5 text-center">Favorite Shows</h1>
+      <div class="carousel-wrapper flex-row align-items-center">
+        <tui-carousel
+          [style.--tui-carousel-padding]="0"
+          [draggable]="true"
+          [itemsCount]="show_count"
+          [(index)]="show_index"
+        >
+          <ng-container *ngFor="let item of  shows; let i = index">
+            <img
+              *tuiItem
+              alt=""
+              draggable="false"
+              [src]="item.poster_path"
+              class="item"
+              [class.item_active]="i === show_index + 1"
+            />
+          </ng-container>
+        </tui-carousel>
+      </div>
+
+      <h1 class="display-5 text-light mt-5 text-center">Favorite Books</h1>
+      <div class="carousel-wrapper flex-row align-items-center">
+        <tui-carousel
+          [style.--tui-carousel-padding]="0"
+          [draggable]="true"
+          [itemsCount]="book_count"
+          [(index)]="book_index"
+        >
+          <ng-container *ngFor="let item of  books; let i = index">
+            <img
+              *tuiItem
+              alt=""
+              draggable="false"
+              [src]="item.cover_url"
+              class="item"
+              [class.item_active]="i === book_index + 1"
+            />
+          </ng-container>
+        </tui-carousel>
+      </div>
+
+      <h1 class="display-5 text-light mt-5 text-center">Favorite Albums</h1>
+      <div class="carousel-wrapper flex-row ">
+        <tui-carousel
+          [style.--tui-carousel-padding]="0"
+          [draggable]="true"
+          [itemsCount]="album_count"
+          [(index)]="album_index"
+        >
+          <ng-container *ngFor="let item of  albums; let i = index">
+            <img
+              *tuiItem
+              alt=""
+              draggable="false"
+              [src]="item.image"
+              class="item"
+              [class.item_active]="i === album_index + 1"
+            />
+          </ng-container>
+        </tui-carousel>
+      </div>
+
+      <h1 class="display-5 text-light mt-5 text-center">Favorite Games</h1>
+      <div class="carousel-wrapper flex-row align-items-center">
+        <tui-carousel
+          [style.--tui-carousel-padding]="0"
+          [draggable]="true"
+          [itemsCount]="game_count"
+          [(index)]="game_index"
+        >
+          <ng-container *ngFor="let item of  games; let i = index">
+            <img
+              *tuiItem
+              alt=""
+              draggable="false"
+              [src]="item.original_url"
+              class="item"
+              [class.item_active]="i === game_index + 1"
+            />
+          </ng-container>
+        </tui-carousel>
+      </div>
+    </div>
+  </div>
+
+</ng-container>

@@ -1,0 +1,63 @@
+<div class="login-wrapper ">
+  <div class="card" id="loginCard">
+    <div class="card-title text-center  justify-content-center align-content-center   mt-2">
+      <h4>Login</h4>
+      <hr/>
+    </div>
+    <div class="card-body">
+      <form [formGroup]="frm" (ngSubmit)="submitForm()">
+        <div class="tui-form__row tui-form__row_multi-fields">
+          <div class="tui-form__multi-field">
+            <div class="tui-form__row mb-3">
+              <tui-input
+                formControlName="username"
+              >
+                <i class="fi fi-rs-user"></i> Username
+                <input
+                  tuiTextfield
+                  placeholder="Username"
+                />
+                <span class="tui-required"></span>
+              </tui-input>
+              <tui-error
+                formControlName="username"
+                [error]="[] | tuiFieldError | async"
+              ></tui-error>
+            </div>
+            <div class="tui-form__row ">
+              <tui-input-password formControlName="password"><i class="fi fi-rr-lock"></i> Password</tui-input-password>
+              <tui-error
+                formControlName="password"
+                [error]="[] | tuiFieldError | async"
+              ></tui-error>
+            </div>
+          </div>
+        </div>
+        <div class="text-end">
+          <button
+            tuiButton
+            type="button"
+            appearance="flat"
+            size="s"
+            class="mt-1 "
+          >
+            Forgot password?
+          </button>
+        </div>
+        <div class="tui-form__buttons justify-content-center text-center align-items-center">
+          <button
+            tuiButton
+            size="l"
+            type="submit"
+            appearance="green"
+            class="tui-form__button w-50 "
+            [disabled]="!frm.valid"
+          >
+            Login
+          </button>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>
+

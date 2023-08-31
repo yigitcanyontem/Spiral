@@ -1,0 +1,148 @@
+<ng-container>
+  <header>
+    <nav class="navbar navbar-expand-lg fixed-top ">
+      <ul class="navbar-nav  my-2 flex-container" >
+        <li class="nav-item justify-content-center align-items-center text-center flex-row">
+          <a routerLink="" class=" ms-1 footer-logo flex-column "><img src="../../../assets/logo.png" alt=" Logo" height="50px"></a>
+          <h2 class="ms-2 title flex-column">Spiral</h2>
+        </li>
+        <li>
+          <div class="search">
+          <span class="text-nowrap">
+            <input id="projectNameInput" name="speciesNameSearch" type="search" placeholder="Search..." class="searchbar" [(ngModel)]="this.input" (ngModelChange)="onSearch()">
+            <button class="btn" type="button" (click)="onSearch()" >
+              <i class="fi fi-br-search text-light"></i>
+            </button>
+          </span>
+          </div>
+        </li>
+        <li>
+          <button class="btn" type="button" data-bs-toggle="offcanvas" data-bs-target="#offcanvasExample" aria-controls="offcanvasExample">
+            <i class="fi fi-bs-menu-burger text-light" ></i>
+          </button>
+        </li>
+      </ul>
+    </nav>
+  </header>
+
+  <div class="offcanvas offcanvas-end" tabindex="-1" id="offcanvasExample" aria-labelledby="offcanvasExampleLabel">
+    <div class="offcanvas-header">
+      <h4 class="offcanvas-title" id="offcanvasExampleLabel">Spiral </h4>
+      <button type="button" class="btn-close bg-light" data-bs-dismiss="offcanvas" aria-label="Close"></button>
+    </div>
+    <div class="offcanvas-body">
+      <div  class="container-admin d-flex align-items-center ">
+        <ul class="d-flex w-100 h-50 flex-column gap-3">
+          <div class="user-profile-image-container mb-2" *ngIf="isLoaded">
+            <a class="nav-link " href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+              <img [src]="images" class="user-profile-image"  alt="user profile image">
+            </a>
+          </div>
+          <div class="user-profile-image-container" *ngIf="isLoaded">
+            <p class="name">{{user.username}}</p>
+            <p class="name">{{user.firstName +" " + user.lastName}}</p>
+          </div>
+          <li role="button" *ngIf="isLoaded"
+              routerLink="/profile/{{userid}}"
+              routerLinkActive="routerLinkActive"
+              data-bs-toggle="offcanvas"
+              data-bs-target="#offcanvasExample"
+              class="overflow-hidden gap-2 py-4 px-5 d-flex w-100 align-items-center sidebar-btn">
+            <i class="fi fi-rr-user"></i>
+            <a class="sidebar-text" >Profile</a>
+          </li>
+          <li role="button" *ngIf="isLoaded"
+              routerLink="/issue"
+              [routerLinkActiveOptions]="{exact:true}"
+              routerLinkActive="routerLinkActive"
+              data-bs-toggle="offcanvas"
+              data-bs-target="#offcanvasExample"
+              class="overflow-hidden gap-2 py-4 px-5 d-flex  w-100 d-flex align-items-center sidebar-btn">
+            <i class="fi fi-rr-edit"></i>
+            <a class="sidebar-text" >My Reviews</a>
+          </li>
+          <li role="button"
+              routerLink=""
+              [routerLinkActiveOptions]="{exact:true}"
+              routerLinkActive="routerLinkActive"
+              data-bs-toggle="offcanvas"
+              data-bs-target="#offcanvasExample"
+              class="overflow-hidden gap-2 py-4 px-5 d-flex  w-100 d-flex align-items-center sidebar-btn">
+            <i class="fi fi-rr-apps"></i>
+            <a class="sidebar-text" >Home</a>
+          </li>
+          <li role="button"
+              routerLink="/info"
+              routerLinkActive="routerLinkActive"
+              data-bs-toggle="offcanvas"
+              data-bs-target="#offcanvasExample"
+              class="overflow-hidden gap-2 py-4 px-5 d-flex w-100 align-items-center sidebar-btn">
+            <i class="fi fi-rr-camera-movie"></i>
+            <a class="sidebar-text" >Movies</a>
+          </li>
+
+          <li role="button"
+              routerLink="/report/conclusion"
+              routerLinkActive="routerLinkActive"
+              data-bs-toggle="offcanvas"
+              data-bs-target="#offcanvasExample"
+              class="overflow-hidden gap-2 py-4 px-5 d-flex w-100 align-items-center sidebar-btn">
+            <i class="fi fi-rr-screen"></i>
+            <a class="sidebar-text" >Shows</a>
+          </li>
+          <li role="button"
+              routerLink="/password"
+              routerLinkActive="routerLinkActive"
+              data-bs-toggle="offcanvas"
+              data-bs-target="#offcanvasExample"
+              class="overflow-hidden gap-2 py-4 px-5 d-flex  w-100 d-flex align-items-center sidebar-btn">
+            <i class="fi fi-rr-joystick"></i>
+            <a class="sidebar-text" >Games</a>
+          </li>
+          <li role="button"
+              routerLink="/issue"
+              [routerLinkActiveOptions]="{exact:true}"
+              routerLinkActive="routerLinkActive"
+              data-bs-toggle="offcanvas"
+              data-bs-target="#offcanvasExample"
+              class="overflow-hidden gap-2 py-4 px-5 d-flex  w-100 d-flex align-items-center sidebar-btn">
+            <i class="fi fi-br-album-collection"></i>
+            <a class="sidebar-text" >Albums</a>
+          </li>
+          <li role="button"
+              routerLink="/issue"
+              [routerLinkActiveOptions]="{exact:true}"
+              routerLinkActive="routerLinkActive"
+              data-bs-toggle="offcanvas"
+              data-bs-target="#offcanvasExample"
+              class="overflow-hidden gap-2 py-4 px-5 d-flex  w-100 d-flex align-items-center sidebar-btn">
+            <i class="fi fi-rs-books"></i>
+            <a class="sidebar-text" >Books</a>
+          </li>
+        </ul>
+      </div>
+    </div>
+    <div class="sidebar_footer">
+      <div *ngIf="isLoaded">
+        <p class=" disabled  text-center ">{{user.email}}</p>
+        <div class="logout  w-50 pt-1 pb-1 ">
+          <a class="logout_button dropdown-item  text-center icon" (click)="onLogout()">
+            Logout <i class="fi fi fi-ss-exit  ms-1 "></i>
+          </a>
+        </div>
+      </div>
+      <div *ngIf="!isLoaded">
+        <div class="text-start">
+          <button class=" text-light log-button" routerLink="/signup" data-bs-toggle="offcanvas"
+                  data-bs-target="#offcanvasExample">
+            Sign up
+          </button>
+          <button class=" text-light log-button" routerLink="/login" data-bs-toggle="offcanvas"
+                  data-bs-target="#offcanvasExample">
+            Log In
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+</ng-container>

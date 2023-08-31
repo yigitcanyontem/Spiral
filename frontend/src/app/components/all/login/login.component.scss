@@ -1,0 +1,22 @@
+@import '@taiga-ui/core/styles/taiga-ui-local.scss';
+
+.login-wrapper{
+  margin-top: 2%;
+  margin-right: 35%;
+  margin-left: 35%;
+
+}
+
+@media (max-width: 991px) {
+  .login-wrapper{
+    margin-right: 2%;
+    margin-left: 2%;
+  }
+}
+
+#loginCard{
+  color: black;
+  box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
+  border: 1px solid rgba(255, 255, 255, 0.3);
+  border-radius: 10px;
+}
