@@ -4,10 +4,7 @@ import com.yigitcanyontem.forum.entity.Review;
 import com.yigitcanyontem.forum.entity.enums.EntertainmentType;
 import com.yigitcanyontem.forum.mapper.ReviewDTOMapper;
 import com.yigitcanyontem.forum.mapper.ReviewMapper;
-import com.yigitcanyontem.forum.model.review.PaginatedReviewDTO;
-import com.yigitcanyontem.forum.model.review.ReviewCreateDTO;
-import com.yigitcanyontem.forum.model.review.ReviewDTO;
-import com.yigitcanyontem.forum.model.review.ReviewUpdateDTO;
+import com.yigitcanyontem.forum.model.review.*;
 import com.yigitcanyontem.forum.repository.ReviewRepository;
 import jakarta.transaction.Transactional;
 import jakarta.validation.constraints.Max;
@@ -48,7 +45,7 @@ public class ReviewService {
         return reviewRepository.findReviewById(id);
     }
 
-    public PaginatedReviewDTO getReviewsByEntertainment(EntertainmentType entertainmentType, String entertainmentId, int pageNumber, int pageSize, String sort, String direction,@Min(1) @Max(5) Integer rating){
+    public PaginatedReview getReviewsByEntertainment(EntertainmentType entertainmentType, String entertainmentId, int pageNumber, int pageSize, String sort, String direction, @Min(1) @Max(5) Integer rating){
         Pageable pageable = reviewSort(pageNumber,pageSize,sort,direction);
         Page<Review> reviewPage;
         if (rating != null && rating >= 0 && rating <= 5){
@@ -56,8 +53,8 @@ public class ReviewService {
         }else {
             reviewPage = reviewRepository.findReviewsByEntertainmentTypeAndEntertainmentid(entertainmentType,entertainmentId,pageable);
         }
-        return new PaginatedReviewDTO(
-                reviewPage.getContent().stream().map(reviewDTOMapper).toList(),
+        return new PaginatedReview(
+                reviewPage.getContent(),
                 reviewPage.getTotalPages()
         );
     }
@@ -65,7 +62,7 @@ public class ReviewService {
     public Double getAverageRatingByEntertainment(EntertainmentType entertainmentType, String entertainmentId){
         return reviewRepository.findReviewsByEntertainmentTypeAndEntertainmentid(entertainmentType,entertainmentId)
                 .stream()
-                .mapToDouble(Review::getRating).average().orElseThrow();
+                .mapToDouble(Review::getRating).average().orElse(0);
     }
 
     public Pageable reviewSort(int pageNumber, int pageSize,String sort, String direction){

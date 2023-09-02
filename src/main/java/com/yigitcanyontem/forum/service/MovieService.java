@@ -3,6 +3,8 @@ package com.yigitcanyontem.forum.service;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.yigitcanyontem.forum.entity.FavMovie;
+import com.yigitcanyontem.forum.entity.FavShows;
 import com.yigitcanyontem.forum.exceptions.SearchNotFoundException;
 import com.yigitcanyontem.forum.model.entertainment.CrewMember;
 import com.yigitcanyontem.forum.model.entertainment.Show;
@@ -30,23 +32,40 @@ public class MovieService {
     private RestTemplate restTemplate = new RestTemplate();
     private ObjectMapper objectMapper = new ObjectMapper();
 
-    public Movie getSingleMovieDTOById(Integer movieid) throws JsonProcessingException, ExecutionException, InterruptedException {
-        String url = "https://api.themoviedb.org/3/movie/"+movieid+"?api_key="+ tmdb_api_key;
-        CompletableFuture<String> movieInfoFuture = CompletableFuture.supplyAsync(() -> restTemplate.getForObject(url, String.class));
+    public List<Movie> getMovieTOByUser(List<FavMovie> favlist) throws JsonProcessingException, ExecutionException, InterruptedException {
+        List<CompletableFuture<String>> urlList = new ArrayList<>();
+        for (FavMovie movie:favlist){
+            String url = "https://api.themoviedb.org/3/movie/"+movie.getMovieid()+"?api_key="+ tmdb_api_key;
+            urlList.add(CompletableFuture.supplyAsync(() -> restTemplate.getForObject(url,String.class)));
+        }
 
-        CompletableFuture<Void> combinedFuture = CompletableFuture.allOf(movieInfoFuture);
+        CompletableFuture<Void> combinedFuture = CompletableFuture.allOf(urlList.toArray(new CompletableFuture[0]));
         combinedFuture.get();
 
-        String movieJson = movieInfoFuture.get();
+        try {
+            combinedFuture.get();
+        } catch (Exception e) {
+            throw e;
+        }
 
-        JsonNode movies = objectMapper.readTree(movieJson);
+        List<Movie> movies = new ArrayList<>();
 
-        Movie movie = new Movie();
+        for (CompletableFuture<String> future : urlList) {
+            try {
+                Movie movie = new Movie();
+                JsonNode list = objectMapper.readTree(future.get());
 
-        movie.setId(movies.get("id").asText());
-        movie.setPoster_path("https://image.tmdb.org/t/p/w500"+movies.get("poster_path").asText());
-        return movie;
+                movie.setId(list.get("id").asText());
+                movie.setOriginal_title(list.get("original_title").asText());
+                movie.setPoster_path("https://image.tmdb.org/t/p/w500"+list.get("poster_path").asText());
+                movies.add(movie);
+            } catch (Exception e) {
+                throw e;
+            }
+        }
+        return movies;
     }
+
 
     public Movie getSingleMovieById(Integer movieid) throws JsonProcessingException, ExecutionException, InterruptedException {
         String url = "https://api.themoviedb.org/3/movie/"+movieid+"?api_key="+ tmdb_api_key;

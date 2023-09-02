@@ -32,6 +32,9 @@ cors:
   exposed-headers: "*"
 
 spring:
+  cache:
+    caffeine:
+      spec: expireAfterAccess=600m
   flyway:
     baseline-on-migrate: true
   datasource:

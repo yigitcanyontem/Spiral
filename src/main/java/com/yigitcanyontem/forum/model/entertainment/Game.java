@@ -18,29 +18,14 @@ public class Game implements Entertainment{
     private List<String> genres;
     private List<String> developers;
     private List<String> publishers;
+    private List<String> screenshots;
     private List<String> similar_games;
+    private List<Character> characters;
     private String original_url;
     private String icon_url;
     private String screen_large_url;
     private String deck;
-    private List<String> characters;
     private Integer favorite_count;
-
-    public Integer getFavorite_count() {
-        return favorite_count;
-    }
-
-    public void setFavorite_count(Integer favorite_count) {
-        this.favorite_count = favorite_count;
-    }
-
-    public List<String> getSimilar_games() {
-        return similar_games;
-    }
-
-    public void setSimilar_games(List<String> similar_games) {
-        this.similar_games = similar_games;
-    }
 
     public String getId() {
         return id;
@@ -106,6 +91,30 @@ public class Game implements Entertainment{
         this.publishers = publishers;
     }
 
+    public List<String> getScreenshots() {
+        return screenshots;
+    }
+
+    public void setScreenshots(List<String> screenshots) {
+        this.screenshots = screenshots;
+    }
+
+    public List<String> getSimilar_games() {
+        return similar_games;
+    }
+
+    public void setSimilar_games(List<String> similar_games) {
+        this.similar_games = similar_games;
+    }
+
+    public List<Character> getCharacters() {
+        return characters;
+    }
+
+    public void setCharacters(List<Character> characters) {
+        this.characters = characters;
+    }
+
     public String getOriginal_url() {
         return original_url;
     }
@@ -138,11 +147,11 @@ public class Game implements Entertainment{
         this.deck = deck;
     }
 
-    public List<String> getCharacters() {
-        return characters;
+    public Integer getFavorite_count() {
+        return favorite_count;
     }
 
-    public void setCharacters(List<String> characters) {
-        this.characters = characters;
+    public void setFavorite_count(Integer favorite_count) {
+        this.favorite_count = favorite_count;
     }
 }

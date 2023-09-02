@@ -1,0 +1,50 @@
+<div class="login-wrapper pb-5">
+  <div class="card " id="loginCard">
+    <div class="card-title text-center  justify-content-center align-content-center mt-2 ">
+      <h4 class="text-light">Login</h4>
+      <hr class="text-light" />
+    </div>
+    <div class="card-body">
+      <form [formGroup]="frm" (ngSubmit)="submitForm()">
+        <div class="">
+          <div class="flex justify-content-center">
+            <span class="p-float-label">
+                <input pInputText id="username" formControlName="username" class="w-100"/>
+                <label for="username">Username</label>
+            </span>
+          </div>
+          <div class="flex justify-content-center mt-4 ">
+            <span class="p-float-label">
+              <p-password formControlName="password" id="password" [toggleMask]="true" [feedback]="false" [style]="{'width':'100%'}" [inputStyle]="{'width':'100%'}"></p-password>
+              <label for="password">Password</label>
+            </span>
+          </div>
+<!--          <div class="flex justify-content-center mt-4">-->
+<!--            <span class="p-float-label">-->
+<!--              <input pInputText id="password" formControlName="password" class="w-100" type="password"/>-->
+<!--              <label for="password">Password</label>-->
+<!--            </span>-->
+<!--          </div>-->
+        </div>
+        <div class="text-end">
+          <button
+            type="button"
+            class=" btn mt-1 "
+          >
+            <h6 class="text-light">Forgot password?</h6>
+          </button>
+        </div>
+        <div class=" justify-content-center text-center align-items-center">
+          <button
+            type="submit"
+            class="btn btn-outline-dark w-50 text-light"
+            [disabled]="!frm.valid"
+          >
+            Login
+          </button>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>
+

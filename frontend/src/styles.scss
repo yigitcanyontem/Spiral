@@ -1,6 +1,8 @@
 @import "../node_modules/bootstrap/dist/css/bootstrap.min.css";
 @import "../node_modules/@flaticon/flaticon-uicons/css/all/all";
-@import '../node_modules/@taiga-ui/core/styles/taiga-ui-local.scss';
+@import "primeng/resources/themes/lara-light-blue/theme.css";
+@import "primeng/resources/primeng.css";
+@import "primeicons/primeicons.css";
 @font-face {
   font-family: Raleway;
   src: url('https://fonts.googleapis.com/css2?family=Raleway:wght@200&display=swap') format("opentype");
@@ -14,12 +16,21 @@ $bg-color-light: #0288d1;
 
 body {
   margin: 0;
+  font-family: var(--font-family);
 }
 
 * {
   font-family: 'Raleway', sans-serif;
 }
 
+.crew-profile-image {
+  width: 96px;
+  height: 96px;
+  border: none;
+  border-radius: 50%;
+  background-color: white;
+  object-fit: cover;
+}
 html {
   margin: 0;
 }
@@ -88,3 +99,15 @@ $tui-wrapper-color-red: #fff;
   margin-left: -50px;
   background-size: 100%;
 }
+.rating {
+  color: #ffc500;
+}
+
+.pointer{
+  cursor: pointer;
+}
+.text-custom-color{
+  color: #faf7f7;
+}
+
+

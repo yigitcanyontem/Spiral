@@ -1,0 +1,39 @@
+<ng-container *ngIf="!isLoaded">
+  <app-spinner></app-spinner>
+</ng-container>
+<ng-container *ngIf="isLoaded">
+  <div class="page-wrapper">
+    <div>
+      <div class="card ">
+        <div class="flex-row gap-2">
+          <div class="flex-column">
+            <img [src]="this.album.image" class="" alt=" profile image">
+          </div>
+          <div class="flex-column justify-content-center">
+            <h5 class="fw-bold">{{this.album.mbid}}</h5>
+            <h6 class="text-secondary">{{this.album.name}}</h6>
+            <h6 class="text-secondary">{{this.album.artist}}</h6>
+            <a href="{{this.album.url}}">last_fm</a>
+            <h6 class="text-secondary">{{this.album.favorite_count}}</h6>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div>
+    <div *ngFor="let review of this.reviews.reviews">
+      <div class="card ">
+        <div class="flex-row gap-2">
+          <div class="flex-column justify-content-center">
+            <p-rating [(ngModel)]="review.rating" class="rating" [readonly]="true" [cancel]="false"></p-rating>
+            <h5 class="fw-bold">{{review.date}}</h5>
+            <h5 class="fw-bold">{{review.description}}</h5>
+            <h5 class="fw-bold">{{review.downvote}}</h5>
+            <h5 class="fw-bold">{{review.upvote}}</h5>
+            <h5 class="fw-bold">{{review.usersid}}</h5>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</ng-container>

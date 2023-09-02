@@ -1,6 +1,11 @@
 import { Injectable } from '@angular/core';
 import {environment} from "../environment/environment";
-import {HttpClient, HttpHeaders} from "@angular/common/http";
+import {HttpClient, HttpParams} from "@angular/common/http";
+import {Observable} from "rxjs";
+import {PaginatedReviewDTO} from "../models/paginated-review-dto";
+import {Review} from "../models/review";
+import {ReviewUpdateDTO} from "../models/review-update-dto";
+import {ReviewCreateDTO} from "../models/review-create-dto";
 
 @Injectable({
   providedIn: 'root'
@@ -8,14 +13,66 @@ import {HttpClient, HttpHeaders} from "@angular/common/http";
 export class ReviewService {
 
   private apiUrl = environment.apiUrl;
-
-  private httpOptions = {
-    headers: new HttpHeaders(
-      { 'Content-Type': 'application/json' ,
-        'Authorization': `Bearer ${localStorage.getItem('forum_access_token')}`}
-    )
-  };
-
-
   private backendUrl = `${this.apiUrl}/review`;
+
+  constructor(private http: HttpClient) { }
+
+
+  getReviewById(id: number): Observable<Review> {
+    return this.http.get<Review>(`${this.backendUrl}/${id}`);
+  }
+
+  getReviewsByUser(params: any): Observable<PaginatedReviewDTO> {
+    return this.http.get<PaginatedReviewDTO>(`${this.backendUrl}/user`, { params });
+  }
+
+  getReviewsByEntertainment(
+    entertainmentId: string,
+    entertainmentType: string,
+    pageNumber: number = 0,
+    pageSize: number = 100,
+    sort: string = 'upvote',
+    direction: string = 'ASC',
+    rating: number | null = null
+  ): Observable<PaginatedReviewDTO> {
+    const params = new HttpParams()
+      .set('entertainmentId', entertainmentId)
+      .set('entertainmentType', entertainmentType)
+      .set('pageNumber', pageNumber.toString())
+      .set('pageSize', pageSize.toString())
+      .set('sort', sort)
+      .set('direction', direction)
+      .set('rating', rating?.toString() || '');
+
+    return this.http.get<PaginatedReviewDTO>(`${this.backendUrl}/entertainment`, { params });
+  }
+
+  getAverageRatingByEntertainment(entertainmentId: string,entertainmentType: string): Observable<number> {
+    const params = new HttpParams()
+      .set('entertainmentId', entertainmentId)
+      .set('entertainmentType', entertainmentType);
+
+
+    return this.http.get<number>(`${this.backendUrl}/average-rating`, { params });
+  }
+
+  updateReview(usersid: number, reviewUpdateDTO: ReviewUpdateDTO): Observable<Review> {
+    return this.http.patch<Review>(`${this.backendUrl}/update/${usersid}`, reviewUpdateDTO);
+  }
+
+  incrementUpvote(usersid: number, id: number): Observable<number> {
+    return this.http.patch<number>(`${this.backendUrl}/upvote/${usersid}/${id}`, null);
+  }
+
+  incrementDownvote(usersid: number, id: number): Observable<number> {
+    return this.http.patch<number>(`${this.backendUrl}/downvote/${usersid}/${id}`, null);
+  }
+
+  deleteReview(usersid: number, id: number): Observable<any> {
+    return this.http.delete<any>(`${this.backendUrl}/delete/${usersid}/${id}`);
+  }
+
+  saveReview(reviewCreateDTO: ReviewCreateDTO): Observable<Review> {
+    return this.http.post<Review>(`${this.backendUrl}/save`, reviewCreateDTO);
+  }
 }

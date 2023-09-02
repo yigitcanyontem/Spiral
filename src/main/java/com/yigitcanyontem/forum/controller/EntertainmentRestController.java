@@ -1,5 +1,6 @@
 package com.yigitcanyontem.forum.controller;
 
+import com.fasterxml.jackson.core.JsonProcessingException;
 import com.yigitcanyontem.forum.entity.Country;
 import com.yigitcanyontem.forum.model.entertainment.*;
 import com.yigitcanyontem.forum.service.*;
@@ -31,7 +32,7 @@ public class EntertainmentRestController {
         this.gameService = gameService;
     }
 
-    @GetMapping("/tv/{showid}")
+    @GetMapping("/show/{showid}")
     @Cacheable(value = "shows", key = "'show-' + #showid")
     public ResponseEntity<Show> getSingleShowById(@PathVariable Integer showid) {
         try {
@@ -53,12 +54,9 @@ public class EntertainmentRestController {
 
     @GetMapping("/book/{bookid}")
     @Cacheable(value = "books", key = "'book-' + #bookid")
-    public ResponseEntity<Book> getSingleBookById(@PathVariable String bookid) {
-        try {
-            return ResponseEntity.ok(bookService.getSingleBookById(bookid));
-        } catch (Exception e) {
-            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
-        }
+    public ResponseEntity<Book> getSingleBookById(@PathVariable String bookid) throws JsonProcessingException {
+        return ResponseEntity.ok(bookService.getSingleBookById(bookid));
+
     }
 
     @GetMapping("/album/{mbid}")

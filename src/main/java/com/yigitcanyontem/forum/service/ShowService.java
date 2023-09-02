@@ -3,7 +3,11 @@ package com.yigitcanyontem.forum.service;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.yigitcanyontem.forum.entity.FavBooks;
+import com.yigitcanyontem.forum.entity.FavMovie;
+import com.yigitcanyontem.forum.entity.FavShows;
 import com.yigitcanyontem.forum.exceptions.SearchNotFoundException;
+import com.yigitcanyontem.forum.model.entertainment.Book;
 import com.yigitcanyontem.forum.model.entertainment.CrewMember;
 import com.yigitcanyontem.forum.model.entertainment.Movie;
 import com.yigitcanyontem.forum.repository.FavShowsRepository;
@@ -30,22 +34,38 @@ public class ShowService {
     private RestTemplate restTemplate = new RestTemplate();
     private ObjectMapper objectMapper = new ObjectMapper();
 
-    public Show getSingleShowDTOById(Integer showid) throws JsonProcessingException, ExecutionException, InterruptedException {
-        String url = "https://api.themoviedb.org/3/tv/"+showid+"?api_key="+ tmdb_api_key;
-        CompletableFuture<String> showInfoFuture = CompletableFuture.supplyAsync(() -> restTemplate.getForObject(url, String.class));
+    public List<Show> getShowDTOByUser(List<FavShows> favlist) throws JsonProcessingException, ExecutionException, InterruptedException {
+        List<CompletableFuture<String>> urlList = new ArrayList<>();
+        for (FavShows show:favlist){
+            String url = "https://api.themoviedb.org/3/tv/"+show.getShowid()+"?api_key="+ tmdb_api_key;
+            urlList.add(CompletableFuture.supplyAsync(() -> restTemplate.getForObject(url,String.class)));
+        }
 
-        CompletableFuture<Void> combinedFuture = CompletableFuture.allOf(showInfoFuture);
+        CompletableFuture<Void> combinedFuture = CompletableFuture.allOf(urlList.toArray(new CompletableFuture[0]));
         combinedFuture.get();
 
-        String showJson = showInfoFuture.get();
+        try {
+            combinedFuture.get();
+        } catch (Exception e) {
+            throw e;
+        }
 
-        JsonNode shows = objectMapper.readTree(showJson);
+        List<Show> shows = new ArrayList<>();
 
-        Show show = new Show();
+        for (CompletableFuture<String> future : urlList) {
+            try {
+                Show show = new Show();
 
-        show.setId(shows.get("id").asText());
-        show.setPoster_path("https://image.tmdb.org/t/p/w500"+shows.get("poster_path").asText());
-        return show;
+                JsonNode list = objectMapper.readTree(future.get());
+                show.setId(list.get("id").asText());
+                show.setOriginal_title(list.get("original_name").asText());
+                show.setPoster_path("https://image.tmdb.org/t/p/w500"+list.get("poster_path").asText());
+                shows.add(show);
+            } catch (Exception e) {
+                throw e;
+            }
+        }
+        return shows;
     }
 
     public Show getSingleShowById(Integer showid) throws JsonProcessingException, ExecutionException, InterruptedException {

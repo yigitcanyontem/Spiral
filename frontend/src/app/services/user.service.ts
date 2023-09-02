@@ -40,8 +40,8 @@ export class UserService {
     return this.http.get<Description>(`${this.backendUrl}/description/${id}`);
   }
 
-  updateCustomer(assignModel: AssignModel): Observable<string> {
-    return this.http.patch<string>(`${this.backendUrl}/update`, assignModel, {
+  updateCustomer(assignModel: AssignModel): Observable<string[]> {
+    return this.http.patch<string[]>(`${this.backendUrl}/update`, assignModel, {
       headers: new HttpHeaders({
         'Authorization': this.token
       })

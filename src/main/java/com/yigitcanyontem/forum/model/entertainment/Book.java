@@ -1,30 +1,26 @@
 package com.yigitcanyontem.forum.model.entertainment;
 
+import lombok.AllArgsConstructor;
+import lombok.NoArgsConstructor;
+import lombok.ToString;
+
+import java.util.List;
+
+@ToString
+@AllArgsConstructor
+@NoArgsConstructor
 public class Book implements Entertainment{
     String id;
     String title;
-    String authors;
+    List<String> authors;
     String description;
     Integer pageCount;
     String cover_url;
+    String language;
+    String publishedDate;
+    List<String> categories;
     String webReaderLink;
     Integer favorite_count;
-
-    public Integer getFavorite_count() {
-        return favorite_count;
-    }
-
-    public void setFavorite_count(Integer favorite_count) {
-        this.favorite_count = favorite_count;
-    }
-
-    public String getWebReaderLink() {
-        return webReaderLink;
-    }
-
-    public void setWebReaderLink(String webReaderLink) {
-        this.webReaderLink = webReaderLink;
-    }
 
     public String getId() {
         return id;
@@ -42,11 +38,11 @@ public class Book implements Entertainment{
         this.title = title;
     }
 
-    public String getAuthors() {
+    public List<String> getAuthors() {
         return authors;
     }
 
-    public void setAuthors(String authors) {
+    public void setAuthors(List<String> authors) {
         this.authors = authors;
     }
 
@@ -74,18 +70,44 @@ public class Book implements Entertainment{
         this.cover_url = cover_url;
     }
 
-    @Override
-    public String toString() {
-        return "Book{" +
-                "id='" + id + '\'' +
-                ", title='" + title + '\'' +
-                ", authors='" + authors + '\'' +
-                ", description='" + description + '\'' +
-                ", pageCount=" + pageCount +
-                ", cover_url='" + cover_url + '\'' +
-                ", webReaderLink='" + webReaderLink + '\'' +
-                ", favorite_count=" + favorite_count +
-                '}';
+    public String getLanguage() {
+        return language;
+    }
+
+    public void setLanguage(String language) {
+        this.language = language;
+    }
+
+    public String getPublishedDate() {
+        return publishedDate;
+    }
+
+    public void setPublishedDate(String publishedDate) {
+        this.publishedDate = publishedDate;
+    }
+
+    public List<String> getCategories() {
+        return categories;
+    }
+
+    public void setCategories(List<String> categories) {
+        this.categories = categories;
+    }
+
+    public String getWebReaderLink() {
+        return webReaderLink;
+    }
+
+    public void setWebReaderLink(String webReaderLink) {
+        this.webReaderLink = webReaderLink;
+    }
+
+    public Integer getFavorite_count() {
+        return favorite_count;
+    }
+
+    public void setFavorite_count(Integer favorite_count) {
+        this.favorite_count = favorite_count;
     }
 }
 

@@ -8,6 +8,7 @@ import com.yigitcanyontem.forum.repository.UsersRepository;
 import com.yigitcanyontem.forum.entity.SocialMedia;
 import com.yigitcanyontem.forum.model.entertainment.AssignModel;
 import jakarta.transaction.Transactional;
+import lombok.RequiredArgsConstructor;
 import org.apache.commons.io.FileUtils;
 import org.springframework.core.io.FileSystemResource;
 import org.springframework.core.io.Resource;
@@ -23,29 +24,11 @@ import java.util.List;
 import java.util.Objects;
 
 @Service
+@RequiredArgsConstructor
 public class UsersService {
     private final UsersRepository usersRepository;
     private final DescriptionService descriptionService;
-    private final FavMovieService favMovieService;
-    private final FavAlbumsService favAlbumsService;
-    private final FavShowsService favShowsService;
-    private final FavBooksService favBooksService;
-    private final CountryService countryService;
     private final SocialMediaService socialMediaService;
-
-    public UsersService(UsersRepository usersRepository, DescriptionService descriptionService
-            , FavMovieService favMovieService, FavAlbumsService favAlbumsService, FavShowsService favShowsService,
-                        FavBooksService favBooksService, CountryService countryService,
-                        SocialMediaService socialMediaService) {
-        this.usersRepository = usersRepository;
-        this.descriptionService = descriptionService;
-        this.favMovieService = favMovieService;
-        this.favAlbumsService = favAlbumsService;
-        this.favShowsService = favShowsService;
-        this.favBooksService = favBooksService;
-        this.countryService = countryService;
-        this.socialMediaService = socialMediaService;
-    }
 
     public Users getUser(Integer id){
         return usersRepository.findById(id).orElseThrow(
@@ -86,7 +69,7 @@ public class UsersService {
     }
 
 
-    public String updateCustomer(AssignModel assignModel) {
+    public List<String> updateCustomer(AssignModel assignModel) {
         try {
             int id = assignModel.getId();
         }catch (NullPointerException e){
@@ -116,7 +99,7 @@ public class UsersService {
             socialMedia.setTwitter(twitteruser);
         }
         socialMediaService.saveSocialMedia(socialMedia);
-        return "Success";
+        return List.of("Success");
     }
     @Transactional
     public void deleteCustomer(Integer usersid) {
@@ -127,9 +110,9 @@ public class UsersService {
         users.setStatus(Status.INACTIVE);
     }
 
-     public String uploadPicture(MultipartFile file, Integer id){
+     public List<String> uploadPicture(MultipartFile file, Integer id){
         if (file.isEmpty()) {
-            return "No file selected";
+            return List.of("No file selected");
         }
         try {
             byte[] bytes = file.getBytes();
@@ -139,10 +122,10 @@ public class UsersService {
 
             FileUtils.writeByteArrayToFile(serverFile, bytes);
 
-            return "File uploaded successfully";
+            return List.of("File uploaded successfully");
         } catch (IOException e) {
             e.printStackTrace();
-            return "Error uploading file";
+            return List.of("Error uploading file");
         }
     }
 

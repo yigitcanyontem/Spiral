@@ -1,11 +1,11 @@
 package com.yigitcanyontem.forum.controller;
 
 import com.yigitcanyontem.forum.entity.Review;
+import com.yigitcanyontem.forum.entity.Token;
 import com.yigitcanyontem.forum.entity.enums.EntertainmentType;
-import com.yigitcanyontem.forum.model.review.PaginatedReviewDTO;
-import com.yigitcanyontem.forum.model.review.ReviewCreateDTO;
-import com.yigitcanyontem.forum.model.review.ReviewDTO;
-import com.yigitcanyontem.forum.model.review.ReviewUpdateDTO;
+import com.yigitcanyontem.forum.entity.enums.Role;
+import com.yigitcanyontem.forum.model.review.*;
+import com.yigitcanyontem.forum.repository.TokenRepository;
 import com.yigitcanyontem.forum.service.ReviewService;
 import jakarta.validation.constraints.Max;
 import jakarta.validation.constraints.Min;
@@ -23,6 +23,7 @@ import org.springframework.web.bind.annotation.*;
 @RequiredArgsConstructor
 public class ReviewController {
     private final ReviewService reviewService;
+    private final TokenRepository tokenRepository;
 
     @GetMapping("/{id}")
     @Cacheable(value = "review", key = "'id-' + #id")
@@ -39,7 +40,7 @@ public class ReviewController {
     public ResponseEntity<PaginatedReviewDTO> getReviewsByUser(
             @RequestParam Integer usersid,
             @RequestParam(value = "pageNumber", defaultValue = "0") int pageNumber,
-            @RequestParam(value = "pageSize", defaultValue = "100") int pageSize,
+            @RequestParam(value = "pageSize", defaultValue = "10") int pageSize,
             @RequestParam(value = "sort", defaultValue = "id") String sort,
             @RequestParam(value = "direction", defaultValue = "ASC") String direction,
             @RequestParam(required = false) @Min(1) @Max(5) Integer rating
@@ -52,11 +53,11 @@ public class ReviewController {
     }
 
     @GetMapping("/entertainment")
-    public ResponseEntity<PaginatedReviewDTO> getReviewsByEntertainment(
+    public ResponseEntity<PaginatedReview> getReviewsByEntertainment(
             @RequestParam EntertainmentType entertainmentType,
             @RequestParam String entertainmentId,
             @RequestParam(value = "pageNumber", defaultValue = "0") int pageNumber,
-            @RequestParam(value = "pageSize", defaultValue = "100") int pageSize,
+            @RequestParam(value = "pageSize", defaultValue = "10") int pageSize,
             @RequestParam(value = "sort", defaultValue = "upvote") String sort,
             @RequestParam(value = "direction", defaultValue = "ASC") String direction,
             @RequestParam(required = false) @Min(1) @Max(5) Integer rating
@@ -87,7 +88,10 @@ public class ReviewController {
             @CacheEvict(value = "review_user", allEntries = true)
     }
     )
-    public ResponseEntity<Review> updateReview(@PathVariable Integer usersid,@RequestBody ReviewUpdateDTO reviewUpdateDTO)  {
+    public ResponseEntity<Review> updateReview(@PathVariable Integer usersid,@RequestBody ReviewUpdateDTO reviewUpdateDTO,@RequestHeader (name="Authorization") String token) {
+        if (!userValid(usersid,token)){
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
+        }
         try {
             return ResponseEntity.ok(reviewService.updateReview(reviewUpdateDTO));
         } catch (Exception e) {
@@ -100,7 +104,10 @@ public class ReviewController {
             @CacheEvict(value = "review", key = "'id-' + #id"),
             @CacheEvict(value = "review_user", allEntries = true)
     })
-    public ResponseEntity<Integer> incrementUpvote(@PathVariable Integer usersid,@PathVariable Long id) {
+    public ResponseEntity<Integer> incrementUpvote(@PathVariable Integer usersid,@PathVariable Long id,@RequestHeader (name="Authorization") String token) {
+        if (!userValid(usersid,token)){
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
+        }
         try {
             return ResponseEntity.ok(reviewService.incrementUpvote(id));
         } catch (Exception e) {
@@ -113,7 +120,10 @@ public class ReviewController {
             @CacheEvict(value = "review", key = "'id-' + #id"),
             @CacheEvict(value = "review_user", allEntries = true)
     })
-    public ResponseEntity<Integer> incrementDownvote(@PathVariable Integer usersid,@PathVariable Long id) {
+    public ResponseEntity<Integer> incrementDownvote(@PathVariable Integer usersid,@PathVariable Long id,@RequestHeader (name="Authorization") String token) {
+        if (!userValid(usersid,token)){
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
+        }
         try {
             return ResponseEntity.ok(reviewService.incrementDownvote(id));
         } catch (Exception e) {
@@ -126,7 +136,10 @@ public class ReviewController {
             @CacheEvict(value = "review", key = "'id-' + #id"),
             @CacheEvict(value = "review_user", allEntries = true)
     })
-    public ResponseEntity<?> deleteReview(@PathVariable Integer usersid,@PathVariable Long id) {
+    public ResponseEntity<?> deleteReview(@PathVariable Integer usersid,@PathVariable Long id,@RequestHeader (name="Authorization") String token) {
+        if (!userValid(usersid,token)){
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
+        }
         try {
             reviewService.deleteReview(id);
             return ResponseEntity.status(HttpStatus.OK).build();
@@ -140,11 +153,30 @@ public class ReviewController {
             @CacheEvict(value = "review_user", key = "'usersid-' + #reviewCreateDTO.usersid"),
             @CacheEvict(value = "review_user", allEntries = true)
     })
-    public ResponseEntity<Review> saveReview(@RequestBody ReviewCreateDTO reviewCreateDTO) {
+    public ResponseEntity<Review> saveReview(@RequestBody ReviewCreateDTO reviewCreateDTO,@RequestHeader (name="Authorization") String token) {
+        if (!userValid(reviewCreateDTO.getUsersid(),token)){
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
+        }
         try {
             return ResponseEntity.ok(reviewService.saveReview(reviewCreateDTO));
         } catch (Exception e) {
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
+        }
+    }
+
+    public boolean userValid(Integer usersid, String token){
+        try {
+            token = token.substring(7);
+            Token token_ref = tokenRepository.findTokenByToken(token);
+            if (token_ref.expired || token_ref.revoked){
+                return false;
+            }
+            if (token_ref.user.getRole().equals(Role.ADMIN)){
+                return true;
+            }
+            return token_ref.user.getId().equals(usersid);
+        }catch (Exception e){
+            return false;
         }
     }
 }

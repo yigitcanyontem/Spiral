@@ -1,6 +1,7 @@
 import {CrewMember} from "./crew-member";
+import {Entertainment} from "./entertainment";
 
-export interface Movie {
+export interface Movie extends Entertainment{
   id: string;
   adult: boolean;
   backdrop_path: string;

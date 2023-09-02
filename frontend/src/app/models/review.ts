@@ -1,5 +1,6 @@
 import {EntertainmentType} from "../enums/entertainment-type";
 import {Users} from "./users";
+import {Entertainment} from "./entertainment";
 
 export interface Review {
   id: number;
@@ -11,5 +12,6 @@ export interface Review {
   upvote: number;
   downvote: number;
   date: Date;
+  entertainment: Entertainment;
 }
 

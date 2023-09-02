@@ -1,0 +1,48 @@
+.card{
+  background-color: #2d322b;
+  box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
+}
+
+.btn-outline-dark{
+  &:valid{
+    background-color: #212529;
+    &:hover{
+      background-color: #182121;
+    }
+  }
+}
+
+
+.portraitupdate{
+  width: 200px;
+  margin: 10px;
+  border-radius: 10px;
+  background-color: rgb(182,173,168);
+  align-content: center;
+}
+
+ul{
+  list-style: none;
+  padding: 10px;
+}
+.page-wrapper{
+  margin-right: 15%;
+  margin-left: 15%;
+}
+
+@media (max-width: 991px) {
+  .page-wrapper{
+    margin-right: 2%;
+    margin-left: 2%;
+  }
+}
+.flex-column{
+  display: flex;
+  flex-direction: column;
+  flex-wrap: wrap;
+}
+.flex-row{
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+}

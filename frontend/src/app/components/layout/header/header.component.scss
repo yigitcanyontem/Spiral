@@ -24,9 +24,7 @@ ul{
 }
 
 /* Icons */
-.fi-ss-exit{
-  font-size: 15px;
-}
+
 .fi-bs-menu-burger:before {
   display: flex;
   margin-top: auto;
@@ -133,7 +131,6 @@ fi-br-sign-out-alt:before{
 }
 
 .fi-ss-exit{
-  display: flex;
   font-size: 15px;
 }
 
@@ -151,7 +148,6 @@ fi-br-sign-out-alt:before{
     color: #e84242;
   }
   .fi-ss-exit:before{
-    display: flex;
     margin-left: 5px;
     text-align: center;
   }

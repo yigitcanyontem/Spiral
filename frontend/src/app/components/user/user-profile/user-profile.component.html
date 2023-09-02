@@ -1,0 +1,128 @@
+<ng-container *ngIf="!isLoaded">
+  <app-spinner></app-spinner>
+</ng-container>
+<ng-container *ngIf="isLoaded">
+  <div class=" ">
+    <div>
+      <div class="top-wrapper ">
+        <div class="social-icons flex-row">
+          <a target="_blank" [href]="'https://www.instagram.com/' + socialMedia.instagram"><img src="https://ytuspark.com/wp-content/uploads/2020/09/instagram-logo-png-2428.png" title="Instagram"></a>
+          <a target="_blank" [href]="'https://tr.pinterest.com/' + socialMedia.pinterest"><img src="https://www.freepnglogos.com/uploads/pinterest-logo-emblem-png-11.png" title="Pinterest"></a>
+          <a target="_blank" [href]="'https://www.linkedin.com/in/' + socialMedia.linkedin"><img src="https://upload.wikimedia.org/wikipedia/commons/thumb/c/ca/LinkedIn_logo_initials.png/640px-LinkedIn_logo_initials.png" title="LinkedIn"></a>
+          <a target="_blank" [href]="'https://twitter.com/' + socialMedia.twitter"><img src="https://png.pngtree.com/png-vector/20221018/ourmid/pngtree-twitter-social-media-round-icon-png-image_6315985.png" title="Twitter"></a>
+        </div>
+        <h4 class="text-center text-custom-color">{{ user.firstName + " " +  user.lastName}}</h4>
+        <div class="text-custom-color list_container mt-3 text-center flex-row">
+          <img class="portrait flex-column" [src]="images" title="portrait">
+          <div class="flex-column pt-3 ">
+            <div class="flex-row">
+              <ul class="text-start">
+                <li>
+                  <p>Username: {{ user.username }}</p>
+                </li>
+                <li>
+                  <p>Email: {{ user.email }}</p>
+                </li>
+                <li>
+                  <p>Country: {{ user.country.name }}</p>
+                </li>
+                <li>
+                  <p>Date of Birth: {{ user.date_of_birth }}</p>
+                </li>
+              </ul>
+            </div>
+            <div class="flex-row justify-content-center">
+              <button [routerLink]="['/update']" class="log-button" class="btn btn-secondary">Update</button>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <h1 class="display-6 text-custom-color mt-5 text-center">Who am I?</h1>
+      <div class="container text-custom-color text-center">
+        <h4>{{ description.description }}</h4>
+      </div>
+
+      <h1 class="display-5 text-custom-color mt-5 text-center">Favorite Movies</h1>
+      <div class="">
+        <p-carousel [value]="movies" [numVisible]="6" [numScroll]="1" [responsiveOptions]="responsiveOptions" [showIndicators]="false" >
+          <ng-template let-movie pTemplate="item">
+            <div class="border-1 surface-border border-round m-2 text-center py-3 px-3">
+              <div>
+                <h4 class="text-custom-color mb-1">{{ movie.original_title }}</h4>
+              </div>
+              <div class="mb-3">
+                <img src="{{movie.poster_path}}" [title]="movie.original_title" class="w-6 shadow-2 item" routerLink="/movie/{{movie.id}}" alt="" (click)="scrollTop()"/>
+              </div>
+            </div>
+          </ng-template>
+        </p-carousel>
+      </div>
+
+      <h1 class="display-5 text-custom-color mt-5 text-center">Favorite Shows</h1>
+      <div class="">
+        <p-carousel [value]="shows" [numVisible]="6" [numScroll]="1" [responsiveOptions]="responsiveOptions" [showIndicators]="false">
+          <ng-template let-show pTemplate="item">
+            <div class="border-1 surface-border border-round m-2 text-center py-3 px-3">
+              <div>
+                <h4 class="text-custom-color mb-1">{{ show.original_title }}</h4>
+              </div>
+              <div class="mb-3">
+                <img src="{{show.poster_path}}" [title]="show.original_title" class="w-6 shadow-2 item" routerLink="/show/{{show.id}}" (click)="scrollTop()"/>
+              </div>
+            </div>
+          </ng-template>
+        </p-carousel>
+      </div>
+
+      <h1 class="display-5 text-custom-color mt-5 text-center">Favorite Books</h1>
+      <div class="">
+        <p-carousel [value]="books" [numVisible]="6" [numScroll]="1" [responsiveOptions]="responsiveOptions" [showIndicators]="false" >
+          <ng-template let-book pTemplate="item">
+            <div class="border-1 surface-border border-round m-2 text-center py-3 px-3">
+              <div>
+                <h4 class="text-custom-color mb-1">{{ book.title }}</h4>
+              </div>
+              <div class="mb-3">
+                <img src="{{book.cover_url}}" [title]="book.title" class="w-6 shadow-2 item" routerLink="/book/{{book.id}}" (click)="scrollTop()"/>
+              </div>
+            </div>
+          </ng-template>
+        </p-carousel>
+      </div>
+
+      <h1 class="display-5 text-custom-color mt-5 text-center">Favorite Albums</h1>
+      <div class="">
+        <p-carousel [value]="albums" [numVisible]="6" [numScroll]="1" [responsiveOptions]="responsiveOptions" [showIndicators]="false" >
+          <ng-template let-album pTemplate="item">
+            <div class="border-1 surface-border border-round m-2 text-center py-3 px-3">
+              <div>
+                <h4 class="text-custom-color mb-1">{{ album.name }}</h4>
+              </div>
+              <div class="mb-3">
+                <img src="{{album.image}}" [title]="album.name" class="w-6 shadow-2 item"routerLink="/album/{{album.mbid}}" (click)="scrollTop()"/>
+              </div>
+            </div>
+          </ng-template>
+        </p-carousel>
+      </div>
+
+      <h1 class="display-5 text-custom-color mt-5 text-center">Favorite Games</h1>
+      <div class="">
+        <p-carousel [value]="games" [numVisible]="6" [numScroll]="1" [responsiveOptions]="responsiveOptions" [showIndicators]="false" >
+          <ng-template let-game pTemplate="item">
+            <div class="border-1 surface-border border-round m-2 text-center py-3 px-3">
+              <div>
+                <h4 class="text-custom-color mb-1">{{ game.name }}</h4>
+              </div>
+              <div class="mb-3">
+                <img src="{{game.original_url}}" [title]="game.name" class="w-6 shadow-2 item" routerLink="/game/{{game.id}}" (click)="scrollTop()"/>
+              </div>
+            </div>
+          </ng-template>
+        </p-carousel>
+      </div>
+    </div>
+  </div>
+
+</ng-container>

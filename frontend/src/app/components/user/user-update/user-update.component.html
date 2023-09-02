@@ -1,0 +1,86 @@
+<ng-container *ngIf="!isLoaded">
+  <app-spinner></app-spinner>
+</ng-container>
+<ng-container *ngIf="isLoaded">
+  <div class="page-wrapper mt-5 pb-5">
+      <div class="flex-row">
+        <div class="card mx-2 flex-column flex-grow-1 text-light">
+          <div class="card-body">
+            <h1 class="display-5">Account Details</h1>
+            <form (ngSubmit)="onSubmit($event)" [formGroup]="frm">
+              <div class="form-group mb-3">
+                <label for="profileImage">Profile Image (JPG)</label>
+                <input
+                  type="file"
+                  class="form-control"
+                  id="profileImage"
+                  name="profileImage"
+                  accept="image/jpeg"
+                  (change)="onFileSelected($event)"
+                />
+                <div>
+                  <img *ngIf="this.selectedImageUrl != null" class="portraitupdate mb-2" [src]="this.selectedImageUrl" alt="portrait"/>
+                </div>
+              </div>
+              <div class="form-group mb-3">
+                <label for="description">Description</label>
+                <textarea class="form-control" id="description" name="description" rows="3"
+                          formControlName="description" placeholder="{{ description.description }}"></textarea>
+              </div>
+              <div class="form-group mb-3">
+                <label for="instagramuser">Instagram User</label>
+                <input
+                  type="text"
+                  class="form-control"
+                  id="instagramuser"
+                  formControlName="instagramuser"
+                  name="instagramuser"
+                  placeholder="{{ socialMedia.instagram }}"
+                />
+              </div>
+              <div class="form-group mb-3">
+                <label for="pinterestuser">Pinterest User</label>
+                <input
+                  type="text"
+                  class="form-control"
+                  id="pinterestuser"
+                  formControlName="pinterestuser"
+                  name="pinterestuser"
+                  placeholder="{{ socialMedia.pinterest }}"
+                />
+              </div>
+              <div class="form-group mb-3">
+                <label for="linkedinuser">LinkedIn User</label>
+                <input
+                  type="text"
+                  class="form-control"
+                  id="linkedinuser"
+                  formControlName="linkedinuser"
+                  name="linkedinuser"
+                  placeholder="{{ socialMedia.linkedin }}"
+                />
+              </div>
+              <div class="form-group mb-3">
+                <label for="twitteruser">Twitter User</label>
+                <input
+                  type="text"
+                  class="form-control"
+                  id="twitteruser"
+                  name="twitteruser"
+                  formControlName="twitteruser"
+                  placeholder="{{ socialMedia.twitter }}"
+                />
+              </div>
+              <div class="flex-row justify-content-around">
+                  <div class="">
+                    <button type="submit" id="submit" name="submit" class="btn btn-primary">Update</button>
+                    <a [routerLink]="'/profile/' + userid" class="btn btn-secondary m-2">Cancel</a>
+                    <button type="button" (click)="onDelete()" class="btn btn-danger">Delete Account</button>
+                  </div>
+                </div>
+            </form>
+          </div>
+        </div>
+      </div>
+  </div>
+</ng-container>

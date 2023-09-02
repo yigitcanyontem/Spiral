@@ -86,8 +86,13 @@ public class UsersController {
     }
 
     @PatchMapping("/update")
-    @CacheEvict(value = "user", key = "'id-' + #assignModel.id")
-    public ResponseEntity<String> updateCustomer(@RequestBody AssignModel assignModel,@RequestHeader (name="Authorization") String token) {
+    @Caching(evict = {
+            @CacheEvict(value = "user", key = "'id-' + #assignModel.id"),
+            @CacheEvict(value = "images", key = "'id-' + #assignModel.id"),
+            @CacheEvict(value = "description", key = "'id-' + #assignModel.id"),
+            @CacheEvict(value = "socialmedia", key = "'id-' + #assignModel.id")
+    })
+    public ResponseEntity<List<String>> updateCustomer(@RequestBody AssignModel assignModel,@RequestHeader (name="Authorization") String token) {
         if (!userValid(assignModel.getId(),token)){
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
         }
@@ -119,11 +124,7 @@ public class UsersController {
     public ResponseEntity<List<Movie>> getFavMovies(@PathVariable Integer id) {
         try {
             List<FavMovie> movieids = favMovieService.findByUserId(getCustomer(id).getBody());
-            List<Movie> movies = new ArrayList<>();
-            for (FavMovie x : movieids) {
-                movies.add(movieService.getSingleMovieDTOById(x.getMovieid()));
-            }
-            return ResponseEntity.ok(movies);
+            return ResponseEntity.ok(movieService.getMovieTOByUser(movieids));
         } catch (Exception e) {
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
         }
@@ -135,11 +136,7 @@ public class UsersController {
 
         try {
             List<FavShows> showids = favShowsService.findByUserId(getCustomer(id).getBody());
-            List<Show> shows = new ArrayList<>();
-            for (FavShows x : showids) {
-                shows.add(showService.getSingleShowDTOById(x.getShowid()));
-            }
-            return ResponseEntity.ok(shows);
+            return ResponseEntity.ok(showService.getShowDTOByUser(showids));
         } catch (Exception e) {
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
         }
@@ -150,11 +147,7 @@ public class UsersController {
     public ResponseEntity<List<Album>> getFavAlbums(@PathVariable Integer id) {
         try {
             List<FavAlbums> albumids = favAlbumsService.findByUserId(getCustomer(id).getBody());
-            List<Album> albums = new ArrayList<>();
-            for (FavAlbums x : albumids) {
-                albums.add(albumService.getSingleAlbumById(x.getAlbumid()));
-            }
-            return ResponseEntity.ok(albums);
+            return ResponseEntity.ok(albumService.getAlbumDTOsByUser(albumids));
         } catch (Exception e) {
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
         }
@@ -165,11 +158,7 @@ public class UsersController {
     public ResponseEntity<List<Book>> getFavBooks(@PathVariable Integer id) {
         try {
             List<FavBooks> bookids = favBooksService.findByUserId(getCustomer(id).getBody());
-            List<Book> books = new ArrayList<>();
-            for (FavBooks x : bookids) {
-                books.add(bookService.getSingleBookById(x.getBookid()));
-            }
-            return ResponseEntity.ok(books);
+            return ResponseEntity.ok(bookService.getGameDTOsByUser(bookids));
         } catch (Exception e) {
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
         }
@@ -182,7 +171,7 @@ public class UsersController {
             List<FavGame> gameids = favGameService.findByUserId(getCustomer(id).getBody());
             List<Game> games = new ArrayList<>();
             for (FavGame x : gameids) {
-                games.add(gameService.getSingleGameById(x.getGameid()));
+                games.add(gameService.getSingleGameDTOById(x.getGameid()));
             }
             return ResponseEntity.ok(games);
         } catch (Exception e) {
@@ -362,7 +351,7 @@ public class UsersController {
 
     @PostMapping("/upload/{id}")
     @CacheEvict(value = "images", key = "'id-' + #id")
-    public ResponseEntity<String> uploadImage(@RequestParam("file") MultipartFile file, @PathVariable Integer id,@RequestHeader (name="Authorization") String token) {
+    public ResponseEntity<List<String>> uploadImage(@RequestParam("file") MultipartFile file, @PathVariable Integer id,@RequestHeader (name="Authorization") String token) {
         if (!userValid(id,token)){
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
         }
@@ -374,7 +363,7 @@ public class UsersController {
     }
 
     @GetMapping("/images/{id}")
-    @CacheEvict(value = "images", key = "'id-' + #id")
+    @Cacheable(value = "images", key = "'id-' + #id")
     public ResponseEntity<Resource> getImage(@PathVariable Integer id) {
         try {
             HttpHeaders headers = new HttpHeaders();
@@ -388,10 +377,14 @@ public class UsersController {
     public boolean userValid(Integer usersid, String token){
         try {
             token = token.substring(7);
-            if (tokenRepository.findTokenByToken(token).user.getRole().equals(Role.ADMIN)){
+            Token token_ref = tokenRepository.findTokenByToken(token);
+            if (token_ref.expired || token_ref.revoked){
+                return false;
+            }
+            if (token_ref.user.getRole().equals(Role.ADMIN)){
                 return true;
             }
-            return tokenRepository.findTokenByToken(token).user.getId().equals(usersid);
+            return token_ref.user.getId().equals(usersid);
         }catch (Exception e){
             return false;
         }

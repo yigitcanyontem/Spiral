@@ -2,8 +2,8 @@
   <header>
     <nav class="navbar navbar-expand-lg fixed-top ">
       <ul class="navbar-nav  my-2 flex-container" >
-        <li class="nav-item justify-content-center align-items-center text-center flex-row">
-          <a routerLink="" class=" ms-1 footer-logo flex-column "><img src="../../../assets/logo.png" alt=" Logo" height="50px"></a>
+        <li class="nav-item justify-content-center align-items-center text-center flex-row pointer" routerLink="">
+          <a  class=" ms-1 footer-logo flex-column "><img src="../../../assets/logo.png" alt=" Logo" height="50px"></a>
           <h2 class="ms-2 title flex-column">Spiral</h2>
         </li>
         <li>
@@ -40,7 +40,6 @@
           </div>
           <div class="user-profile-image-container" *ngIf="isLoaded">
             <p class="name">{{user.username}}</p>
-            <p class="name">{{user.firstName +" " + user.lastName}}</p>
           </div>
           <li role="button" *ngIf="isLoaded"
               routerLink="/profile/{{userid}}"
@@ -124,12 +123,12 @@
     </div>
     <div class="sidebar_footer">
       <div *ngIf="isLoaded">
-        <p class=" disabled  text-center ">{{user.email}}</p>
-        <div class="logout  w-50 pt-1 pb-1 ">
-          <a class="logout_button dropdown-item  text-center icon" (click)="onLogout()">
-            Logout <i class="fi fi fi-ss-exit  ms-1 "></i>
-          </a>
-        </div>
+        <span class="text-start">
+          <button class=" text-light log-button" routerLink="/login" data-bs-toggle="offcanvas"
+                  data-bs-target="#offcanvasExample" (click)="onLogout()">
+            <span>Logout <i class="fi fi fi-ss-exit  ms-1 "></i></span>
+          </button>
+        </span>
       </div>
       <div *ngIf="!isLoaded">
         <div class="text-start">
