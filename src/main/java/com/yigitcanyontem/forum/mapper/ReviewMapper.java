@@ -23,6 +23,7 @@ public class ReviewMapper implements Function<ReviewCreateDTO, Review> {
                 reviewCreateDTO.getEntertainmentType(),
                 reviewCreateDTO.getEntertainmentid(),
                 reviewCreateDTO.getDescription(),
+                reviewCreateDTO.getTitle(),
                 reviewCreateDTO.getRating(),
                 0,
                 0,

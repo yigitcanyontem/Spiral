@@ -118,7 +118,11 @@ public class BookService {
         book.setCover_url("https://books.google.com/books/publisher/content/images/frontcover/"+book.getId()+"?fife=w400-h600");
         book.setLanguage(list.findValue("language").asText());
         book.setPublishedDate(list.findValue("publishedDate").asText());
-        book.setCategories(Arrays.stream(list.findValue("categories").get(0).asText().split(" / ")).toList());
+        try {
+            book.setCategories(Arrays.stream(list.findValue("categories").get(0).asText().split(" / ")).toList());
+        }catch (Exception e){
+            book.setCategories(null);
+        }
         book.setWebReaderLink(list.findValue("webReaderLink").asText());
         book.setFavorite_count(favBooksRepository.countFavBooksByBookid(bookid));
         return book;

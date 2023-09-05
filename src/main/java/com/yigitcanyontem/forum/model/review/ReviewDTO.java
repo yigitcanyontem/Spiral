@@ -20,12 +20,30 @@ public class ReviewDTO {
     private UserDTO usersid;
     private EntertainmentType entertainmentType;
     private String entertainmentid;
+    private String entertainmentTitle;
     private String description;
+    private String title;
     private Integer rating;
     private Integer upvote;
     private Integer downvote;
     private Date date;
-    private Entertainment entertainment;
+    private String image;
+
+    public String getEntertainmentTitle() {
+        return entertainmentTitle;
+    }
+
+    public void setEntertainmentTitle(String entertainmentTitle) {
+        this.entertainmentTitle = entertainmentTitle;
+    }
+
+    public String getTitle() {
+        return title;
+    }
+
+    public void setTitle(String title) {
+        this.title = title;
+    }
 
     public Long getId() {
         return id;
@@ -99,11 +117,11 @@ public class ReviewDTO {
         this.date = date;
     }
 
-    public Entertainment getEntertainment() {
-        return entertainment;
+    public String getImage() {
+        return image;
     }
 
-    public void setEntertainment(Entertainment entertainment) {
-        this.entertainment = entertainment;
+    public void setImage(String image) {
+        this.image = image;
     }
 }

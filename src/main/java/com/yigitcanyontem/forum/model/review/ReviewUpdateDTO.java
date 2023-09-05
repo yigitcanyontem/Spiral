@@ -13,6 +13,7 @@ public class ReviewUpdateDTO {
     private Long id;
     private Integer usersid;
     private String description;
+    private String title;
     @Min(1)
     @Max(5)
     private Integer rating;
@@ -25,6 +26,22 @@ public class ReviewUpdateDTO {
     public ReviewUpdateDTO(Long id, String description) {
         this.id = id;
         this.description = description;
+    }
+
+    public Integer getUsersid() {
+        return usersid;
+    }
+
+    public void setUsersid(Integer usersid) {
+        this.usersid = usersid;
+    }
+
+    public String getTitle() {
+        return title;
+    }
+
+    public void setTitle(String title) {
+        this.title = title;
     }
 
     public Long getId() {

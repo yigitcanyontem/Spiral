@@ -36,15 +36,6 @@ public class ReviewService {
                 reviewPage.getTotalPages()
         );
     }
-
-    public ReviewDTO getReviewsDTOById(Long id){
-        return reviewDTOMapper.apply(reviewRepository.findReviewById(id));
-    }
-
-    public Review getReviewsById(Long id){
-        return reviewRepository.findReviewById(id);
-    }
-
     public PaginatedReview getReviewsByEntertainment(EntertainmentType entertainmentType, String entertainmentId, int pageNumber, int pageSize, String sort, String direction, @Min(1) @Max(5) Integer rating){
         Pageable pageable = reviewSort(pageNumber,pageSize,sort,direction);
         Page<Review> reviewPage;
@@ -59,6 +50,16 @@ public class ReviewService {
         );
     }
 
+    public ReviewDTO getReviewsDTOById(Long id){
+        return reviewDTOMapper.apply(reviewRepository.findReviewById(id));
+    }
+
+    public Review getReviewsById(Long id){
+        return reviewRepository.findReviewById(id);
+    }
+
+
+
     public Double getAverageRatingByEntertainment(EntertainmentType entertainmentType, String entertainmentId){
         return reviewRepository.findReviewsByEntertainmentTypeAndEntertainmentid(entertainmentType,entertainmentId)
                 .stream()
@@ -66,7 +67,7 @@ public class ReviewService {
     }
 
     public Pageable reviewSort(int pageNumber, int pageSize,String sort, String direction){
-        if (sort != null && direction != null && (sort.equals("rating") || sort.equals("upvote") || sort.equals("downvote") || sort.equals("date"))){
+        if (sort != null && direction != null && (sort.equals("rating") || sort.equals("upvote") || sort.equals("downvote") || sort.equals("date") || sort.equals("id"))){
             if (direction.equals("ASC")){
                 return PageRequest.of(pageNumber, pageSize, Sort.by(sort).ascending());
             }else if (direction.equals("DSC")){
@@ -84,29 +85,14 @@ public class ReviewService {
         Integer rating = reviewUpdateDTO.getRating();
         if (description != null){
             review.setDescription(description);
-            System.out.println(review);
         }
 
         if (rating != null){
             review.setRating(rating);
-            System.out.println(review);
         }
         return reviewRepository.save(review);
     }
 
-    public Integer incrementUpvote(Long id){
-        Review review = getReviewsById(id);
-        review.setUpvote(review.getUpvote()+1);
-        reviewRepository.save(review);
-        return review.getUpvote();
-    }
-
-    public Integer incrementDownvote(Long id){
-        Review review = getReviewsById(id);
-        review.setDownvote(review.getDownvote()+1);
-        reviewRepository.save(review);
-        return review.getDownvote();
-    }
 
     public Review saveReview(ReviewCreateDTO reviewCreateDTO) {
         Review review = reviewMapper.apply(reviewCreateDTO);

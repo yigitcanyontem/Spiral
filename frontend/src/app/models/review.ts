@@ -7,11 +7,13 @@ export interface Review {
   usersid: Users;
   entertainmentType: EntertainmentType;
   entertainmentid: string;
+  entertainmentTitle: string;
   description: string | null;
+  title: string | null;
   rating: number;
   upvote: number;
   downvote: number;
   date: Date;
-  entertainment: Entertainment;
+  image: string;
 }
 

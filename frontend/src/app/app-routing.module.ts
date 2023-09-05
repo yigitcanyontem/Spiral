@@ -9,9 +9,11 @@ import {GameComponent} from "./components/entertainment/game/game.component";
 import {AlbumComponent} from "./components/entertainment/album/album.component";
 import {BookComponent} from "./components/entertainment/book/book.component";
 import {UserUpdateComponent} from "./components/user/user-update/user-update.component";
+import {UserReviewsComponent} from "./components/user/user-reviews/user-reviews.component";
 
 const routes: Routes = [
   {path: 'profile/:userid', component: UserProfileComponent},
+  {path: 'reviews/user/:userid', component: UserReviewsComponent},
   {path: 'update', component: UserUpdateComponent},
   {path: 'login', component: LoginComponent},
   {path: 'signup', component: RegisterComponent},

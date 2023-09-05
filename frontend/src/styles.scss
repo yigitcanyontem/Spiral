@@ -5,12 +5,14 @@
 @import "primeicons/primeicons.css";
 @font-face {
   font-family: Raleway;
-  src: url('https://fonts.googleapis.com/css2?family=Raleway:wght@200&display=swap') format("opentype");
+  src: url("https://fonts.googleapis.com/css2?family=Raleway:wght@200&display=swap")
+    format("opentype");
 }
 @font-face {
   font-family: anton;
   src: url(assets/Anton-Regular.ttf) format("opentype");
 }
+
 $bg-color-dark: #122454;
 $bg-color-light: #0288d1;
 
@@ -20,7 +22,7 @@ body {
 }
 
 * {
-  font-family: 'Raleway', sans-serif;
+  font-family: "Raleway", sans-serif;
 }
 
 .crew-profile-image {
@@ -41,13 +43,13 @@ html {
   padding: 0;
 }
 
-.page-wrapper{
+.page-wrapper {
   margin-right: 15%;
   margin-left: 15%;
 }
 
 @media (max-width: 991px) {
-  .page-wrapper{
+  .page-wrapper {
     margin-right: 2%;
     margin-left: 2%;
   }
@@ -57,41 +59,41 @@ $tui-wrapper-bg-green: #33c573;
 $tui-wrapper-color-green: #fff;
 $tui-wrapper-bg-red: #e3554d;
 $tui-wrapper-color-red: #fff;
-[tuiWrapper][data-appearance='green'] {
+[tuiWrapper][data-appearance="green"] {
   background: $tui-wrapper-bg-green;
   color: $tui-wrapper-color-green;
-  &:hover{
+  &:hover {
     background: #006935;
   }
 }
 
-[tuiWrapper][data-appearance='red'] {
+[tuiWrapper][data-appearance="red"] {
   background: $tui-wrapper-bg-red;
   color: $tui-wrapper-color-red;
-  &:hover{
+  &:hover {
     background: #ab2424;
   }
 }
 
-.form-wrapper{
+.form-wrapper {
   margin-right: 30%;
   margin-left: 30%;
 }
 @media (max-width: 991px) {
-  .form-wrapper{
+  .form-wrapper {
     margin-right: 2%;
     margin-left: 2%;
   }
 }
-.flex-column{
+.flex-column {
   display: flex;
   flex-direction: column;
 }
-.flex-row{
+.flex-row {
   display: flex;
   flex-direction: row;
 }
-.spinner{
+.spinner {
   position: absolute;
   height: 100px;
   width: 100px;
@@ -103,11 +105,13 @@ $tui-wrapper-color-red: #fff;
   color: #ffc500;
 }
 
-.pointer{
+.pointer {
   cursor: pointer;
 }
-.text-custom-color{
+.text-custom-color {
   color: #faf7f7;
 }
 
-
+.p-rating .p-rating-icon.p-rating-icon-active {
+  color: #373a3d;
+}

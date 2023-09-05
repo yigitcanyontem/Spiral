@@ -1,0 +1,56 @@
+<ng-container *ngIf="!isLoaded">
+  <app-spinner></app-spinner>
+</ng-container>
+<ng-container *ngIf="isLoaded">
+  <h4 class="text-light text-center mt-2">User Reviews</h4>
+  <div *ngFor="let review of this.reviews?.reviews">
+    <div class="card mt-2 p-3">
+      <div class="flex-column justify-content-center">
+        <div class="flex-row align-items-center justify-content-between">
+          <div class="flex-column">
+            <p-rating
+              [(ngModel)]="review.rating"
+              class="rating"
+              [readonly]="true"
+              [cancel]="false"
+            ></p-rating>
+          </div>
+          <div class="flex-column">
+            <div class="flex-row">
+              <button class="btn border-0" (click)="upvote(review.id)">
+                <h5 class="fw-bold">
+                  <i class="fi fi-rr-social-network me-2"></i
+                  >{{ review.upvote }}
+                </h5>
+              </button>
+              <button class="btn border-0" (click)="downvote(review.id)">
+                <h5 class="fw-bold">
+                  <i class="fi fi-rr-hand ms-3 me-2"></i>{{ review.downvote }}
+                </h5>
+              </button>
+            </div>
+          </div>
+        </div>
+        <div>
+          <div class="flex-row justify-content-between">
+            <h5 class="fw-bold ms-2">{{ review.title }}</h5>
+            <h5 class="fw-bold">{{ review.date }}</h5>
+          </div>
+        </div>
+        <div class="flex-row">
+          <div class="flex-column">
+            <img
+              [src]="review.image"
+              [title]="review.entertainmentTitle"
+              class="w-6 shadow-2 item"
+              alt=""
+            />
+          </div>
+          <div class="flex-column flex-grow-1 w-75">
+            <h6 class="p-2">{{ review.description }}</h6>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</ng-container>

@@ -1,92 +1,153 @@
 <ng-container *ngIf="!isLoaded">
-    <app-spinner></app-spinner>
+  <app-spinner></app-spinner>
 </ng-container>
-<ng-container *ngIf="isLoaded" >
-    <div class="page-wrapper">
-        <div>
-            <div class="card ">
-                <div class="flex-row gap-2">
-                    <div class="flex-column">
-                        <img [src]="this.movie.poster_path" class=""  alt=" profile image">
-                    </div>
-                    <div class="flex-column justify-content-center">
-                        <h5 class="fw-bold">{{this.movie.original_title}}</h5>
-                        <h6 class="text-secondary">{{this.movie.overview}}</h6>
-                        <h6 class="text-secondary">{{this.movie.release_date}}</h6>
-                        <a href="{{this.movie.imdb_url}}">imdb</a>
-                        <h6 class="text-secondary">{{this.movie.vote_count}}</h6>
-                        <h6 class="text-secondary">{{this.movie.favorite_count}}</h6>
-                        <h6 class="text-secondary">{{this.movie.tagline}}</h6>
-                    </div>
-                  <div *ngFor="let lang of this.movie.language">
-                    <div class="card ">
-                      {{lang}}
-                    </div>
-                  </div>
-                  <div *ngFor="let genre of this.movie.genres">
-                    <div class="card ">
-                      {{genre}}
-                    </div>
-                  </div>
-                </div>
-            </div>
-        </div>
-        <div>
-            <div *ngFor="let actor of this.movie.actors">
-                <div class="card ">
-                    <div class="flex-row gap-2">
-                        <div class="flex-column">
-                            <img [src]="actor.profile_path" class="crew-profile-image"  alt=" profile image">
-                        </div>
-                        <div class="flex-column justify-content-center">
-                            <h5 class="fw-bold">{{actor.original_name}}</h5>
-                            <h6 class="text-secondary">{{actor.character}}</h6>
-                        </div>
-                    </div>
-                </div>
-            </div>
-          <div *ngFor="let director of this.movie.directors">
-            <div class="card ">
-              <div class="flex-row gap-2">
-                <div class="flex-column">
-                  <img [src]="director.profile_path" class="crew-profile-image"  alt=" profile image">
-                </div>
-                <div class="flex-column justify-content-center">
-                  <h5 class="fw-bold">{{director.original_name}}</h5>
-                  <h6 class="text-secondary">{{director.character}}</h6>
-                </div>
-              </div>
+<ng-container *ngIf="isLoaded">
+  <div class="page-wrapper">
+    <div>
+      <div class="card">
+        <div class="flex-row gap-2">
+          <div class="flex-column">
+            <img [src]="this.movie.poster_path" class="" alt=" profile image" />
+          </div>
+          <div class="flex-column justify-content-center">
+            <h5 class="fw-bold">{{ this.movie.original_title }}</h5>
+            <h6 class="text-secondary">{{ this.movie.overview }}</h6>
+            <h6 class="text-secondary">{{ this.movie.release_date }}</h6>
+            <a href="{{ this.movie.imdb_url }}">imdb</a>
+            <h6 class="text-secondary">{{ this.movie.vote_count }}</h6>
+            <h6 class="text-secondary">{{ this.movie.favorite_count }}</h6>
+            <h6 class="text-secondary">{{ this.movie.tagline }}</h6>
+          </div>
+          <div *ngFor="let lang of this.movie.language">
+            <div class="card">
+              {{ lang }}
             </div>
           </div>
-          <div *ngFor="let writer of this.movie.writers">
-            <div class="card ">
-              <div class="flex-row gap-2">
-                <div class="flex-column">
-                  <img [src]="writer.profile_path" class="crew-profile-image"  alt=" profile image">
-                </div>
-                <div class="flex-column justify-content-center">
-                  <h5 class="fw-bold">{{writer.original_name}}</h5>
-                  <h6 class="text-secondary">{{writer.character}}</h6>
-                </div>
-              </div>
+          <p-rating
+            [(ngModel)]="average"
+            class="rating"
+            [readonly]="true"
+            [cancel]="false"
+          ></p-rating>
+          <div *ngFor="let genre of this.movie.genres">
+            <div class="card">
+              {{ genre }}
             </div>
           </div>
         </div>
-        <div>
-            <div *ngFor="let review of this.reviews.reviews">
-                <div class="card ">
-                    <div class="flex-row gap-2">
-                        <div class="flex-column justify-content-center">
-                          <p-rating [(ngModel)]="review.rating" class="rating" [readonly]="true" [cancel]="false"></p-rating>
-                            <h5 class="fw-bold">{{review.date}}</h5>
-                            <h5 class="fw-bold">{{review.description}}</h5>
-                            <h5 class="fw-bold">{{review.downvote}}</h5>
-                            <h5 class="fw-bold">{{review.upvote}}</h5>
-                            <h5 class="fw-bold">{{review.usersid}}</h5>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
+      </div>
     </div>
+    <div>
+      <h4 class="text-light">actors</h4>
+      <div *ngFor="let actor of this.movie.actors">
+        <div class="card">
+          <div class="flex-row gap-2">
+            <div class="flex-column">
+              <img
+                [src]="actor.profile_path"
+                class="crew-profile-image"
+                alt=" profile image"
+              />
+            </div>
+            <div class="flex-column justify-content-center">
+              <h5 class="fw-bold">{{ actor.original_name }}</h5>
+              <h6 class="text-secondary">{{ actor.character }}</h6>
+            </div>
+          </div>
+        </div>
+      </div>
+      <h4 class="text-light">directors</h4>
+      <div *ngFor="let director of this.movie.directors">
+        <div class="card">
+          <div class="flex-row gap-2">
+            <div class="flex-column">
+              <img
+                [src]="director.profile_path"
+                class="crew-profile-image"
+                alt=" profile image"
+              />
+            </div>
+            <div class="flex-column justify-content-center">
+              <h5 class="fw-bold">{{ director.original_name }}</h5>
+            </div>
+          </div>
+        </div>
+      </div>
+      <h4 class="text-light">writers</h4>
+      <div *ngFor="let writer of this.movie.writers">
+        <div class="card">
+          <div class="flex-row gap-2">
+            <div class="flex-column">
+              <img
+                [src]="writer.profile_path"
+                class="crew-profile-image"
+                alt=" profile image"
+              />
+            </div>
+            <div class="flex-column justify-content-center">
+              <h5 class="fw-bold">{{ writer.original_name }}</h5>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div>
+      <app-reviews [reviews]="reviews"></app-reviews>
+    </div>
+    <div class="pb-5 mt-5">
+      <div class="card" id="registerCard">
+        <div
+          class="card-title text-center justify-content-center align-content-center mt-2"
+        >
+          <h4 class="">Review</h4>
+          <hr class="" />
+        </div>
+        <div class="card-body">
+          <form [formGroup]="frm" (ngSubmit)="submitForm()">
+            <div class="p-grid p-fluid">
+              <div class="flex justify-content-center">
+                <p-rating formControlName="rating" id="rating"></p-rating>
+              </div>
+
+              <div class="flex justify-content-center mt-4">
+                <span class="p-float-label">
+                  <input
+                    pInputText
+                    id="title"
+                    formControlName="title"
+                    class="w-100"
+                  />
+                  <label for="title">Title</label>
+                </span>
+              </div>
+
+              <div class="flex justify-content-center mt-4">
+                <span class="p-float-label">
+                  <textarea
+                    pInputTextarea
+                    id="description"
+                    formControlName="description"
+                  ></textarea>
+                  <label for="description">Review</label>
+                </span>
+              </div>
+            </div>
+
+            <div
+              class="mt-4 justify-content-center text-center align-items-center"
+            >
+              <button
+                type="submit"
+                class="btn btn-outline-dark w-50"
+                [disabled]="!frm.valid"
+                (click)="submitForm()"
+              >
+                Submit
+              </button>
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
 </ng-container>

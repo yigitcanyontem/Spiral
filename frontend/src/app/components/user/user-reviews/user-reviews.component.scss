@@ -1,0 +1,20 @@
+
+.item{
+  min-width: 200px;
+  max-width: 200px;
+  padding:0;
+  border-radius: 15px;
+  overflow-x: auto;
+  object-fit: contain;
+  cursor: pointer;
+  transition: transform 0.2s ease-in-out;
+  &:hover{
+    transform: scale(1.06);
+  };
+}
+
+
+.flex-row{
+  flex-wrap: wrap;
+  justify-content: space-between;
+}

@@ -31,8 +31,9 @@
                 </li>
               </ul>
             </div>
-            <div class="flex-row justify-content-center">
-              <button [routerLink]="['/update']" class="log-button" class="btn btn-secondary">Update</button>
+            <div class="flex-row justify-content-center gap-2">
+              <button [routerLink]="['/update']"  class="btn btn-outline-dark text-light border-light">Update</button>
+              <button [routerLink]="['/reviews/user/'+this.user.id]" class="btn btn-outline-dark text-light border-light">Reviews</button>
             </div>
           </div>
         </div>

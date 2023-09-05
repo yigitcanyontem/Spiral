@@ -10,6 +10,7 @@ import {Game} from "../../../models/game";
 import {SocialMediaDTO} from "../../../models/socialmedia-dto";
 import {Description} from "../../../models/description";
 import {forkJoin} from "rxjs";
+import {EntertainmentService} from "../../../services/entertainment.service";
 
 @Component({
   selector: 'app-user-profile',
@@ -19,18 +20,6 @@ import {forkJoin} from "rxjs";
 export class UserProfileComponent implements OnInit{
   userid =  parseInt(<string>this.activatedRoute.snapshot.paramMap.get('userid'));
   responsiveOptions: any[] | undefined;
-
-  movie_index = 0;
-  show_index = 0;
-  game_index = 0;
-  album_index = 0;
-  book_index = 0;
-
-  movie_count! : number;
-  show_count! : number;
-  game_count! : number;
-  album_count! : number;
-  book_count! : number;
 
   isLoaded = false;
   user!: UserDTO ;
@@ -44,7 +33,7 @@ export class UserProfileComponent implements OnInit{
   images!: string ;
   description!: Description ;
 
-  constructor(private activatedRoute: ActivatedRoute,private userService: UserService, private router:Router) {
+  constructor(private activatedRoute: ActivatedRoute,private userService: UserService, private router:Router, private entertainmentService:EntertainmentService) {
     this.responsiveOptions = [
       {
         breakpoint: '1199px',
@@ -64,34 +53,8 @@ export class UserProfileComponent implements OnInit{
     ];
   }
 
-  @HostListener('window:resize', ['$event'])
-  onResize(event: any) {
-    this.onWindowResize(event.target.innerWidth);
-  }
-
-  onWindowResize(windowWidth: number) {
-    if(windowWidth>991){
-      this.counter()
-    }
-    if(windowWidth<991){
-      this.movie_count = 2;
-      this.show_count = 2;
-      this.game_count = 2;
-      this.album_count = 2;
-      this.book_count = 2;
-    }
-
-  }
 
   ngOnInit(): void {
-    if(window.innerWidth<991){
-      this.movie_count = 2;
-      this.show_count = 2;
-      this.game_count = 2;
-      this.album_count = 2;
-      this.book_count = 2;
-    }
-
     const getUser$ = this.userService.getUser((this.userid));
     const getSocialMedia$ = this.userService.getCustomerSocialMedia((this.userid));
     const getDescription$ = this.userService.getCustomerDescription((this.userid));
@@ -133,10 +96,8 @@ export class UserProfileComponent implements OnInit{
         this.games = results.games;
         this.albums = results.albums;
         this.images = URL.createObjectURL(results.images);
-        if(window.innerWidth>991){
-          this.counter()
-        }
         this.isLoaded = true;
+        this.getSingleResultsForGames()
       },
       error => {
         // Handle errors
@@ -145,37 +106,13 @@ export class UserProfileComponent implements OnInit{
 
   }
 
-  counter(){
-    if (this.movies.length < 6){
-      this.movie_count = this.movies.length;
-    }else {
-      this.movie_count = 6;
-    }
 
-    if (this.shows.length < 6){
-      this.show_count = this.shows.length;
-    }else {
-      this.show_count = 6;
-    }
-
-    if (this.games.length < 6){
-      this.game_count = this.games.length;
-    }else {
-      this.game_count = 6;
-    }
-
-    if (this.albums.length < 6){
-      this.album_count = this.albums.length;
-    }else {
-      this.album_count = 6;
-    }
-
-    if (this.books.length < 6){
-      this.book_count = this.books.length;
-    }else {
-      this.book_count = 6;
-    }
+  getSingleResultsForGames(){
+    this.games.forEach((value) => {
+      this.entertainmentService.onGetGame(value.id).subscribe()
+    });
   }
+
   scrollTop() {
     window.scroll(0, 0);
   }

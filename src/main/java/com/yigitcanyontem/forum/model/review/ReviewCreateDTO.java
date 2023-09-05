@@ -14,9 +14,18 @@ public class ReviewCreateDTO {
     private Integer usersid;
     @Enumerated(EnumType.STRING)
     private EntertainmentType entertainmentType;
+    private String title;
     private String entertainmentid;
     private String description;
     private Integer rating;
+
+    public String getTitle() {
+        return title;
+    }
+
+    public void setTitle(String title) {
+        this.title = title;
+    }
 
     public Integer getUsersid() {
         return usersid;

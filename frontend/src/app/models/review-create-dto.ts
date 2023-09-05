@@ -5,6 +5,7 @@ export interface ReviewCreateDTO {
   entertainmentType: EntertainmentType;
   entertainmentid: string;
   description: string;
+  title: string;
   rating: number;
 }
 

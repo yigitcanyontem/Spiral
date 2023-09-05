@@ -86,6 +86,7 @@ create table public.review (
                                     id integer primary key not null,
                                     usersid integer not null,
                                     entertainmenttype character varying(255) not null,
+                                    title character varying(255) not null,
                                     description TEXT not null,
                                     rating integer not null,
                                     upvote integer not null,
@@ -97,7 +98,18 @@ create table public.review (
                                         match simple on update no action on delete no action
 );
 
+create table public.review_reaction (
+                               id integer primary key not null,
+                               usersid integer not null,
+                               reviewid integer not null,
+                               reactionType TEXT not null,
+                               CHECK (reactionType IN ('UPVOTE', 'DOWNVOTE')),
+                               foreign key (reviewid) references public.review (id)
+                                   match simple on update no action on delete no action,
+                               foreign key (usersid) references public.users (id)
+                                   match simple on update no action on delete no action
 
+);
 
 create table public.token (
                               id integer primary key not null,

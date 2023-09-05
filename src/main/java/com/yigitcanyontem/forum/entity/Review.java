@@ -68,6 +68,11 @@ public class Review {
             nullable = true
     )
     private String description;
+    @Column(
+            name = "title",
+            nullable = true
+    )
+    private String title;
 
     @Column(
             name = "rating",
@@ -95,16 +100,19 @@ public class Review {
     )
     private Date date;
 
-    public Review(Users usersid, EntertainmentType entertainmentType, String entertainmentid, String description, Integer rating, Integer upvote, Integer downvote, Date date) {
+    public Review(Users usersid, EntertainmentType entertainmentType, String entertainmentid, String description,String title, Integer rating, Integer upvote, Integer downvote, Date date) {
         this.usersid = usersid;
         this.entertainmentType = entertainmentType;
         this.entertainmentid = entertainmentid;
         this.description = description;
+        this.title = title;
         this.rating = rating;
         this.upvote = upvote;
         this.downvote = downvote;
         this.date = date;
     }
+
+
 
     public String getEntertainmentId() {
         return entertainmentid;
@@ -112,6 +120,22 @@ public class Review {
 
     public void setEntertainmentId(String entertainmentId) {
         this.entertainmentid = entertainmentId;
+    }
+
+    public String getEntertainmentid() {
+        return entertainmentid;
+    }
+
+    public void setEntertainmentid(String entertainmentid) {
+        this.entertainmentid = entertainmentid;
+    }
+
+    public String getTitle() {
+        return title;
+    }
+
+    public void setTitle(String title) {
+        this.title = title;
     }
 
     public Long getId() {

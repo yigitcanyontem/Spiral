@@ -30,6 +30,8 @@ import {DropdownModule} from "primeng/dropdown";
 import {RatingModule} from "primeng/rating";
 import {DividerModule} from "primeng/divider";
 import { UserUpdateComponent } from './components/user/user-update/user-update.component';
+import {InputTextareaModule} from "primeng/inputtextarea";
+import { ReviewsComponent } from './components/all/reviews/reviews.component';
 
 @NgModule({
   declarations: [
@@ -47,26 +49,28 @@ import { UserUpdateComponent } from './components/user/user-update/user-update.c
     ShowComponent,
     AlbumComponent,
     SpinnerComponent,
-    UserUpdateComponent
+    UserUpdateComponent,
+    ReviewsComponent,
   ],
-  imports: [
-    BrowserModule,
-    HttpClientModule,
-    AppRoutingModule,
-    BrowserAnimationsModule,
-    FormsModule,
-    ReactiveFormsModule,
-    CarouselModule,
-    TagModule,
-    ButtonModule,
-    InputTextModule,
-    PasswordModule,
-    MessageModule,
-    CalendarModule,
-    DropdownModule,
-    RatingModule,
-    DividerModule
-  ],
+    imports: [
+        BrowserModule,
+        HttpClientModule,
+        AppRoutingModule,
+        BrowserAnimationsModule,
+        FormsModule,
+        ReactiveFormsModule,
+        CarouselModule,
+        TagModule,
+        ButtonModule,
+        InputTextModule,
+        PasswordModule,
+        MessageModule,
+        CalendarModule,
+        DropdownModule,
+        RatingModule,
+        DividerModule,
+        InputTextareaModule
+    ],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

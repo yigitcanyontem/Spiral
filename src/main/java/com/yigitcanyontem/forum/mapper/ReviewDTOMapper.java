@@ -2,7 +2,7 @@ package com.yigitcanyontem.forum.mapper;
 
 import com.yigitcanyontem.forum.entity.Review;
 import com.yigitcanyontem.forum.entity.enums.EntertainmentType;
-import com.yigitcanyontem.forum.model.entertainment.Entertainment;
+import com.yigitcanyontem.forum.model.entertainment.*;
 import com.yigitcanyontem.forum.model.review.ReviewDTO;
 import com.yigitcanyontem.forum.service.*;
 import lombok.RequiredArgsConstructor;
@@ -24,21 +24,32 @@ public class ReviewDTOMapper implements Function<Review, ReviewDTO> {
 
     @Override
     public ReviewDTO apply(Review review) {
-        Entertainment entertainment = null;
+        String image = "";
+        String entertainmentTitle = "";
         EntertainmentType entertainmentType = review.getEntertainmentType();
         String entertainmentid = review.getEntertainmentId();
 
         try {
             if (entertainmentType.equals(EntertainmentType.ALBUM)){
-                entertainment = albumService.getSingleAlbumById(entertainmentid);
+                Album album = albumService.getSingleAlbumById(entertainmentid);
+                image = album.getImage();
+                entertainmentTitle = album.getName();
             } else if (entertainmentType.equals(EntertainmentType.GAME)) {
-                entertainment = gameService.getSingleGameById(entertainmentid);
+                Game game = gameService.getSingleGameById(entertainmentid);
+                image = game.getOriginal_url();
+                entertainmentTitle = game.getName();
             }else if (entertainmentType.equals(EntertainmentType.MOVIE)) {
-                entertainment = movieService.getSingleMovieById(Integer.parseInt(entertainmentid));
+                Movie movie = movieService.getSingleMovieById(Integer.parseInt(entertainmentid));
+                image = movie.getPoster_path();
+                entertainmentTitle = movie.getOriginal_title();
             }else if (entertainmentType.equals(EntertainmentType.SHOW)) {
-                entertainment = showService.getSingleShowById(Integer.parseInt(entertainmentid));
+                Show show =  showService.getSingleShowById(Integer.parseInt(entertainmentid));
+                image = show.getPoster_path();
+                entertainmentTitle = show.getOriginal_title();
             }else if (entertainmentType.equals(EntertainmentType.BOOK)) {
-                entertainment = bookService.getSingleBookById(entertainmentid);
+                Book book = bookService.getSingleBookById(entertainmentid);
+                image = book.getCover_url();
+                entertainmentTitle = book.getTitle();
             }
         }catch (IOException e){
             throw new RuntimeException("");
@@ -54,12 +65,14 @@ public class ReviewDTOMapper implements Function<Review, ReviewDTO> {
                 usersService.getUserModel(review.getUsersid().getId()),
                 entertainmentType,
                 entertainmentid,
+                entertainmentTitle,
                 review.getDescription(),
+                review.getTitle(),
                 review.getRating(),
                 review.getUpvote(),
                 review.getDownvote(),
                 review.getDate(),
-                entertainment
+                image
         );
     }
 }
