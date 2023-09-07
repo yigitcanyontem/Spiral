@@ -1,5 +1,6 @@
 package com.yigitcanyontem.forum.entity;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.yigitcanyontem.forum.entity.enums.EntertainmentType;
 import jakarta.persistence.*;
@@ -39,8 +40,7 @@ public class Review {
     )
     @Column(name = "id")
     private Long id;
-
-    @JsonIgnore
+    @JsonBackReference
     @ManyToOne()
     @JoinColumn(
             name = "usersid",
@@ -99,8 +99,18 @@ public class Review {
             nullable = false
     )
     private Date date;
+    @Column(
+            name = "entertainment_title",
+            nullable = false
+    )
+    private String entertainmentTitle;
+    @Column(
+            name = "entertainment_image",
+            nullable = false
+    )
+    private String entertainmentImage;
 
-    public Review(Users usersid, EntertainmentType entertainmentType, String entertainmentid, String description,String title, Integer rating, Integer upvote, Integer downvote, Date date) {
+    public Review(Users usersid, EntertainmentType entertainmentType, String entertainmentid, String description, String title, Integer rating, Integer upvote, Integer downvote, Date date, String entertainmentTitle, String entertainmentImage) {
         this.usersid = usersid;
         this.entertainmentType = entertainmentType;
         this.entertainmentid = entertainmentid;
@@ -110,32 +120,24 @@ public class Review {
         this.upvote = upvote;
         this.downvote = downvote;
         this.date = date;
+        this.entertainmentTitle = entertainmentTitle;
+        this.entertainmentImage = entertainmentImage;
     }
 
-
-
-    public String getEntertainmentId() {
-        return entertainmentid;
+    public String getEntertainmentTitle() {
+        return entertainmentTitle;
     }
 
-    public void setEntertainmentId(String entertainmentId) {
-        this.entertainmentid = entertainmentId;
+    public void setEntertainmentTitle(String entertainmentTitle) {
+        this.entertainmentTitle = entertainmentTitle;
     }
 
-    public String getEntertainmentid() {
-        return entertainmentid;
+    public String getEntertainmentImage() {
+        return entertainmentImage;
     }
 
-    public void setEntertainmentid(String entertainmentid) {
-        this.entertainmentid = entertainmentid;
-    }
-
-    public String getTitle() {
-        return title;
-    }
-
-    public void setTitle(String title) {
-        this.title = title;
+    public void setEntertainmentImage(String entertainmentImage) {
+        this.entertainmentImage = entertainmentImage;
     }
 
     public Long getId() {
@@ -162,12 +164,28 @@ public class Review {
         this.entertainmentType = entertainmentType;
     }
 
+    public String getEntertainmentid() {
+        return entertainmentid;
+    }
+
+    public void setEntertainmentid(String entertainmentid) {
+        this.entertainmentid = entertainmentid;
+    }
+
     public String getDescription() {
         return description;
     }
 
     public void setDescription(String description) {
         this.description = description;
+    }
+
+    public String getTitle() {
+        return title;
+    }
+
+    public void setTitle(String title) {
+        this.title = title;
     }
 
     public Integer getRating() {

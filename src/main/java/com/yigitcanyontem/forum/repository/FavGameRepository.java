@@ -13,9 +13,9 @@ public interface FavGameRepository extends JpaRepository<FavGame, String> {
     @Query("SELECT max(a.id) FROM FavGame a")
     int maxId();
 
-    List<FavGame> findByUsersid(Users usersid);
+    List<FavGame> findByUsersid_Id(Integer usersid_id);
     int countFavGamesByUsersid(Users usersid);
-    boolean existsByUsersid(Users usersid);
+    boolean existsByUsersid_Id(Integer usersid_id);
     int countFavGamesByGameid(String gameid);
     boolean existsFavGameByUsersidAndGameid(Users usersid, String gameid);
     void deleteFavGameByUsersid(Users usersid);

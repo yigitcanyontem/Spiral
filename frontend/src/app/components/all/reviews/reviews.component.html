@@ -2,53 +2,160 @@
   <app-spinner></app-spinner>
 </ng-container>
 <ng-container *ngIf="isLoaded">
-  <h4 class="text-light text-center mt-2">User Reviews</h4>
-  <div *ngFor="let review of this.reviews?.reviews">
-    <div class="card mt-2 p-3">
-      <div class="flex-column justify-content-center">
-        <div class="flex-row align-items-center justify-content-between">
-          <div class="flex-column">
-            <p-rating
-              [(ngModel)]="review.rating"
-              class="rating"
-              [readonly]="true"
-              [cancel]="false"
-            ></p-rating>
+  <p-toast></p-toast>
+  <div *ngIf="edit_frm">
+    <app-update-review
+      [review_edit_id]="review_edit_id"
+      (getReviews)="onGetReviews()"
+    ></app-update-review>
+  </div>
+  <div class="page-wrapper">
+    <h4 class="text-light mt-2">User Reviews</h4>
+    <div *ngFor="let review of this.reviews?.reviews">
+      <div
+        class="card mt-1 p-3"
+        *ngIf="
+          review.description != '' ||
+          review.title != '' ||
+          review.usersid.id == parseInt(usersid)
+        "
+      >
+        <div class="flex-column justify-content-center">
+          <div class="flex-row align-items-center justify-content-between">
+            <div class="flex-column p-1">
+              <p-rating
+                [(ngModel)]="review.rating"
+                class="rating"
+                [readonly]="true"
+                [cancel]="false"
+              ></p-rating>
+            </div>
+            <div class="flex-column">
+              <div class="flex-row text-wrap flex-wrap">
+                <div>
+                  <p-button
+                    styleClass="p-button-link"
+                    (click)="upvote(review.id)"
+                    ><i
+                      class="pi pi-thumbs-up"
+                      style="color: black; font-size: 1.2rem"
+                    ></i
+                    ><span class="black_text">
+                      {{ review.upvote }}</span
+                    ></p-button
+                  >
+                </div>
+                <div>
+                  <p-button
+                    styleClass="p-button-link"
+                    (click)="downvote(review.id)"
+                    ><i
+                      class="pi pi-thumbs-down"
+                      style="color: black; font-size: 1.2rem"
+                    ></i
+                    ><span class="black_text">
+                      {{ review.downvote }}</span
+                    ></p-button
+                  >
+                </div>
+                <div>
+                  <p-button
+                    styleClass="p-button-link"
+                    (click)="editReview(review.id)"
+                    *ngIf="review.usersid.id === parseInt(usersid)"
+                    ><i
+                      class="pi pi-file-edit"
+                      style="color: black; font-size: 1.2rem"
+                    ></i
+                  ></p-button>
+                </div>
+                <div *ngIf="review.usersid.id === parseInt(usersid)">
+                  <p-toast></p-toast>
+                  <p-confirmPopup></p-confirmPopup>
+                  <p-button
+                    styleClass="p-button-link"
+                    (click)="confirmDelete($event, review.id)"
+                    ><i
+                      class="pi pi-trash"
+                      style="color: red; font-size: 1.2rem"
+                    ></i
+                  ></p-button>
+                </div>
+              </div>
+            </div>
           </div>
-          <div class="flex-column">
-            <div class="flex-row">
-              <button class="btn border-0" (click)="upvote(review.id)">
-                <h5 class="fw-bold">
-                  <i class="fi fi-rr-social-network me-2"></i
-                  >{{ review.upvote }}
-                </h5>
-              </button>
-              <button class="btn border-0" (click)="downvote(review.id)">
-                <h5 class="fw-bold">
-                  <i class="fi fi-rr-hand ms-3 me-2"></i>{{ review.downvote }}
-                </h5>
-              </button>
+          <div>
+            <div class="flex-row justify-content-between">
+              <h5 class="fw-bold ms-2">{{ review.title }}</h5>
+            </div>
+          </div>
+          <div class="flex-row">
+            <div class="flex-column flex-grow-1 w-75">
+              <h6 class="p-2">{{ review.description }}</h6>
             </div>
           </div>
         </div>
-        <div>
-          <div class="flex-row justify-content-between">
-            <h5 class="fw-bold ms-2">{{ review.title }}</h5>
-            <h5 class="fw-bold">{{ review.date }}</h5>
-          </div>
+        <div class="card-footer">
+          <span class="flex-row justify-content-between">
+            <p class="">{{ review.date }}</p>
+            <a class="" [routerLink]="'/profile/' + review.usersid.id">{{
+              review.usersid.username
+            }}</a>
+          </span>
         </div>
-        <div class="flex-row">
-          <div class="flex-column">
-            <img
-              [src]="review.image"
-              [title]="review.entertainmentTitle"
-              class="w-6 shadow-2 item"
-              alt=""
-            />
-          </div>
-          <div class="flex-column flex-grow-1 w-75">
-            <h6 class="p-2">{{ review.description }}</h6>
-          </div>
+      </div>
+    </div>
+    <div class="pb-5 mt-5">
+      <div class="card" id="registerCard">
+        <div
+          class="card-title text-center justify-content-center align-content-center mt-2"
+        >
+          <h4 class="">Review</h4>
+          <hr class="" />
+        </div>
+        <div class="card-body">
+          <form [formGroup]="frm" (ngSubmit)="submitForm()">
+            <div class="p-grid p-fluid">
+              <div class="flex justify-content-center">
+                <p-rating formControlName="rating" id="rating"></p-rating>
+              </div>
+
+              <div class="flex justify-content-center mt-4">
+                <span class="p-float-label">
+                  <input
+                    pInputText
+                    id="title"
+                    formControlName="title"
+                    class="w-100"
+                  />
+                  <label for="title">Title</label>
+                </span>
+              </div>
+
+              <div class="flex justify-content-center mt-4">
+                <span class="p-float-label">
+                  <textarea
+                    pInputTextarea
+                    id="description"
+                    formControlName="description"
+                  ></textarea>
+                  <label for="description">Review</label>
+                </span>
+              </div>
+            </div>
+
+            <div
+              class="mt-4 justify-content-center text-center align-items-center"
+            >
+              <button
+                type="submit"
+                class="btn btn-outline-dark w-50"
+                [disabled]="!frm.valid"
+              >
+                Submit
+              </button>
+            </div>
+          </form>
         </div>
       </div>
     </div>

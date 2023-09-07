@@ -47,11 +47,8 @@ public class ReviewController {
             @RequestParam(value = "direction", defaultValue = "ASC") String direction,
             @RequestParam(required = false) @Min(1) @Max(5) Integer rating
     ) {
-        try {
-            return ResponseEntity.ok(reviewService.getReviewsByUser(usersid, pageNumber, pageSize, sort, direction, rating));
-        } catch (Exception e) {
-            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
-        }
+        return ResponseEntity.ok(reviewService.getReviewsByUser(usersid, pageNumber, pageSize, sort, direction, rating));
+
     }
 
     @GetMapping("/entertainment")
@@ -82,15 +79,14 @@ public class ReviewController {
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
         }
     }
-
-    @PatchMapping("/update/{usersid}")
+    @PatchMapping("/update")
     @Caching(evict = {
             @CacheEvict(value = "review", key = "'id-' + #reviewUpdateDTO.id"),
             @CacheEvict(value = "review_user", allEntries = true)
     }
     )
-    public ResponseEntity<Review> updateReview(@PathVariable Integer usersid, @RequestBody ReviewUpdateDTO reviewUpdateDTO, @RequestHeader(name = "Authorization") String token) {
-        if (!userValid(usersid, token)) {
+    public ResponseEntity<Review> updateReview(@RequestBody ReviewUpdateDTO reviewUpdateDTO, @RequestHeader(name = "Authorization") String token) {
+        if (!userValid(reviewUpdateDTO.getUsersid(), token)) {
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
         }
         try {

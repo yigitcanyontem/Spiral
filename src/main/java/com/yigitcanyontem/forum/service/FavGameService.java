@@ -2,6 +2,9 @@ package com.yigitcanyontem.forum.service;
 
 import com.yigitcanyontem.forum.exceptions.SearchNotFoundException;
 import com.yigitcanyontem.forum.entity.FavGame;
+import com.yigitcanyontem.forum.mapper.FavGameDTOMapper;
+import com.yigitcanyontem.forum.model.entertainment.FavGameCreateDTO;
+import com.yigitcanyontem.forum.model.entertainment.FavGameDTO;
 import com.yigitcanyontem.forum.repository.FavGameRepository;
 import com.yigitcanyontem.forum.entity.Users;
 import com.yigitcanyontem.forum.repository.UsersRepository;
@@ -16,18 +19,18 @@ import java.util.List;
 public class FavGameService {
     private final FavGameRepository favGameRepository;
     private final UsersRepository usersRepository;
+    private final FavGameDTOMapper favGameDTOMapper;
 
-
-    public List<FavGame> findByUserId(Users usersid){
-        if (!favGameRepository.existsByUsersid(usersid)){
+    public List<FavGameDTO> findByUserId(Integer usersid){
+        if (!favGameRepository.existsByUsersid_Id(usersid)){
             throw new SearchNotFoundException("User Not Found");
         }
-        return favGameRepository.findByUsersid(usersid);
+        return favGameRepository.findByUsersid_Id(usersid).stream().map(favGameDTOMapper).toList();
     }
 
     @Transactional
     public void deleteUserFavGame(Users usersid){
-        if (!favGameRepository.existsByUsersid(usersid)){
+        if (!favGameRepository.existsByUsersid_Id(usersid.getId())){
             throw new SearchNotFoundException("User Not Found");
         }
         favGameRepository.deleteFavGameByUsersid(usersid);
@@ -35,7 +38,7 @@ public class FavGameService {
 
     @Transactional
     public void deleteUserFavGameById(Users usersid, String gameid){
-        if (!favGameRepository.existsByUsersid(usersid)){
+        if (!favGameRepository.existsByUsersid_Id(usersid.getId())){
             throw new SearchNotFoundException("User Not Found");
         }
         if (!favGameRepository.existsFavGameByUsersidAndGameid(usersid,gameid)){
@@ -44,13 +47,19 @@ public class FavGameService {
         favGameRepository.deleteFavGameByUsersidAndGameid(usersid,gameid);
     }
 
-    public void saveFavGame(Users usersid, String gameid){
-        if (!usersRepository.existsById(usersid.getId())){
-            throw new SearchNotFoundException("User Not Found");
-        }
-        if (favGameRepository.existsFavGameByUsersidAndGameid(usersid,gameid)){
+    public void saveFavGame(FavGameCreateDTO favGameCreateDTO){
+        Users user = usersRepository.findById(favGameCreateDTO.getUsersid()).orElseThrow(() -> new SearchNotFoundException("User Not Found"));
+        String gameid = favGameCreateDTO.getGameid();
+
+        if (favGameRepository.existsFavGameByUsersidAndGameid(user,gameid)){
             throw new SearchNotFoundException("Already Favorited");
         }
-        favGameRepository.save(new FavGame(usersid,gameid));
+
+        favGameRepository.save(new FavGame(
+                user,
+                gameid,
+                favGameCreateDTO.getGameName(),
+                favGameCreateDTO.getGameImage()
+        ));
     }
 }

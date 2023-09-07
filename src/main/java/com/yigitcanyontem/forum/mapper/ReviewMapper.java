@@ -27,7 +27,9 @@ public class ReviewMapper implements Function<ReviewCreateDTO, Review> {
                 reviewCreateDTO.getRating(),
                 0,
                 0,
-                Date.valueOf(LocalDate.now(ZoneId.of("Europe/Istanbul")))
+                Date.valueOf(LocalDate.now(ZoneId.of("Europe/Istanbul"))),
+                reviewCreateDTO.getEntertainmentTitle(),
+                reviewCreateDTO.getEntertainmentImage()
         );
     }
 }

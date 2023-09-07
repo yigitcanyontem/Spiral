@@ -1,0 +1,23 @@
+.item {
+  background-color: #373f51;
+  width: 100%;
+  height: 500px;
+  padding: 0;
+  border-radius: 15px;
+  overflow-x: auto;
+  object-fit: contain;
+  cursor: pointer;
+}
+.poster {
+  min-width: 400px;
+  max-width: 400px;
+  padding: 0;
+  border-radius: 15px;
+  overflow-x: auto;
+  object-fit: contain;
+  cursor: pointer;
+  transition: transform 0.2s ease-in-out;
+  &:hover {
+    transform: scale(1.06);
+  }
+}

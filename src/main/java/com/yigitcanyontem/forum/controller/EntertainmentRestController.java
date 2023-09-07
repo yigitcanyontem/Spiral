@@ -78,7 +78,7 @@ public class EntertainmentRestController {
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
         }
     }
-
+    //TODO add to frontend
     @GetMapping("/crew/{id}")
     @Cacheable(value = "crew", key = "'crew-' + #id")
     public ResponseEntity<CrewMember> getSingleCrewMemberById(@PathVariable Integer id) {

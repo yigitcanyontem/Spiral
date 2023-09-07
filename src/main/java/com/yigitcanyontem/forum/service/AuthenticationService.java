@@ -6,6 +6,7 @@ import com.yigitcanyontem.forum.model.auth.AuthenticationResponse;
 import com.yigitcanyontem.forum.model.auth.RegisterRequest;
 import com.yigitcanyontem.forum.exceptions.LoginException;
 import com.yigitcanyontem.forum.entity.Token;
+import com.yigitcanyontem.forum.model.entertainment.FavGameCreateDTO;
 import com.yigitcanyontem.forum.repository.TokenRepository;
 import com.yigitcanyontem.forum.entity.enums.TokenType;
 import com.yigitcanyontem.forum.entity.enums.Role;
@@ -65,7 +66,9 @@ public class AuthenticationService {
     favBooksService.saveFavBooks(users1,"vrpPEAAAQBAJ");
     favMovieService.saveFavMovie(users1,550);
     favShowsService.saveFavShows(users1,100);
-    favGameService.saveFavGame(users1,"3030-89187");
+    favGameService.saveFavGame(new FavGameCreateDTO(
+            users1.getId(),"3030-89187","Mortal Kombat 1","https://www.giantbomb.com/a/uploads/original/0/1992/3469602-untitled-1.png"
+    ));
     return AuthenticationResponse.builder()
         .accessToken(jwtToken)
             .refreshToken(refreshToken)

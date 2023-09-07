@@ -11,6 +11,8 @@ import { Album } from '../models/album';
 import { Movie } from '../models/movie';
 import { Book } from '../models/book';
 import { Game } from '../models/game';
+import { FavGame } from '../models/favGame';
+import { FavGameDto } from '../models/fav-game-dto';
 
 @Injectable({
   providedIn: 'root',
@@ -70,8 +72,8 @@ export class UserService {
     return this.http.get<Book[]>(`${this.backendUrl}/favbooks/${id}`);
   }
 
-  getFavGames(id: number): Observable<Game[]> {
-    return this.http.get<Game[]>(`${this.backendUrl}/favgames/${id}`);
+  getFavGames(id: number): Observable<FavGameDto[]> {
+    return this.http.get<FavGameDto[]>(`${this.backendUrl}/favgames/${id}`);
   }
 
   saveFavMovies(usersid: number, movieid: number): Observable<any> {

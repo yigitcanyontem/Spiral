@@ -24,7 +24,7 @@ import org.springframework.web.multipart.MultipartFile;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
-
+//TODO add fav add and delete to frontend
 @RestController
 @RequestMapping("/api/v1/user")
 @RequiredArgsConstructor
@@ -166,14 +166,9 @@ public class UsersController {
 
     @GetMapping("/favgames/{id}")
     @Cacheable(value = "favgames", key = "'id-' + #id")
-    public ResponseEntity<List<Game>> getFavGames(@PathVariable Integer id) {
+    public ResponseEntity<List<FavGameDTO>> getFavGames(@PathVariable Integer id) {
         try {
-            List<FavGame> gameids = favGameService.findByUserId(getCustomer(id).getBody());
-            List<Game> games = new ArrayList<>();
-            for (FavGame x : gameids) {
-                games.add(gameService.getSingleGameDTOById(x.getGameid()));
-            }
-            return ResponseEntity.ok(games);
+            return ResponseEntity.ok(favGameService.findByUserId(id));
         } catch (Exception e) {
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
         }
@@ -196,18 +191,18 @@ public class UsersController {
         }
     }
 
-    @PutMapping("/favgames/{usersid}/{gameid}")
+    @PutMapping("/favgames")
     @Caching(evict = {
-            @CacheEvict(value = "favgames", key = "'id-' + #usersid"),
-            @CacheEvict(value = "games", key = "'game-' + #gameid")
+            @CacheEvict(value = "favgames", key = "'id-' + #favGameCreateDTO.usersid"),
+            @CacheEvict(value = "games", key = "'game-' + #favGameCreateDTO.gameid")
     })
-    public ResponseEntity<?> saveFavGames(@PathVariable Integer usersid, @PathVariable String gameid,@RequestHeader (name="Authorization") String token) {
-        if (!userValid(usersid,token)){
+    public ResponseEntity<?> saveFavGames(@RequestBody FavGameCreateDTO favGameCreateDTO,@RequestHeader (name="Authorization") String token) {
+        if (!userValid(favGameCreateDTO.getUsersid(),token)){
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
         }
         try {
-            favGameService.saveFavGame(Objects.requireNonNull(getCustomer(usersid).getBody()), gameid);
-            return ResponseEntity.status(HttpStatus.OK).build();
+            favGameService.saveFavGame(favGameCreateDTO);
+            return ResponseEntity.ok().build();
         } catch (Exception e) {
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
         }

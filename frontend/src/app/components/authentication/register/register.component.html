@@ -1,21 +1,34 @@
+<p-toast></p-toast>
 <div class="register-wrapper mb-5">
   <div class="card" id="registerCard">
-    <div class="card-title text-center justify-content-center align-content-center mt-2">
+    <div
+      class="card-title text-center justify-content-center align-content-center mt-2"
+    >
       <h4 class="text-light">Sign Up</h4>
-      <hr class="text-light"/>
+      <hr class="text-light" />
     </div>
     <div class="card-body">
-      <form [formGroup]="frm" (ngSubmit)="submitForm()">
+      <form [formGroup]="frm">
         <div class="p-grid p-fluid">
           <div class="flex justify-content-center">
             <span class="p-float-label">
-              <input pInputText id="firstName" formControlName="firstName" class="w-100"/>
+              <input
+                pInputText
+                id="firstName"
+                formControlName="firstName"
+                class="w-100"
+              />
               <label for="firstName">First Name</label>
             </span>
           </div>
           <div class="flex justify-content-center mt-4">
             <span class="p-float-label">
-              <input pInputText id="lastName" formControlName="lastName" class="w-100"/>
+              <input
+                pInputText
+                id="lastName"
+                formControlName="lastName"
+                class="w-100"
+              />
               <label for="lastName">Last Name</label>
             </span>
           </div>
@@ -47,26 +60,40 @@
 
           <div class="flex justify-content-center mt-4">
             <span class="p-float-label">
-              <input pInputText id="email" formControlName="email" class="w-100"/>
+              <input
+                pInputText
+                id="email"
+                formControlName="email"
+                class="w-100"
+              />
               <label for="email">Email</label>
             </span>
           </div>
 
           <div class="flex justify-content-center mt-4">
             <span class="p-float-label">
-              <input pInputText id="username" formControlName="username" class="w-100"/>
+              <input
+                pInputText
+                id="username"
+                formControlName="username"
+                class="w-100"
+              />
               <label for="username">Username</label>
             </span>
           </div>
           <div class="flex justify-content-center mt-4">
             <span class="p-float-label">
-              <p-password formControlName="password" id="password" [toggleMask]="true">
+              <p-password
+                formControlName="password"
+                id="password"
+                [toggleMask]="true"
+              >
                 <ng-template pTemplate="header">
                   <h6>Pick a password</h6>
                 </ng-template>
-                <ng-template pTemplate="footer" >
+                <ng-template pTemplate="footer">
                   <p-divider></p-divider>
-                  <p class="  mt-2">Must Have</p>
+                  <p class="mt-2">Must Have</p>
                   <ul class="pl-2 ml-2 mt-0" style="line-height: 1.5">
                     <li>At least one lowercase</li>
                     <li>At least one uppercase</li>
@@ -80,10 +107,12 @@
           </div>
         </div>
         <div class="mt-4 justify-content-center text-center align-items-center">
+          <p-confirmPopup></p-confirmPopup>
           <button
             type="submit"
             class="btn btn-outline-dark w-50 text-light"
             [disabled]="!frm.valid"
+            (click)="confirmRegister($event)"
           >
             Sign Up
           </button>

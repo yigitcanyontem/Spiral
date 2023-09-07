@@ -2,39 +2,111 @@
   <app-spinner></app-spinner>
 </ng-container>
 <ng-container *ngIf="isLoaded">
+  <p-toast></p-toast>
+  <div *ngIf="edit_frm">
+    <app-update-review
+      [review_edit_id]="review_edit_id"
+      (getReviews)="onGetReviewsByUser()"
+    ></app-update-review>
+  </div>
   <div class="page-wrapper">
+    <h4 class="text-light text-center mt-2">User Reviews</h4>
     <div *ngFor="let review of this.reviews">
-      <div class="card mt-2 p-3">
+      <div class="card mt-1 p-3">
         <div class="flex-column justify-content-center">
           <div class="flex-row align-items-center justify-content-between">
-            <div class="flex-column">
-              <p-rating [(ngModel)]="review.rating" class="rating" [readonly]="true" [cancel]="false" ></p-rating>
+            <div>
+              <p-rating
+                [(ngModel)]="review.rating"
+                class="rating"
+                [readonly]="true"
+                [cancel]="false"
+              ></p-rating>
             </div>
-            <div class="flex-column">
-              <h5 class="fw-bold">{{ review.entertainmentTitle }}<span class="ms-2 fw-light">({{ review.entertainmentType }})</span></h5>
+            <div>
+              <h5>{{ review.entertainmentTitle }}</h5>
             </div>
-            <div class="flex-column">
-              <div class="flex-row ">
-                <h5 class="fw-bold"><i class="fi fi-rr-social-network me-2"></i>{{review.upvote}}</h5>
-                <h5 class="fw-bold"><i class="fi fi-rr-hand ms-3 me-2"></i>{{review.downvote}}</h5>
+            <div class="flex-row">
+              <div>
+                <p-button styleClass="p-button-link" (click)="upvote(review.id)"
+                  ><i
+                    class="pi pi-thumbs-up"
+                    style="color: black; font-size: 1.2rem"
+                  ></i
+                  ><span class="black_text">
+                    {{ review.upvote }}</span
+                  ></p-button
+                >
               </div>
-            </div>
-          </div>
-          <div>
-            <div class="flex-row justify-content-between">
-              <h5 class="fw-bold ms-2">{{review.title}}</h5>
-              <h5 class="fw-bold">{{review.date}}</h5>
+              <div>
+                <p-button
+                  styleClass="p-button-link"
+                  (click)="downvote(review.id)"
+                  ><i
+                    class="pi pi-thumbs-down"
+                    style="color: black; font-size: 1.2rem"
+                  ></i
+                  ><span class="black_text">
+                    {{ review.downvote }}</span
+                  ></p-button
+                >
+              </div>
+              <div>
+                <p-button
+                  styleClass="p-button-link"
+                  (click)="editReview(review.id)"
+                  *ngIf="review.usersid.id === parseInt(usersid)"
+                  ><i
+                    class="pi pi-file-edit"
+                    style="color: black; font-size: 1.2rem"
+                  ></i
+                ></p-button>
+              </div>
+              <div *ngIf="review.usersid.id === parseInt(usersid)">
+                <p-toast></p-toast>
+                <p-confirmPopup></p-confirmPopup>
+                <p-button
+                  styleClass="p-button-link"
+                  (click)="confirmDelete($event, review.id)"
+                  ><i
+                    class="pi pi-trash"
+                    style="color: red; font-size: 1.2rem"
+                  ></i
+                ></p-button>
+              </div>
             </div>
           </div>
           <div class="flex-row">
             <div class="flex-column">
-              <img [src]="review.image" [title]="review.entertainmentTitle" class="w-6 shadow-2 item" alt="" />
+              <img
+                [src]="review.entertainmentImage"
+                [title]="review.entertainmentTitle"
+                routerLink="/{{ review.entertainmentType.toLowerCase() }}/{{
+                  review.entertainmentid
+                }}"
+                class="w-6 shadow-2 item"
+                alt=""
+              />
             </div>
-            <div class="flex-column flex-grow-1 w-75">
-              <h6 class="p-2">{{review.description}}</h6>
+            <div class="flex-column flex-grow-1 p-1">
+              <div>
+                <div class="flex-row justify-content-between">
+                  <h5 class="fw-bold ms-2">{{ review.title }}</h5>
+                </div>
+                <div class="flex-row">
+                  <h6 class="p-2">{{ review.description }}</h6>
+                </div>
+              </div>
             </div>
-
           </div>
+        </div>
+        <div class="card-footer">
+          <span class="flex-row justify-content-between">
+            <p class="">{{ review.date }}</p>
+            <a class="" [routerLink]="'/profile/' + review.usersid.id">{{
+              review.usersid.username
+            }}</a>
+          </span>
         </div>
       </div>
     </div>

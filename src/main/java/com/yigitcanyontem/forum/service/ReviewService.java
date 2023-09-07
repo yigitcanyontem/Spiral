@@ -22,6 +22,7 @@ public class ReviewService {
     private final ReviewRepository reviewRepository;
     private final ReviewMapper reviewMapper;
     private final ReviewDTOMapper reviewDTOMapper;
+    private final ReviewReactionService reviewReactionService;
 
     public PaginatedReviewDTO getReviewsByUser(Integer usersid_id, int pageNumber, int pageSize, String sort, String direction,@Min(1) @Max(5) Integer rating){
         Pageable pageable = reviewSort(pageNumber,pageSize,sort,direction);
@@ -45,7 +46,7 @@ public class ReviewService {
             reviewPage = reviewRepository.findReviewsByEntertainmentTypeAndEntertainmentid(entertainmentType,entertainmentId,pageable);
         }
         return new PaginatedReview(
-                reviewPage.getContent(),
+                reviewPage.getContent().stream().map(reviewDTOMapper).toList(),
                 reviewPage.getTotalPages()
         );
     }
@@ -82,7 +83,12 @@ public class ReviewService {
     public Review updateReview(ReviewUpdateDTO reviewUpdateDTO) throws Exception {
         Review review = reviewRepository.getReferenceById(reviewUpdateDTO.getId());
         String description = reviewUpdateDTO.getDescription();
+        String title = reviewUpdateDTO.getTitle();
         Integer rating = reviewUpdateDTO.getRating();
+        if (title != null){
+            review.setTitle(title);
+        }
+
         if (description != null){
             review.setDescription(description);
         }
@@ -99,8 +105,10 @@ public class ReviewService {
         return reviewRepository.save(review);
     }
 
+    @Transactional
     public String deleteReview(Long id) {
         try {
+            reviewReactionService.deleteReactionsOfReview(reviewRepository.findReviewById(id));
             reviewRepository.deleteById(id);
         }catch (Exception e){
             return "Fail";

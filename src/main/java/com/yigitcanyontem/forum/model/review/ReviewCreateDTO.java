@@ -18,6 +18,24 @@ public class ReviewCreateDTO {
     private String entertainmentid;
     private String description;
     private Integer rating;
+    private String entertainmentTitle;
+    private String entertainmentImage;
+
+    public String getEntertainmentTitle() {
+        return entertainmentTitle;
+    }
+
+    public void setEntertainmentTitle(String entertainmentTitle) {
+        this.entertainmentTitle = entertainmentTitle;
+    }
+
+    public String getEntertainmentImage() {
+        return entertainmentImage;
+    }
+
+    public void setEntertainmentImage(String entertainmentImage) {
+        this.entertainmentImage = entertainmentImage;
+    }
 
     public String getTitle() {
         return title;

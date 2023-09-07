@@ -39,9 +39,45 @@ public class FavGame {
     )
     private String gameid;
 
+    @Column(
+            name = "gamename",
+            nullable = true
+    )
+    private String gameName;
+
+    @Column(
+            name = "gameimage",
+            nullable = true
+    )
+    private String gameImage;
+
+
     public FavGame(Users usersid, String gameid) {
         this.usersid = usersid;
         this.gameid = gameid;
+    }
+
+    public FavGame(Users usersid, String gameid, String gameName, String gameImage) {
+        this.usersid = usersid;
+        this.gameid = gameid;
+        this.gameName = gameName;
+        this.gameImage = gameImage;
+    }
+
+    public String getGameName() {
+        return gameName;
+    }
+
+    public void setGameName(String gameName) {
+        this.gameName = gameName;
+    }
+
+    public String getGameImage() {
+        return gameImage;
+    }
+
+    public void setGameImage(String gameImage) {
+        this.gameImage = gameImage;
     }
 
     public Integer getId() {

@@ -115,3 +115,31 @@ $tui-wrapper-color-red: #fff;
 .p-rating .p-rating-icon.p-rating-icon-active {
   color: #373a3d;
 }
+
+.image {
+  min-width: 200px;
+  max-width: 200px;
+  padding: 0;
+  border-radius: 15px;
+  overflow-x: auto;
+  object-fit: contain;
+  cursor: pointer;
+  transition: transform 0.2s ease-in-out;
+  &:hover {
+    transform: scale(1.06);
+  }
+}
+.flex-container {
+  display: flex;
+  flex-wrap: wrap-reverse;
+}
+
+.image-container,
+.info-container {
+  flex: 1;
+  box-sizing: border-box;
+}
+
+.image-container {
+  align-items: start;
+}

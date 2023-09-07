@@ -12,4 +12,5 @@ public interface ReviewReactionRepository extends JpaRepository<ReviewReaction, 
     boolean existsReviewReactionByUsersid_IdAndReviewid_Id(Integer usersid_id, Long reviewid_id);
     Integer countReviewReactionsByReviewid_IdAndReactionType(Long reviewid_id, ReactionType reactionType);
     ReviewReaction findReviewReactionByUsersid_IdAndReviewid_Id(Integer usersid_id, Long reviewid_id);
+    void deleteReviewReactionsByReviewid(Review reviewid);
 }

@@ -1,19 +1,17 @@
-import {Component, OnInit} from '@angular/core';
-import {EntertainmentType} from "../../../enums/entertainment-type";
-import {Movie} from "../../../models/movie";
-import {PaginatedReviewDTO} from "../../../models/paginated-review-dto";
-import {ActivatedRoute} from "@angular/router";
-import {EntertainmentService} from "../../../services/entertainment.service";
-import {ReviewService} from "../../../services/review.service";
-import {forkJoin} from "rxjs";
-import {Game} from "../../../models/game";
+import { Component, OnInit } from '@angular/core';
+import { EntertainmentType } from '../../../enums/entertainment-type';
+import { ActivatedRoute } from '@angular/router';
+import { EntertainmentService } from '../../../services/entertainment.service';
+import { ReviewService } from '../../../services/review.service';
+import { forkJoin } from 'rxjs';
+import { Game } from '../../../models/game';
 
 @Component({
   selector: 'app-game',
   templateUrl: './game.component.html',
-  styleUrls: ['./game.component.scss']
+  styleUrls: ['./game.component.scss'],
 })
-export class GameComponent implements OnInit{
+export class GameComponent implements OnInit {
   id = <string>this.activatedRoute.snapshot.paramMap.get('id');
   entertainmentType = EntertainmentType.GAME;
   pageNumber: number = 0;
@@ -21,42 +19,58 @@ export class GameComponent implements OnInit{
   sort: string = 'upvote';
   direction: string = 'ASC';
   rating = null;
-
+  responsiveOptions: any[] | undefined;
   isLoaded = false;
   game!: Game;
-  reviews!: PaginatedReviewDTO ;
   average!: number;
 
-  constructor(private activatedRoute: ActivatedRoute,private entertainmentService:EntertainmentService, private reviewService:ReviewService) {
+  constructor(
+    private activatedRoute: ActivatedRoute,
+    private entertainmentService: EntertainmentService,
+    private reviewService: ReviewService,
+  ) {
+    this.responsiveOptions = [
+      {
+        breakpoint: '1024px',
+        numVisible: 5,
+      },
+      {
+        breakpoint: '768px',
+        numVisible: 3,
+      },
+      {
+        breakpoint: '560px',
+        numVisible: 1,
+      },
+    ];
   }
-
 
   ngOnInit(): void {
     const getGame$ = this.entertainmentService.onGetGame(this.id);
-    const getReviews$ = this.reviewService.getReviewsByEntertainment(this.id,this.entertainmentType,this.pageNumber,this.pageSize,this.sort,this.direction,this.rating);
-    const getRating$ = this.reviewService.getAverageRatingByEntertainment(this.id,this.entertainmentType);
+    const getRating$ = this.reviewService.getAverageRatingByEntertainment(
+      this.id,
+      this.entertainmentType,
+    );
     forkJoin({
       game: getGame$,
-      reviews: getReviews$,
-      average: getRating$
+      average: getRating$,
     }).subscribe(
-      (results: {
-        game: Game,
-        reviews: PaginatedReviewDTO,
-        average: number
-      }) => {
+      (results: { game: Game; average: number }) => {
         this.game = results.game;
-        this.reviews = results.reviews;
         this.average = results.average;
-        console.log(this.game)
-        console.log(this.reviews)
-        console.log(this.average)
         this.isLoaded = true;
       },
-      error => {
+      (error) => {
         // Handle errors
-      }
+      },
     );
+  }
 
+  onGetAverage() {
+    this.reviewService
+      .getAverageRatingByEntertainment(this.id, this.entertainmentType)
+      .subscribe((results) => {
+        this.average = results;
+      });
   }
 }

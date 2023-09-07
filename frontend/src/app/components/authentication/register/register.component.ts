@@ -1,9 +1,16 @@
 import { Component } from '@angular/core';
-import {AbstractControl, FormBuilder, FormGroup, ValidatorFn, Validators} from "@angular/forms";
-import {Router} from "@angular/router";
-import {AuthenticationService} from "../../../services/authentication.service";
-import {RegisterRequest} from "../../../models/register-request";
-import {Country} from "../../../models/country";
+import {
+  AbstractControl,
+  FormBuilder,
+  FormGroup,
+  ValidatorFn,
+  Validators,
+} from '@angular/forms';
+import { Router } from '@angular/router';
+import { AuthenticationService } from '../../../services/authentication.service';
+import { RegisterRequest } from '../../../models/register-request';
+import { Country } from '../../../models/country';
+import { ConfirmationService, MessageService } from 'primeng/api';
 
 interface CountryDTO {
   readonly id: number;
@@ -12,55 +19,89 @@ interface CountryDTO {
 @Component({
   selector: 'app-register',
   templateUrl: './register.component.html',
-  styleUrls: ['./register.component.scss']
+  styleUrls: ['./register.component.scss'],
+  providers: [ConfirmationService, MessageService],
 })
 export class RegisterComponent {
   frm: FormGroup;
   countries: Country[] = [];
   maxDate: Date = new Date();
   selectedCountryId: number = 1;
-  constructor(private formBuilder: FormBuilder,private router:Router, private authService:AuthenticationService) {
-    authService.onGetCountries().subscribe(
-      (response) => {
-        this.countries = response;
-      }
-    )
+  constructor(
+    private formBuilder: FormBuilder,
+    private router: Router,
+    private authService: AuthenticationService,
+    private confirmationService: ConfirmationService,
+    private messageService: MessageService,
+  ) {
+    authService.onGetCountries().subscribe((response) => {
+      this.countries = response;
+    });
 
     this.frm = this.formBuilder.group({
-      firstName: ["", [Validators.required]],
-      lastName: ["", [Validators.required]],
+      firstName: ['', [Validators.required]],
+      lastName: ['', [Validators.required]],
       date_of_birth: [Date, [Validators.required]],
       country: [this.selectedCountryId, [Validators.required]],
-      email: ["", [Validators.required,this.emailValidator()]],
-      username: ["", [Validators.required]],
-      password: ["", [Validators.required, this.passwordValidator()]],
-    })
+      email: ['', [Validators.required, this.emailValidator()]],
+      username: ['', [Validators.required]],
+      password: ['', [Validators.required, this.passwordValidator()]],
+    });
 
     // @ts-ignore
     this.frm.get('country').valueChanges.subscribe((selectedCountry) => {
       this.selectedCountryId = selectedCountry?.id;
     });
   }
-
-
-  submitForm(){
-    this.authService.onRegister(
-      {
+  confirmRegister(event: Event) {
+    this.confirmationService.confirm({
+      target: event.target as EventTarget,
+      message: 'Confirm registration',
+      icon: 'pi pi-exclamation-triangle',
+      accept: () => {
+        this.submitForm();
+      },
+      reject: () => {
+        this.messageService.add({
+          severity: 'error',
+          summary: 'Rejected',
+          detail: 'Cancelled',
+        });
+      },
+    });
+  }
+  submitForm() {
+    this.authService
+      .onRegister({
         firstName: this.firstName?.value,
         lastName: this.lastName?.value,
         date_of_birth: this.date_of_birth?.value,
         country: this.selectedCountryId,
         email: this.email?.value,
         username: this.username?.value,
-        password: this.password?.value
-      }as RegisterRequest)
-      .subscribe((bool) => {
-        if (bool){
-          window.location.reload()
-        }
-      });
+        password: this.password?.value,
+      } as RegisterRequest)
+      .subscribe(
+        (bool) => {
+          if (bool) {
+            window.location.reload();
+          } else {
+            this.messageService.add({
+              severity: 'error',
+              summary: 'Error',
+              detail: 'Username or/and email is already used.',
+            });
+          }
+        },
+        (error) => {
+          this.messageService.add({
+            severity: 'error',
+            summary: 'Error',
+            detail: 'Username or/and email is already used.',
+          });
+        },
+      );
   }
-
 
   private emailValidator(): ValidatorFn {
     return (control: AbstractControl): { [key: string]: any } | null => {
@@ -84,11 +125,6 @@ export class RegisterComponent {
       return null;
     };
   }
-
-
-
-
-
 
   get firstName() {
     return this.frm.get('firstName');

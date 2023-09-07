@@ -7,6 +7,7 @@ import com.yigitcanyontem.forum.entity.enums.ReactionType;
 import com.yigitcanyontem.forum.model.review.ReactionCreateDTO;
 import com.yigitcanyontem.forum.repository.ReviewReactionRepository;
 import com.yigitcanyontem.forum.repository.ReviewRepository;
+import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
@@ -53,6 +54,11 @@ public class ReviewReactionService {
 
     }
 
+    public void deleteReactionsOfReview(Review review) {
+        reviewReactionRepository.deleteReviewReactionsByReviewid(review);
+    }
+
+    @Transactional
     public void deleteReaction(Long id) {
         reviewReactionRepository.deleteById(id);
     }

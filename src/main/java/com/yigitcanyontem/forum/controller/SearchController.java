@@ -11,7 +11,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
-
+//TODO add to frontend
 @RestController
 @RequestMapping("/api/v1/search")
 @RequiredArgsConstructor
@@ -24,7 +24,7 @@ public class SearchController {
     private final GameService gameService;
 
 
-    @GetMapping("tv/{title}")
+    @GetMapping("show/{title}")
     @Cacheable(value = "searched_shows", key = "'title-'+#title")
     public ResponseEntity<List<Show>> getShowSearchResults(@PathVariable String title) {
         try {

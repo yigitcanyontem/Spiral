@@ -66,6 +66,8 @@ create table public.favshows (
 create table public.favgames (
                                  id integer primary key not null,
                                  gameid character varying(255) not null,
+                                 gamename character varying(255) not null,
+                                 gameimage character varying(255) not null,
                                  usersid integer not null,
                                  foreign key (usersid) references public.users (id)
                                      match simple on update no action on delete no action
@@ -92,6 +94,8 @@ create table public.review (
                                     upvote integer not null,
                                     downvote integer not null,
                                     entertainmentid character varying(255) not null,
+                                    entertainment_image character varying(255) not null,
+                                    entertainment_title character varying(255) not null,
                                     date date not null,
                                     CHECK (entertainmenttype IN ('MOVIE', 'SHOW', 'ALBUM', 'BOOK', 'GAME')),
                                     foreign key (usersid) references public.users (id)

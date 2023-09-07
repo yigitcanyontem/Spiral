@@ -1,6 +1,6 @@
-import {EntertainmentType} from "../enums/entertainment-type";
-import {Users} from "./users";
-import {Entertainment} from "./entertainment";
+import { EntertainmentType } from '../enums/entertainment-type';
+import { Users } from './users';
+import { Entertainment } from './entertainment';
 
 export interface Review {
   id: number;
@@ -14,6 +14,5 @@ export interface Review {
   upvote: number;
   downvote: number;
   date: Date;
-  image: string;
+  entertainmentImage: string;
 }
-
