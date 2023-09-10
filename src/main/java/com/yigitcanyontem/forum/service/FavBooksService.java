@@ -53,4 +53,8 @@ public class FavBooksService {
         }
         favBooksRepository.save(new FavBooks(usersid,favbooksid));
     }
+
+    public Boolean checkFavoritedBooks(Integer usersid, String bookid) {
+        return favBooksRepository.existsFavBooksByUsersid_IdAndBookid(usersid,bookid);
+    }
 }

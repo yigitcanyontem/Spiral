@@ -9,7 +9,9 @@ import com.yigitcanyontem.forum.service.CountryService;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import lombok.RequiredArgsConstructor;
+import org.springframework.cache.annotation.CacheEvict;
 import org.springframework.cache.annotation.Cacheable;
+import org.springframework.cache.annotation.Caching;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -26,6 +28,9 @@ public class AuthenticationController {
   private final CountryService countryService;
 
   @PostMapping("/register")
+  @Caching(evict = {
+          @CacheEvict(value = "searched_users", allEntries = true)
+  })
   public ResponseEntity<AuthenticationResponse> register(@RequestBody RegisterRequest request) {
     return ResponseEntity.ok(service.register(request));
   }

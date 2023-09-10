@@ -62,4 +62,8 @@ public class FavGameService {
                 favGameCreateDTO.getGameImage()
         ));
     }
+
+    public Boolean checkFavoritedGames(Integer usersid, String gameid) {
+        return favGameRepository.existsFavGameByUsersid_IdAndGameid(usersid,gameid);
+    }
 }

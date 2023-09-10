@@ -39,6 +39,8 @@ import { ToastModule } from 'primeng/toast';
 import { MessagesModule } from 'primeng/messages';
 import { CrewMembersComponent } from './components/entertainment/crew-members/crew-members.component';
 import { SearchResultsComponent } from './components/all/search-results/search-results.component';
+import { TabMenuModule } from 'primeng/tabmenu';
+import { TabViewModule } from 'primeng/tabview';
 
 @NgModule({
   declarations: [
@@ -84,6 +86,8 @@ import { SearchResultsComponent } from './components/all/search-results/search-r
     ConfirmPopupModule,
     ToastModule,
     MessagesModule,
+    TabMenuModule,
+    TabViewModule,
   ],
   bootstrap: [AppComponent],
 })

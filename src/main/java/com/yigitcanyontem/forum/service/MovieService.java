@@ -159,7 +159,7 @@ public class MovieService {
         }
         movies.sort(Comparator.comparing(Movie::getVote_count).reversed());
         if (movies.size() == 0){
-            throw new SearchNotFoundException("No Movie Found");
+            return List.of();
         }
         return movies;
     }

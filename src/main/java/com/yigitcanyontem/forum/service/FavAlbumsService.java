@@ -53,4 +53,8 @@ public class FavAlbumsService {
         }
         favAlbumsRepository.save(new FavAlbums(usersid,favalbumsid));
     }
+
+    public Boolean checkFavoritedAlbums(Integer usersid, String albumid) {
+        return favAlbumsRepository.existsFavAlbumsByUsersid_IdAndAlbumid(usersid,albumid);
+    }
 }

@@ -1,7 +1,8 @@
 <ng-container *ngIf="!isLoaded">
   <app-spinner></app-spinner>
 </ng-container>
-<ng-container *ngIf="isLoaded">
+<ng-container *ngIf="isLoaded && !error">
+  <p-toast></p-toast>
   <div class="page-wrapper">
     <div class="card">
       <div class="flex-row gap-2">
@@ -34,6 +35,24 @@
             <h6 class="text-secondary">
               Favorite Count: {{ this.game.favorite_count }}
             </h6>
+            <div *ngIf="this.userLogged">
+              <button
+                class="favorite_button"
+                *ngIf="!favorited"
+                (click)="addFavorite()"
+              >
+                <i class="fi fi-rr-heart"></i>
+                <p>Favorite</p>
+              </button>
+              <button
+                class="favorite_button"
+                *ngIf="favorited"
+                (click)="deleteFavorite()"
+              >
+                <i class="fi fi-sr-heart"></i>
+                <p>Favorited</p>
+              </button>
+            </div>
           </div>
           <!-- Screenshots Carousel -->
           <div>
@@ -104,5 +123,15 @@
       [entertainmentImage]="game.original_url"
       (getAverage)="onGetAverage()"
     ></app-reviews>
+  </div>
+</ng-container>
+<ng-container *ngIf="isLoaded && error">
+  <div class="card text-center page-wrapper mt-5">
+    <div class="card-header">
+      <h5>Game Not Found</h5>
+    </div>
+    <div class="card-img overflow-x-hidden">
+      <img src="assets/not_found.svg" alt="" class="mt-2" />
+    </div>
   </div>
 </ng-container>

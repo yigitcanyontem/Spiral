@@ -21,7 +21,7 @@
                 placeholder="Search..."
                 class="searchbar"
                 [(ngModel)]="this.input"
-                (ngModelChange)="onSearch()"
+                (keyup.enter)="onSearch()"
               />
               <button class="btn" type="button" (click)="onSearch()">
                 <i class="fi fi-br-search text-light"></i>

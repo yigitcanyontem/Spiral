@@ -104,8 +104,14 @@ public class UsersController {
 
     }
 
+
+
     @DeleteMapping("/delete/{usersid}")
     @CacheEvict(value = "user", key = "'id-' + #usersid")
+    @Caching(evict = {
+            @CacheEvict(value = "user", key = "'id-' + #usersid"),
+            @CacheEvict(value = "searched_users", allEntries = true)
+    })
     @PreAuthorize("hasAnyRole('USER','ADMIN')")
     public ResponseEntity<?> deleteCustomer(@PathVariable Integer usersid,@RequestHeader (name="Authorization") String token) {
         if (!userValid(usersid,token)){
@@ -337,12 +343,60 @@ public class UsersController {
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
         }
         try {
-            favGameService.deleteUserFavGameById(getCustomer(usersid).getBody(), gameid);
+            favGameService.deleteUserFavGameById(Objects.requireNonNull(getCustomer(usersid).getBody()), gameid);
             return ResponseEntity.status(HttpStatus.OK).build();
         } catch (Exception e) {
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
         }
     }
+
+    @GetMapping("/favmovie/check/{usersid}/{movieid}")
+    public ResponseEntity<Boolean> checkFavoritedMovie(@PathVariable Integer usersid, @PathVariable Integer movieid) {
+        try {
+            return ResponseEntity.ok(favMovieService.checkFavoritedMovie(usersid, movieid));
+        } catch (Exception e) {
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
+        }
+    }
+
+    @GetMapping("/favshows/check/{usersid}/{showid}")
+    public ResponseEntity<Boolean> checkFavoritedShows(@PathVariable Integer usersid, @PathVariable Integer showid) {
+        try {
+            return ResponseEntity.ok(favShowsService.checkFavoritedShows(usersid, showid));
+        } catch (Exception e) {
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
+        }
+    }
+
+    @GetMapping("/favalbums/check/{usersid}/{albumid}")
+    public ResponseEntity<Boolean> checkFavoritedAlbums(@PathVariable Integer usersid, @PathVariable String albumid) {
+        try {
+            return ResponseEntity.ok(favAlbumsService.checkFavoritedAlbums(usersid, albumid));
+        } catch (Exception e) {
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
+        }
+    }
+
+    @GetMapping("/favbooks/check/{usersid}/{bookid}")
+    public ResponseEntity<Boolean> checkFavoritedBooks(@PathVariable Integer usersid, @PathVariable String bookid) {
+        try {
+            return ResponseEntity.ok(favBooksService.checkFavoritedBooks(usersid, bookid));
+        } catch (Exception e) {
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
+        }
+    }
+
+    @GetMapping("/favgames/check/{usersid}/{gameid}")
+    public ResponseEntity<Boolean> checkFavoritedGames(@PathVariable Integer usersid, @PathVariable String gameid) {
+        try {
+            return ResponseEntity.ok(favGameService.checkFavoritedGames(usersid, gameid));
+        } catch (Exception e) {
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
+        }
+    }
+
+
+
 
     @PostMapping("/upload/{id}")
     @CacheEvict(value = "images", key = "'id-' + #id")

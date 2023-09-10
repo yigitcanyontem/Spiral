@@ -52,7 +52,7 @@ public class AlbumService {
             albums.add(album);
         }
         if (albums.size() == 0){
-            throw new SearchNotFoundException("No Album Found");
+            return List.of();
         }
         return albums;
     }

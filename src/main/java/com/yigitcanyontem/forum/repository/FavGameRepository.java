@@ -18,6 +18,7 @@ public interface FavGameRepository extends JpaRepository<FavGame, String> {
     boolean existsByUsersid_Id(Integer usersid_id);
     int countFavGamesByGameid(String gameid);
     boolean existsFavGameByUsersidAndGameid(Users usersid, String gameid);
+    boolean existsFavGameByUsersid_IdAndGameid(Integer usersid_id, String gameid);
     void deleteFavGameByUsersid(Users usersid);
     void deleteFavGameByUsersidAndGameid(Users usersid, String gameid);
 

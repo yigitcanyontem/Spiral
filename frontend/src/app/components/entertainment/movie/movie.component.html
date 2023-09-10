@@ -1,7 +1,8 @@
 <ng-container *ngIf="!isLoaded">
   <app-spinner></app-spinner>
 </ng-container>
-<ng-container *ngIf="isLoaded">
+<ng-container *ngIf="isLoaded && !error">
+  <p-toast></p-toast>
   <div class="page-wrapper">
     <div>
       <div class="card mt-5">
@@ -56,8 +57,26 @@
             <div class="flex-row text-center">
               <h6 class="p-0">Genres:&nbsp;</h6>
               <div *ngFor="let genre of this.movie.genres">
-                {{ genre }}
+                {{ genre }} &nbsp;
               </div>
+            </div>
+            <div *ngIf="this.userLogged">
+              <button
+                class="favorite_button"
+                *ngIf="!favorited"
+                (click)="addFavorite()"
+              >
+                <i class="fi fi-rr-heart"></i>
+                <p>Favorite</p>
+              </button>
+              <button
+                class="favorite_button"
+                *ngIf="favorited"
+                (click)="deleteFavorite()"
+              >
+                <i class="fi fi-sr-heart"></i>
+                <p>Favorited</p>
+              </button>
             </div>
           </div>
         </div>
@@ -199,5 +218,15 @@
       [entertainmentImage]="movie.poster_path"
       (getAverage)="onGetAverage()"
     ></app-reviews>
+  </div>
+</ng-container>
+<ng-container *ngIf="isLoaded && error">
+  <div class="card text-center page-wrapper mt-5">
+    <div class="card-header">
+      <h5>Movie Not Found</h5>
+    </div>
+    <div class="card-img overflow-x-hidden">
+      <img src="assets/not_found.svg" alt="" class="mt-2" />
+    </div>
   </div>
 </ng-container>

@@ -55,4 +55,7 @@ public class FavMovieService {
     }
 
 
+    public Boolean checkFavoritedMovie(Integer usersid, Integer movieid) {
+        return favMovieRepository.existsFavMovieByUsersid_IdAndMovieid(usersid,movieid);
+    }
 }

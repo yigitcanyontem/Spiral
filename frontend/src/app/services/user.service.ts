@@ -10,9 +10,8 @@ import { Show } from '../models/show';
 import { Album } from '../models/album';
 import { Movie } from '../models/movie';
 import { Book } from '../models/book';
-import { Game } from '../models/game';
-import { FavGame } from '../models/favGame';
 import { FavGameDto } from '../models/fav-game-dto';
+import { FavGameCreateDto } from '../models/fav-game-create-dto';
 
 @Injectable({
   providedIn: 'root',
@@ -124,16 +123,12 @@ export class UserService {
     );
   }
 
-  saveFavGames(usersid: number, gameid: string): Observable<any> {
-    return this.http.put<any>(
-      `${this.backendUrl}/favgames/${usersid}/${gameid}`,
-      null,
-      {
-        headers: new HttpHeaders({
-          Authorization: this.token,
-        }),
-      },
-    );
+  saveFavGames(favGameCreateDTO: FavGameCreateDto): Observable<any> {
+    return this.http.put<any>(`${this.backendUrl}/favgames`, favGameCreateDTO, {
+      headers: new HttpHeaders({
+        Authorization: this.token,
+      }),
+    });
   }
 
   deleteFavMovies(usersid: number, movieid: number): Observable<any> {
@@ -188,6 +183,36 @@ export class UserService {
           Authorization: this.token,
         }),
       },
+    );
+  }
+
+  checkFavoritedMovie(userId: number, movieId: number): Observable<boolean> {
+    return this.http.get<boolean>(
+      `${this.backendUrl}/favmovie/check/${userId}/${movieId}`,
+    );
+  }
+
+  checkFavoritedShows(userId: number, showId: number): Observable<boolean> {
+    return this.http.get<boolean>(
+      `${this.backendUrl}/favshows/check/${userId}/${showId}`,
+    );
+  }
+
+  checkFavoritedAlbums(userId: number, albumId: string): Observable<boolean> {
+    return this.http.get<boolean>(
+      `${this.backendUrl}/favalbums/check/${userId}/${albumId}`,
+    );
+  }
+
+  checkFavoritedBooks(userId: number, bookId: string): Observable<boolean> {
+    return this.http.get<boolean>(
+      `${this.backendUrl}/favbooks/check/${userId}/${bookId}`,
+    );
+  }
+
+  checkFavoritedGames(userId: number, gameId: string): Observable<boolean> {
+    return this.http.get<boolean>(
+      `${this.backendUrl}/favgames/check/${userId}/${gameId}`,
     );
   }
 

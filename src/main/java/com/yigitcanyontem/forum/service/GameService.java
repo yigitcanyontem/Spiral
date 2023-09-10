@@ -65,7 +65,7 @@ public class GameService {
         }
 
         if (games.isEmpty()){
-            throw new SearchNotFoundException("No Games Found");
+            return List.of();
         }
         return games;
     }

@@ -5,13 +5,20 @@ import { EntertainmentService } from '../../../services/entertainment.service';
 import { ReviewService } from '../../../services/review.service';
 import { forkJoin } from 'rxjs';
 import { Game } from '../../../models/game';
+import { MessageService } from 'primeng/api';
+import { UserService } from '../../../services/user.service';
 
 @Component({
   selector: 'app-game',
   templateUrl: './game.component.html',
   styleUrls: ['./game.component.scss'],
+  providers: [MessageService],
 })
 export class GameComponent implements OnInit {
+  userLogged!: boolean;
+  favorited!: boolean;
+
+  usersid = <string>localStorage.getItem('forum_user_id');
   id = <string>this.activatedRoute.snapshot.paramMap.get('id');
   entertainmentType = EntertainmentType.GAME;
   pageNumber: number = 0;
@@ -24,10 +31,14 @@ export class GameComponent implements OnInit {
   game!: Game;
   average!: number;
 
+  error = false;
+
   constructor(
     private activatedRoute: ActivatedRoute,
     private entertainmentService: EntertainmentService,
     private reviewService: ReviewService,
+    private userService: UserService,
+    private messageService: MessageService,
   ) {
     this.responsiveOptions = [
       {
@@ -58,10 +69,12 @@ export class GameComponent implements OnInit {
       (results: { game: Game; average: number }) => {
         this.game = results.game;
         this.average = results.average;
+        this.checkUser();
         this.isLoaded = true;
       },
       (error) => {
-        // Handle errors
+        this.error = true;
+        this.isLoaded = true;
       },
     );
   }
@@ -72,5 +85,56 @@ export class GameComponent implements OnInit {
       .subscribe((results) => {
         this.average = results;
       });
+  }
+
+  checkUser() {
+    this.userService
+      .checkFavoritedGames(parseInt(this.usersid), this.id)
+      .subscribe(
+        (results) => {
+          this.favorited = results;
+        },
+        (error) => {
+          this.favorited = false;
+        },
+      );
+    this.userLogged = this.usersid !== null;
+  }
+
+  addFavorite() {
+    this.userService
+      .saveFavGames({
+        usersid: parseInt(this.usersid),
+        gameid: this.id,
+        gameName: this.game.name,
+        gameImage: this.game.original_url,
+      })
+      .subscribe(
+        (results) => {
+          this.favorited = true;
+        },
+        (error) => {
+          this.messageService.add({
+            severity: 'error',
+            summary: 'Error',
+            detail: 'An Error Occured.',
+          });
+        },
+      );
+  }
+
+  deleteFavorite() {
+    this.userService.deleteFavGames(parseInt(this.usersid), this.id).subscribe(
+      (results) => {
+        this.favorited = false;
+      },
+      (error) => {
+        this.messageService.add({
+          severity: 'error',
+          summary: 'Error',
+          detail: 'An Error Occured.',
+        });
+      },
+    );
   }
 }

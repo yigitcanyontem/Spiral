@@ -9,7 +9,7 @@
       (getReviews)="onGetReviewsByUser()"
     ></app-update-review>
   </div>
-  <div class="page-wrapper">
+  <div class="page-wrapper pb-5">
     <h4 class="text-light text-center mt-2">User Reviews</h4>
     <div *ngFor="let review of this.reviews">
       <div class="card mt-1 p-3">
@@ -63,7 +63,6 @@
                 ></p-button>
               </div>
               <div *ngIf="review.usersid.id === parseInt(usersid)">
-                <p-toast></p-toast>
                 <p-confirmPopup></p-confirmPopup>
                 <p-button
                   styleClass="p-button-link"

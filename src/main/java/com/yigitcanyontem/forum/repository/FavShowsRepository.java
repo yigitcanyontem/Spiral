@@ -18,6 +18,7 @@ public interface FavShowsRepository extends JpaRepository<FavShows,Integer> {
     int countFavShowsByUsersid(Users usersid);
     boolean existsByUsersid(Users usersid);
     boolean existsByUsersidAndShowid(Users usersid, Integer showid);
+    boolean existsByUsersid_IdAndShowid(Integer usersid, Integer showid);
     void deleteFavShowsByUsersid(Users usersid);
     void deleteFavShowsByUsersidAndShowid(Users usersid, Integer showid);
 }

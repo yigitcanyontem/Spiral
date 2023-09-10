@@ -57,22 +57,21 @@ export class UserReviewsComponent implements OnInit {
         })
         .subscribe(
           (value) => {
-            this.messageService.add({
-              severity: 'success',
-              summary: 'Upvoted',
-              detail: 'Review has been upvoted',
-            });
             this.onGetReviewsByUser();
           },
           (error) => {
-            this.messageService.add({
-              severity: 'error',
-              summary: 'Error',
-              detail: "Can't react to your own comment.",
-            });
+            this.ownCommentToast();
           },
         );
     }
+  }
+
+  ownCommentToast() {
+    this.messageService.add({
+      severity: 'error',
+      summary: 'Error',
+      detail: "Can't react to your own comment.",
+    });
   }
 
   downvote(id: number) {
@@ -91,19 +90,10 @@ export class UserReviewsComponent implements OnInit {
         })
         .subscribe(
           (value) => {
-            this.messageService.add({
-              severity: 'success',
-              summary: 'Downvoted',
-              detail: 'Review has been downvoted',
-            });
             this.onGetReviewsByUser();
           },
           (error) => {
-            this.messageService.add({
-              severity: 'error',
-              summary: 'Error',
-              detail: "Can't react to your own comment.",
-            });
+            this.ownCommentToast();
           },
         );
     }

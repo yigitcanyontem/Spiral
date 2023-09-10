@@ -54,4 +54,8 @@ public class FavShowsService {
         }
         favShowsRepository.save(new FavShows(usersid,favshowsid));
     }
+
+    public Boolean checkFavoritedShows(Integer usersid, Integer showid) {
+        return favShowsRepository.existsByUsersid_IdAndShowid(usersid,showid);
+    }
 }

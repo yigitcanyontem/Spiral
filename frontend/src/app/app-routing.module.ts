@@ -11,6 +11,7 @@ import { BookComponent } from './components/entertainment/book/book.component';
 import { UserUpdateComponent } from './components/user/user-update/user-update.component';
 import { UserReviewsComponent } from './components/user/user-reviews/user-reviews.component';
 import { MainpageWrapperComponent } from './components/all/mainpage-wrapper/mainpage-wrapper.component';
+import { SearchResultsComponent } from './components/all/search-results/search-results.component';
 
 const routes: Routes = [
   { path: 'profile/:userid', component: UserProfileComponent },
@@ -24,10 +25,13 @@ const routes: Routes = [
   { path: 'game/:id', component: GameComponent },
   { path: 'album/:id', component: AlbumComponent },
   { path: 'book/:id', component: BookComponent },
+  { path: 'search/:query', component: SearchResultsComponent },
 ];
 
 @NgModule({
-  imports: [RouterModule.forRoot(routes)],
+  imports: [
+    RouterModule.forRoot(routes, { scrollPositionRestoration: 'enabled' }),
+  ],
   exports: [RouterModule],
 })
 export class AppRoutingModule {}

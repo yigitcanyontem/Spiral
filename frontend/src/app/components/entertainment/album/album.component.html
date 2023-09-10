@@ -1,7 +1,8 @@
 <ng-container *ngIf="!isLoaded">
   <app-spinner></app-spinner>
 </ng-container>
-<ng-container *ngIf="isLoaded">
+<ng-container *ngIf="isLoaded && !error">
+  <p-toast></p-toast>
   <div class="page-wrapper">
     <div>
       <div class="card">
@@ -22,6 +23,24 @@
             <a href="{{ this.album.url }}">last_fm</a>
             <h6 class="text-secondary">{{ this.album.favorite_count }}</h6>
           </div>
+          <div *ngIf="this.userLogged">
+            <button
+              class="favorite_button"
+              *ngIf="!favorited"
+              (click)="addFavorite()"
+            >
+              <i class="fi fi-rr-heart"></i>
+              <p>Favorite</p>
+            </button>
+            <button
+              class="favorite_button"
+              *ngIf="favorited"
+              (click)="deleteFavorite()"
+            >
+              <i class="fi fi-sr-heart"></i>
+              <p>Favorited</p>
+            </button>
+          </div>
         </div>
       </div>
     </div>
@@ -33,5 +52,15 @@
       [entertainmentImage]="album.image"
       (getAverage)="onGetAverage()"
     ></app-reviews>
+  </div>
+</ng-container>
+<ng-container *ngIf="isLoaded && error">
+  <div class="card text-center page-wrapper mt-5">
+    <div class="card-header">
+      <h5>Album Not Found</h5>
+    </div>
+    <div class="card-img overflow-x-hidden">
+      <img src="assets/not_found.svg" alt="" class="mt-2" />
+    </div>
   </div>
 </ng-container>

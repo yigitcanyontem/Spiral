@@ -1,20 +1,18 @@
 package com.yigitcanyontem.forum.service;
 
+import com.yigitcanyontem.forum.entity.SocialMedia;
 import com.yigitcanyontem.forum.entity.Users;
 import com.yigitcanyontem.forum.entity.enums.Status;
 import com.yigitcanyontem.forum.exceptions.SearchNotFoundException;
-import com.yigitcanyontem.forum.model.users.UserDTO;
-import com.yigitcanyontem.forum.repository.UsersRepository;
-import com.yigitcanyontem.forum.entity.SocialMedia;
 import com.yigitcanyontem.forum.model.entertainment.AssignModel;
+import com.yigitcanyontem.forum.model.users.UserDTO;
+import com.yigitcanyontem.forum.model.users.UserSearchDTO;
+import com.yigitcanyontem.forum.repository.UsersRepository;
 import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 import org.apache.commons.io.FileUtils;
 import org.springframework.core.io.FileSystemResource;
 import org.springframework.core.io.Resource;
-import org.springframework.http.HttpHeaders;
-import org.springframework.http.MediaType;
-import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -60,10 +58,16 @@ public class UsersService {
     public Users getUsersObjectByUsername(String username){
         return usersRepository.getUsersByUsername(username);
     }
-    public List<Users> usersList(String username){
-        List<Users> list = usersRepository.findByUsernameContainingAndStatus(username, Status.ACTIVE);
-        if (list.size() == 0){
-            throw new SearchNotFoundException("No Users Found");
+
+    public List<UserSearchDTO> usersList(String username){
+        List<UserSearchDTO> list = usersRepository.findByUsernameContainingAndStatus(username, Status.ACTIVE).stream().map(users -> new UserSearchDTO(
+                users.getId(),
+                users.getFirstName(),
+                users.getLastName(),
+                users.getUsername()
+        )).toList();
+        if (list.isEmpty()){
+            return List.of();
         }
         return list;
     }

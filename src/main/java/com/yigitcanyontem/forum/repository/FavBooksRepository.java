@@ -17,6 +17,7 @@ public interface FavBooksRepository extends JpaRepository<FavBooks,String> {
     boolean existsFavBooksByUsersid(Users usersid);
     int countFavBooksByBookid(String bookid);
     boolean existsFavBooksByUsersidAndBookid(Users usersid, String bookid);
+    boolean existsFavBooksByUsersid_IdAndBookid(Integer usersid, String bookid);
     void deleteFavBooksByUsersid(Users usersid);
     void deleteFavBooksByUsersidAndBookid(Users usersid, String bookid);
 

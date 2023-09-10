@@ -50,7 +50,7 @@ public class BookService {
             }
         }
         if (books.size() == 0){
-            throw new SearchNotFoundException("No Book Found");
+            return List.of();
         }
         return books;
     }
@@ -108,9 +108,12 @@ public class BookService {
         book.setId(list.findValue("id").asText());
         book.setTitle(list.findValue("title").asText());
 
-        for (JsonNode authorNode:list.findValue("authors")){
-            authors.add(authorNode.asText());
-
+        try {
+            for (JsonNode authorNode:list.findValue("authors")){
+                authors.add(authorNode.asText());
+            }
+        }catch (Exception e){
+            authors = null;
         }
         book.setAuthors(authors);
         book.setDescription(list.findValue("description").asText());

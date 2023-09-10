@@ -154,7 +154,7 @@ public class ShowService {
         }
         shows.sort(Comparator.comparing(Show::getVote_count).reversed());
         if (shows.size() == 0){
-            throw new SearchNotFoundException("No Show Found");
+            return List.of();
         }
         return shows;
     }

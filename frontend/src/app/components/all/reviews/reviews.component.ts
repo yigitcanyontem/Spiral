@@ -85,11 +85,6 @@ export class ReviewsComponent {
         })
         .subscribe(
           (value) => {
-            this.messageService.add({
-              severity: 'success',
-              summary: 'Upvoted',
-              detail: 'Review has been upvoted',
-            });
             this.onGetReviews();
           },
           (error) => {
@@ -119,11 +114,6 @@ export class ReviewsComponent {
         })
         .subscribe(
           (value) => {
-            this.messageService.add({
-              severity: 'success',
-              summary: 'Downvoted',
-              detail: 'Review has been downvoted',
-            });
             this.onGetReviews();
           },
           (error) => {

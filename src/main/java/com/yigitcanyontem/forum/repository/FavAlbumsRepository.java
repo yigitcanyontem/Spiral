@@ -18,6 +18,7 @@ public interface FavAlbumsRepository extends JpaRepository<FavAlbums,String> {
     int countFavAlbumsByAlbumid(String albumid);
     boolean existsFavAlbumsByUsersid(Users usersid);
     boolean existsFavAlbumsByUsersidAndAlbumid(Users usersid, String albumid);
+    boolean existsFavAlbumsByUsersid_IdAndAlbumid(Integer usersid_id, String albumid);
     void deleteFavAlbumsByUsersid(Users usersid);
     void deleteFavAlbumsByUsersidAndAlbumid(Users usersid, String albumid);
 }

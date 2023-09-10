@@ -1,1 +1,177 @@
-<p>search-results works!</p>
+<ng-container class="text-center" *ngIf="!isLoaded">
+  <app-spinner></app-spinner>
+</ng-container>
+<ng-container class="text-center" *ngIf="isLoaded">
+  <div class="page-wrapper mt-5 pb-5">
+    <h3 class="text-light text-center">SEARCH RESULTS</h3>
+    <p-tabView [scrollable]="true">
+      <p-tabPanel [cache]="true">
+        <ng-template pTemplate="header">
+          <i class="fi fi-rr-camera-movie"></i>
+          <span>Movies</span>
+        </ng-template>
+        <h5 class="text-center" *ngIf="this.movies.length == 0">
+          No Movies Found
+        </h5>
+        <div *ngFor="let movie of movies">
+          <a href="/movie/{{ movie.id }}" target="_blank" rel="bookmark">
+            <div class="card d-flex flex-row pointer gap-2 mb-1">
+              <div class="flex-column">
+                <img [src]="movie.poster_path" alt="" class="card-image" />
+              </div>
+              <div
+                class="flex-column align-items-center justify-content-center"
+              >
+                <div>
+                  <h4>{{ movie.original_title }}</h4>
+                  <h5 class="text-secondary">{{ movie.release_date }}</h5>
+                </div>
+              </div>
+            </div>
+          </a>
+        </div>
+      </p-tabPanel>
+      <p-tabPanel [cache]="true">
+        <ng-template pTemplate="header">
+          <i class="fi fi-br-screen"></i>
+          <span>Shows</span>
+        </ng-template>
+        <h5 class="text-center" *ngIf="this.shows.length == 0">
+          No Shows Found
+        </h5>
+        <div *ngFor="let show of shows">
+          <a href="/show/{{ show.id }}" target="_blank" rel="bookmark">
+            <div class="card d-flex flex-row pointer gap-2 mb-1">
+              <div class="flex-column">
+                <img [src]="show.poster_path" alt="" class="card-image" />
+              </div>
+              <div
+                class="flex-column align-items-center justify-content-center"
+              >
+                <div>
+                  <h4>{{ show.original_title }}</h4>
+                  <h5 class="text-secondary">
+                    {{ show.first_air_date }} - {{ show.last_air_date }}
+                  </h5>
+                </div>
+              </div>
+            </div>
+          </a>
+        </div>
+      </p-tabPanel>
+      <p-tabPanel [cache]="true">
+        <ng-template pTemplate="header">
+          <i class="fi fi-rr-record-vinyl"></i>
+          <span>Albums</span>
+        </ng-template>
+        <h5 class="text-center" *ngIf="this.albums.length == 0">
+          No Albums Found
+        </h5>
+        <div *ngFor="let album of albums">
+          <a href="/album/{{ album.mbid }}" target="_blank" rel="bookmark">
+            <div class="card d-flex flex-row pointer gap-2 mb-1">
+              <div class="flex-column">
+                <img [src]="album.image" alt="" class="card-image" />
+              </div>
+              <div
+                class="flex-column align-items-center justify-content-center"
+              >
+                <div>
+                  <h4>{{ album.name }}</h4>
+                  <h5 class="text-secondary">{{ album.artist }}</h5>
+                </div>
+              </div>
+            </div>
+          </a>
+        </div>
+      </p-tabPanel>
+      <p-tabPanel [cache]="true">
+        <ng-template pTemplate="header">
+          <i class="fi-rr-book-bookmark"></i>
+          <span>Books</span>
+        </ng-template>
+        <h5 class="text-center" *ngIf="this.books.length == 0">
+          No Books Found
+        </h5>
+        <div *ngFor="let book of books">
+          <a href="/book/{{ book.id }}" target="_blank" rel="bookmark">
+            <div
+              class="card d-flex flex-row pointer gap-2 mb-1"
+              routerLink="/book/{{ book.id }}"
+            >
+              <div class="flex-column">
+                <img [src]="book.cover_url" alt="" class="card-image" />
+              </div>
+              <div
+                class="flex-column align-items-center justify-content-center"
+              >
+                <div>
+                  <h4>{{ book.title }}</h4>
+                  <h5 class="text-secondary">{{ book.publishedDate }}</h5>
+                </div>
+              </div>
+            </div>
+          </a>
+        </div>
+      </p-tabPanel>
+      <p-tabPanel [cache]="true">
+        <ng-template pTemplate="header">
+          <i class="fi fi-rr-joystick"></i>
+          <span>Games</span>
+        </ng-template>
+        <h5 class="text-center" *ngIf="this.games.length == 0">
+          No Games Found
+        </h5>
+        <div *ngFor="let game of games">
+          <a href="/game/{{ game.id }}" target="_blank" rel="bookmark">
+            <div class="card d-flex flex-row pointer gap-2 mb-1">
+              <div class="flex-column">
+                <img [src]="game.original_url" alt="" class="card-image" />
+              </div>
+              <div
+                class="flex-column align-items-center justify-content-center"
+              >
+                <div>
+                  <h4>{{ game.name }}</h4>
+                  <h5 class="text-secondary">{{ game.releaseDate }}</h5>
+                </div>
+              </div>
+            </div>
+          </a>
+        </div>
+      </p-tabPanel>
+      <p-tabPanel [cache]="true">
+        <ng-template pTemplate="header">
+          <i class="fi fi-rs-users"></i>
+          <span>Users</span>
+        </ng-template>
+        <h5 class="text-center" *ngIf="this.users.length == 0">
+          No Users Found
+        </h5>
+        <div *ngFor="let user of users">
+          <a href="/profile/{{ user.id }}" target="_blank" rel="bookmark">
+            <div class="card d-flex flex-row pointer gap-2 mb-1">
+              <div class="flex-column">
+                <img
+                  [src]="userProfilePicturesMap.get(user.id)"
+                  alt=""
+                  class="card-image"
+                />
+              </div>
+              <div
+                class="flex-column align-items-center justify-content-center"
+              >
+                <div>
+                  <h4>{{ user.username }}</h4>
+                  <h5 class="text-secondary">
+                    {{ user.firstName }} {{ user.lastName }}
+                  </h5>
+                </div>
+              </div>
+            </div>
+          </a>
+        </div>
+      </p-tabPanel>
+    </p-tabView>
+  </div>
+</ng-container>
