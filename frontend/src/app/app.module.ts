@@ -41,6 +41,8 @@ import { CrewMembersComponent } from './components/entertainment/crew-members/cr
 import { SearchResultsComponent } from './components/all/search-results/search-results.component';
 import { TabMenuModule } from 'primeng/tabmenu';
 import { TabViewModule } from 'primeng/tabview';
+import { MenuModule } from 'primeng/menu';
+import { ConfirmDialogModule } from 'primeng/confirmdialog';
 
 @NgModule({
   declarations: [
@@ -88,6 +90,8 @@ import { TabViewModule } from 'primeng/tabview';
     MessagesModule,
     TabMenuModule,
     TabViewModule,
+    MenuModule,
+    ConfirmDialogModule,
   ],
   bootstrap: [AppComponent],
 })

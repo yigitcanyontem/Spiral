@@ -29,189 +29,37 @@
             </span>
           </div>
         </li>
+        <p-confirmDialog [style]="{ width: '50vw' }"></p-confirmDialog>
         <li>
-          <button
-            class="btn"
-            type="button"
-            data-bs-toggle="offcanvas"
-            data-bs-target="#offcanvasExample"
-            aria-controls="offcanvasExample"
-          >
-            <i class="fi fi-bs-menu-burger text-light"></i>
-          </button>
-        </li>
-      </ul>
-    </nav>
-  </header>
-
-  <div
-    class="offcanvas offcanvas-end"
-    tabindex="-1"
-    id="offcanvasExample"
-    aria-labelledby="offcanvasExampleLabel"
-  >
-    <div class="offcanvas-header">
-      <h4 class="offcanvas-title" id="offcanvasExampleLabel">Spiral</h4>
-      <button
-        type="button"
-        class="btn-close bg-light"
-        data-bs-dismiss="offcanvas"
-        aria-label="Close"
-      ></button>
-    </div>
-    <div class="offcanvas-body">
-      <div class="container-admin d-flex align-items-center">
-        <ul class="d-flex w-100 h-50 flex-column gap-3">
-          <div class="user-profile-image-container mb-2" *ngIf="isLoaded">
-            <a
-              class="nav-link"
-              href="#"
-              role="button"
-              data-bs-toggle="dropdown"
-              aria-expanded="false"
+          <p-menu
+            #menu
+            [model]="items"
+            [popup]="true"
+            appendTo="body"
+            styleClass="mt-3"
+          ></p-menu>
+          <div>
+            <button
+              class="btn p-0 m-0"
+              type="button"
+              (click)="menu.toggle($event)"
             >
               <img
+                *ngIf="!isNaN(this.userid)"
                 [src]="images"
                 class="user-profile-image"
                 alt="user profile image"
               />
-            </a>
+              <img
+                *ngIf="isNaN(this.userid)"
+                src="assets/avatar.svg"
+                class="user-profile-image"
+                alt="user profile image"
+              />
+            </button>
           </div>
-          <div class="user-profile-image-container" *ngIf="isLoaded">
-            <p class="name">{{ user.username }}</p>
-          </div>
-          <li
-            role="button"
-            *ngIf="isLoaded"
-            routerLink="/profile/{{ userid }}"
-            routerLinkActive="routerLinkActive"
-            data-bs-toggle="offcanvas"
-            data-bs-target="#offcanvasExample"
-            class="overflow-hidden gap-2 py-4 px-5 d-flex w-100 align-items-center sidebar-btn"
-          >
-            <i class="fi fi-rr-user"></i>
-            <a class="sidebar-text">Profile</a>
-          </li>
-          <li
-            role="button"
-            *ngIf="isLoaded"
-            routerLink="reviews/user/{{ userid }}"
-            [routerLinkActiveOptions]="{ exact: true }"
-            routerLinkActive="routerLinkActive"
-            data-bs-toggle="offcanvas"
-            data-bs-target="#offcanvasExample"
-            class="overflow-hidden gap-2 py-4 px-5 d-flex w-100 d-flex align-items-center sidebar-btn"
-          >
-            <i class="fi fi-rr-edit"></i>
-            <a class="sidebar-text">My Reviews</a>
-          </li>
-          <li
-            role="button"
-            routerLink=""
-            [routerLinkActiveOptions]="{ exact: true }"
-            routerLinkActive="routerLinkActive"
-            data-bs-toggle="offcanvas"
-            data-bs-target="#offcanvasExample"
-            class="overflow-hidden gap-2 py-4 px-5 d-flex w-100 d-flex align-items-center sidebar-btn"
-          >
-            <i class="fi fi-rr-apps"></i>
-            <a class="sidebar-text">Home</a>
-          </li>
-          <li
-            role="button"
-            routerLink="/info"
-            routerLinkActive="routerLinkActive"
-            data-bs-toggle="offcanvas"
-            data-bs-target="#offcanvasExample"
-            class="overflow-hidden gap-2 py-4 px-5 d-flex w-100 align-items-center sidebar-btn"
-          >
-            <i class="fi fi-rr-camera-movie"></i>
-            <a class="sidebar-text">Movies</a>
-          </li>
-
-          <li
-            role="button"
-            routerLink="/report/conclusion"
-            routerLinkActive="routerLinkActive"
-            data-bs-toggle="offcanvas"
-            data-bs-target="#offcanvasExample"
-            class="overflow-hidden gap-2 py-4 px-5 d-flex w-100 align-items-center sidebar-btn"
-          >
-            <i class="fi fi-rr-screen"></i>
-            <a class="sidebar-text">Shows</a>
-          </li>
-          <li
-            role="button"
-            routerLink="/password"
-            routerLinkActive="routerLinkActive"
-            data-bs-toggle="offcanvas"
-            data-bs-target="#offcanvasExample"
-            class="overflow-hidden gap-2 py-4 px-5 d-flex w-100 d-flex align-items-center sidebar-btn"
-          >
-            <i class="fi fi-rr-joystick"></i>
-            <a class="sidebar-text">Games</a>
-          </li>
-          <li
-            role="button"
-            routerLink="/issue"
-            [routerLinkActiveOptions]="{ exact: true }"
-            routerLinkActive="routerLinkActive"
-            data-bs-toggle="offcanvas"
-            data-bs-target="#offcanvasExample"
-            class="overflow-hidden gap-2 py-4 px-5 d-flex w-100 d-flex align-items-center sidebar-btn"
-          >
-            <i class="fi fi-br-album-collection"></i>
-            <a class="sidebar-text">Albums</a>
-          </li>
-          <li
-            role="button"
-            routerLink="/issue"
-            [routerLinkActiveOptions]="{ exact: true }"
-            routerLinkActive="routerLinkActive"
-            data-bs-toggle="offcanvas"
-            data-bs-target="#offcanvasExample"
-            class="overflow-hidden gap-2 py-4 px-5 d-flex w-100 d-flex align-items-center sidebar-btn"
-          >
-            <i class="fi fi-rs-books"></i>
-            <a class="sidebar-text">Books</a>
-          </li>
-        </ul>
-      </div>
-    </div>
-    <div class="sidebar_footer">
-      <div *ngIf="isLoaded">
-        <span class="text-start">
-          <button
-            class="text-light log-button"
-            routerLink="/login"
-            data-bs-toggle="offcanvas"
-            data-bs-target="#offcanvasExample"
-            (click)="onLogout()"
-          >
-            <span>Logout <i class="fi fi fi-ss-exit ms-1"></i></span>
-          </button>
-        </span>
-      </div>
-      <div *ngIf="!isLoaded">
-        <div class="text-start">
-          <button
-            class="text-light log-button"
-            routerLink="/signup"
-            data-bs-toggle="offcanvas"
-            data-bs-target="#offcanvasExample"
-          >
-            Sign up
-          </button>
-          <button
-            class="text-light log-button"
-            routerLink="/login"
-            data-bs-toggle="offcanvas"
-            data-bs-target="#offcanvasExample"
-          >
-            Log In
-          </button>
-        </div>
-      </div>
-    </div>
-  </div>
+        </li>
+      </ul>
+    </nav>
+  </header>
 </ng-container>

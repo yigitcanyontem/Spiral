@@ -24,7 +24,6 @@ import org.springframework.web.multipart.MultipartFile;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
-//TODO add fav add and delete to frontend
 @RestController
 @RequestMapping("/api/v1/user")
 @RequiredArgsConstructor

@@ -79,7 +79,7 @@ export class UserReviewsComponent implements OnInit {
       this.messageService.add({
         severity: 'error',
         summary: 'Error',
-        detail: 'Login to upvote',
+        detail: 'Login to downvote',
       });
     } else {
       this.reviewService

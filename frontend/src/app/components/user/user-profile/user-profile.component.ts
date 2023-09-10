@@ -25,6 +25,8 @@ export class UserProfileComponent implements OnInit {
   );
   responsiveOptions: any[] | undefined;
 
+  sameUser = this.userid === parseInt(localStorage.getItem('forum_user_id')!);
+
   isLoaded = false;
   user!: UserDTO;
   movies!: Movie[];

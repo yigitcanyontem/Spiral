@@ -59,6 +59,7 @@
             </div>
             <div class="flex-row justify-content-center gap-2">
               <button
+                *ngIf="sameUser"
                 [routerLink]="['/update']"
                 class="btn btn-outline-dark text-light border-light"
               >
