@@ -12,20 +12,23 @@ import { UserUpdateComponent } from './components/user/user-update/user-update.c
 import { UserReviewsComponent } from './components/user/user-reviews/user-reviews.component';
 import { MainpageWrapperComponent } from './components/all/mainpage-wrapper/mainpage-wrapper.component';
 import { SearchResultsComponent } from './components/all/search-results/search-results.component';
+import { CrewMembersComponent } from './components/entertainment/crew-members/crew-members.component';
+import { authGuard } from './services/auth.guard';
 
 const routes: Routes = [
-  { path: 'profile/:userid', component: UserProfileComponent },
   { path: '', component: MainpageWrapperComponent },
-  { path: 'reviews/user/:userid', component: UserReviewsComponent },
+  { path: 'user/:userid', component: UserProfileComponent },
+  { path: 'user/reviews/:userid', component: UserReviewsComponent },
   { path: 'update', component: UserUpdateComponent },
-  { path: 'login', component: LoginComponent },
-  { path: 'signup', component: RegisterComponent },
   { path: 'movie/:id', component: MovieComponent },
   { path: 'show/:id', component: ShowComponent },
   { path: 'game/:id', component: GameComponent },
   { path: 'album/:id', component: AlbumComponent },
   { path: 'book/:id', component: BookComponent },
+  { path: 'crew/:id', component: CrewMembersComponent },
   { path: 'search/:query', component: SearchResultsComponent },
+  { path: 'login', component: LoginComponent, canActivate: [authGuard] },
+  { path: 'signup', component: RegisterComponent, canActivate: [authGuard] },
 ];
 
 @NgModule({

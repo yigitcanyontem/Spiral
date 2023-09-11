@@ -41,7 +41,7 @@ export class LoginComponent {
         (bool) => {
           if (bool) {
             this.router
-              .navigate([`profile/${localStorage.getItem('forum_user_id')}`])
+              .navigate([`user/${localStorage.getItem('forum_user_id')}`])
               .then(() => {
                 window.location.reload();
               });

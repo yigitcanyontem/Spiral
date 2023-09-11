@@ -80,18 +80,20 @@
                 actor.profile_path == 'https://image.tmdb.org/t/p/originalnull'
               "
             >
-              <img
-                *ngIf="actor.gender == 1"
-                src="assets/avatar-female.svg"
-                class="crew-profile-image"
-                alt=" profile image"
-              />
-              <img
-                *ngIf="actor.gender == 2 || actor.gender == 0"
-                src="assets/avatar-male.svg"
-                class="crew-profile-image"
-                alt=" profile image"
-              />
+              <a href="/crew/{{ actor.id }}" target="_blank" rel="bookmark">
+                <img
+                  *ngIf="actor.gender == 1"
+                  src="assets/avatar-female.svg"
+                  class="crew-profile-image"
+                  alt=" profile image"
+                />
+                <img
+                  *ngIf="actor.gender == 2 || actor.gender == 0"
+                  src="assets/avatar-male.svg"
+                  class="crew-profile-image"
+                  alt=" profile image"
+                />
+              </a>
             </div>
             <div
               class="flex-column"
@@ -99,11 +101,13 @@
                 actor.profile_path != 'https://image.tmdb.org/t/p/originalnull'
               "
             >
-              <img
-                [src]="actor.profile_path"
-                class="crew-profile-image"
-                alt=" profile image"
-              />
+              <a href="/crew/{{ actor.id }}" target="_blank" rel="bookmark">
+                <img
+                  [src]="actor.profile_path"
+                  class="crew-profile-image"
+                  alt=" profile image"
+                />
+              </a>
             </div>
             <div class="flex-column justify-content-center">
               <h5 class="fw-bold">{{ actor.original_name }}</h5>
@@ -123,18 +127,20 @@
                 'https://image.tmdb.org/t/p/originalnull'
               "
             >
-              <img
-                *ngIf="producer.gender == 1"
-                src="assets/avatar-female.svg"
-                class="crew-profile-image"
-                alt=" profile image"
-              />
-              <img
-                *ngIf="producer.gender == 2 || producer.gender == 0"
-                src="assets/avatar-male.svg"
-                class="crew-profile-image"
-                alt=" profile image"
-              />
+              <a href="/crew/{{ producer.id }}" target="_blank" rel="bookmark">
+                <img
+                  *ngIf="producer.gender == 1"
+                  src="assets/avatar-female.svg"
+                  class="crew-profile-image"
+                  alt=" profile image"
+                />
+                <img
+                  *ngIf="producer.gender == 2 || producer.gender == 0"
+                  src="assets/avatar-male.svg"
+                  class="crew-profile-image"
+                  alt=" profile image"
+                />
+              </a>
             </div>
             <div
               class="flex-column"
@@ -143,11 +149,13 @@
                 'https://image.tmdb.org/t/p/originalnull'
               "
             >
-              <img
-                [src]="producer.profile_path"
-                class="crew-profile-image"
-                alt=" profile image"
-              />
+              <a href="/crew/{{ producer.id }}" target="_blank" rel="bookmark">
+                <img
+                  [src]="producer.profile_path"
+                  class="crew-profile-image"
+                  alt=" profile image"
+                />
+              </a>
             </div>
             <div class="flex-column justify-content-center">
               <h5 class="fw-bold">{{ producer.original_name }}</h5>

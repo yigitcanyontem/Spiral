@@ -1,1 +1,38 @@
-<p>crew-members works!</p>
+<ng-container *ngIf="!isLoaded">
+  <app-spinner></app-spinner>
+</ng-container>
+<ng-container *ngIf="isLoaded">
+  <div class="page-wrapper text-light">
+    <div class="crew-member-profile" *ngIf="isLoaded">
+      <div class="profile-header">
+        <img
+          src="{{ crewMember.profile_path }}"
+          alt="{{ crewMember.original_name }}"
+          class="profile-image"
+        />
+        <h1>{{ crewMember.original_name }}</h1>
+        <p>{{ crewMember.known_for_department }}</p>
+      </div>
+      <div class="profile-details">
+        <div class="section">
+          <h2>Biography</h2>
+          <p>{{ crewMember.biography }}</p>
+        </div>
+        <div class="section">
+          <h2>Personal Details</h2>
+          <p><strong>Birthday:</strong> {{ crewMember.birthday }}</p>
+          <p>
+            <strong>Place of Birth:</strong> {{ crewMember.place_of_birth }}
+          </p>
+          <a
+            href="https://www.imdb.com/name/{{ crewMember.imdb_id }}/"
+            target="_blank"
+            rel="bookmark"
+          >
+            <strong>IMDb</strong>
+          </a>
+        </div>
+      </div>
+    </div>
+  </div>
+</ng-container>

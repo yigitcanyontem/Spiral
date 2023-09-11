@@ -42,6 +42,8 @@ export class ReviewsComponent {
   direction: string = 'ASC';
   rating = null;
 
+  hasCommented!: boolean;
+
   edit_frm: boolean = false;
   review_edit_id!: number;
   constructor(
@@ -144,6 +146,14 @@ export class ReviewsComponent {
           this.edit_frm = false;
         }
         this.getAverage.next('');
+        this.hasCommented = this.reviews.reviews.some((review) => {
+          const isCommentedByUser = review.usersid.id == parseInt(this.usersid);
+          return isCommentedByUser;
+        });
+
+        if (this.usersid == null || isNaN(Number(this.usersid))) {
+          this.hasCommented = true;
+        }
         this.isLoaded = true;
       });
   }
@@ -234,4 +244,6 @@ export class ReviewsComponent {
   }
 
   protected readonly parseInt = parseInt;
+  protected readonly isNaN = isNaN;
+  protected readonly Number = Number;
 }

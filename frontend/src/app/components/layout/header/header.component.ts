@@ -58,14 +58,14 @@ export class HeaderComponent implements OnInit {
             label: 'Profile',
             icon: 'pi pi-user',
             command: () => {
-              this.router.navigate(['/profile/' + this.userid]);
+              this.router.navigate(['/user/' + this.userid]);
             },
           },
           {
             label: 'Reviews',
             icon: 'fi fi-sr-note',
             command: () => {
-              this.router.navigate(['/reviews/user/' + this.userid]);
+              this.router.navigate(['/user/reviews/' + this.userid]);
             },
           },
           {

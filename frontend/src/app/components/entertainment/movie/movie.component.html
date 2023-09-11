@@ -83,7 +83,7 @@
       </div>
     </div>
     <div>
-      <h4 class="text-light">Actors</h4>
+      <h4 class="text-light" *ngIf="this.movie.actors.length != 0">Actors</h4>
       <div *ngFor="let actor of this.movie.actors">
         <div class="card">
           <div class="flex-row gap-2">
@@ -93,18 +93,20 @@
                 actor.profile_path == 'https://image.tmdb.org/t/p/originalnull'
               "
             >
-              <img
-                *ngIf="actor.gender == 1"
-                src="assets/avatar-female.svg"
-                class="crew-profile-image"
-                alt=" profile image"
-              />
-              <img
-                *ngIf="actor.gender == 2 || actor.gender == 0"
-                src="assets/avatar-male.svg"
-                class="crew-profile-image"
-                alt=" profile image"
-              />
+              <a href="/crew/{{ actor.id }}" target="_blank" rel="bookmark">
+                <img
+                  *ngIf="actor.gender == 1"
+                  src="assets/avatar-female.svg"
+                  class="crew-profile-image"
+                  alt=" profile image"
+                />
+                <img
+                  *ngIf="actor.gender == 2 || actor.gender == 0"
+                  src="assets/avatar-male.svg"
+                  class="crew-profile-image"
+                  alt=" profile image"
+                />
+              </a>
             </div>
             <div
               class="flex-column"
@@ -112,11 +114,13 @@
                 actor.profile_path != 'https://image.tmdb.org/t/p/originalnull'
               "
             >
-              <img
-                [src]="actor.profile_path"
-                class="crew-profile-image"
-                alt=" profile image"
-              />
+              <a href="/crew/{{ actor.id }}" target="_blank" rel="bookmark">
+                <img
+                  [src]="actor.profile_path"
+                  class="crew-profile-image"
+                  alt=" profile image"
+                />
+              </a>
             </div>
             <div class="flex-column justify-content-center">
               <h5 class="fw-bold">{{ actor.original_name }}</h5>
@@ -125,7 +129,9 @@
           </div>
         </div>
       </div>
-      <h4 class="text-light">Directors</h4>
+      <h4 class="text-light" *ngIf="this.movie.directors.length != 0">
+        Directors
+      </h4>
       <div *ngFor="let director of this.movie.directors">
         <div class="card">
           <div class="flex-row gap-2">
@@ -136,18 +142,20 @@
                 'https://image.tmdb.org/t/p/originalnull'
               "
             >
-              <img
-                *ngIf="director.gender == 1"
-                src="assets/avatar-female.svg"
-                class="crew-profile-image"
-                alt=" profile image"
-              />
-              <img
-                *ngIf="director.gender == 2 || director.gender == 0"
-                src="assets/avatar-male.svg"
-                class="crew-profile-image"
-                alt=" profile image"
-              />
+              <a href="/crew/{{ director.id }}" target="_blank" rel="bookmark">
+                <img
+                  *ngIf="director.gender == 1"
+                  src="assets/avatar-female.svg"
+                  class="crew-profile-image"
+                  alt=" profile image"
+                />
+                <img
+                  *ngIf="director.gender == 2 || director.gender == 0"
+                  src="assets/avatar-male.svg"
+                  class="crew-profile-image"
+                  alt=" profile image"
+                />
+              </a>
             </div>
             <div
               class="flex-column"
@@ -156,11 +164,13 @@
                 'https://image.tmdb.org/t/p/originalnull'
               "
             >
-              <img
-                [src]="director.profile_path"
-                class="crew-profile-image"
-                alt=" profile image"
-              />
+              <a href="/crew/{{ director.id }}" target="_blank" rel="bookmark">
+                <img
+                  [src]="director.profile_path"
+                  class="crew-profile-image"
+                  alt=" profile image"
+                />
+              </a>
             </div>
             <div class="flex-column justify-content-center">
               <h5 class="fw-bold">{{ director.original_name }}</h5>
@@ -168,7 +178,7 @@
           </div>
         </div>
       </div>
-      <h4 class="text-light">Writers</h4>
+      <h4 class="text-light" *ngIf="this.movie.writers.length != 0">Writers</h4>
       <div *ngFor="let writer of this.movie.writers">
         <div class="card">
           <div class="flex-row gap-2">
@@ -178,18 +188,20 @@
                 writer.profile_path == 'https://image.tmdb.org/t/p/originalnull'
               "
             >
-              <img
-                *ngIf="writer.gender == 1"
-                src="assets/avatar-female.svg"
-                class="crew-profile-image"
-                alt=" profile image"
-              />
-              <img
-                *ngIf="writer.gender == 2 || writer.gender == 0"
-                src="assets/avatar-male.svg"
-                class="crew-profile-image"
-                alt=" profile image"
-              />
+              <a href="/crew/{{ writer.id }}" target="_blank" rel="bookmark">
+                <img
+                  *ngIf="writer.gender == 1"
+                  src="assets/avatar-female.svg"
+                  class="crew-profile-image"
+                  alt=" profile image"
+                />
+                <img
+                  *ngIf="writer.gender == 2 || writer.gender == 0"
+                  src="assets/avatar-male.svg"
+                  class="crew-profile-image"
+                  alt=" profile image"
+                />
+              </a>
             </div>
             <div
               class="flex-column"
@@ -197,11 +209,13 @@
                 writer.profile_path != 'https://image.tmdb.org/t/p/originalnull'
               "
             >
-              <img
-                [src]="writer.profile_path"
-                class="crew-profile-image"
-                alt=" profile image"
-              />
+              <a href="/crew/{{ writer.id }}" target="_blank" rel="bookmark">
+                <img
+                  [src]="writer.profile_path"
+                  class="crew-profile-image"
+                  alt=" profile image"
+                />
+              </a>
             </div>
             <div class="flex-column justify-content-center">
               <h5 class="fw-bold">{{ writer.original_name }}</h5>

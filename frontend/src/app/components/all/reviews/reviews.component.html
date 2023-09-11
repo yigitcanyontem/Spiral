@@ -9,8 +9,10 @@
       (getReviews)="onGetReviews()"
     ></app-update-review>
   </div>
-  <div class="page-wrapper">
-    <h4 class="text-light mt-2">User Reviews</h4>
+  <div class="page-wrapper pb-3">
+    <h4 *ngIf="reviews.reviews.length != 0" class="text-light mt-2">
+      User Reviews
+    </h4>
     <div *ngFor="let review of this.reviews?.reviews">
       <div
         class="card mt-1 p-3"
@@ -98,14 +100,14 @@
         <div class="card-footer">
           <span class="flex-row justify-content-between">
             <p class="">{{ review.date }}</p>
-            <a class="" [routerLink]="'/profile/' + review.usersid.id">{{
+            <a class="" [routerLink]="'/user/' + review.usersid.id">{{
               review.usersid.username
             }}</a>
           </span>
         </div>
       </div>
     </div>
-    <div class="pb-5 mt-5">
+    <div class="pb-5 mt-5" *ngIf="!hasCommented">
       <div class="card" id="registerCard">
         <div
           class="card-title text-center justify-content-center align-content-center mt-2"
