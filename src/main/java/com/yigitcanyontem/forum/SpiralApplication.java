@@ -8,11 +8,11 @@ import java.util.Locale;
 
 @SpringBootApplication
 @EnableCaching
-public class AboutmeApplication {
+public class SpiralApplication {
 
 	public static void main(String[] args) {
 		Locale.setDefault(Locale.US);
-		SpringApplication.run(AboutmeApplication.class, args);
+		SpringApplication.run(SpiralApplication.class, args);
 	}
 
 }
