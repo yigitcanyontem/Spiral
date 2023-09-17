@@ -45,6 +45,13 @@
               (click)="menu.toggle($event)"
             >
               <img
+                *ngIf="!isNaN(this.userid)"
+                [src]="images"
+                class="user-profile-image"
+                alt="user profile image"
+              />
+              <img
+                *ngIf="isNaN(this.userid)"
                 src="assets/avatar.svg"
                 class="user-profile-image"
                 alt="user profile image"

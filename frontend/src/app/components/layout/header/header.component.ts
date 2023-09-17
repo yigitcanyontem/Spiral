@@ -1,10 +1,23 @@
-import { Component, HostListener, OnInit, ViewChild } from '@angular/core';
+import {
+  ChangeDetectorRef,
+  Component,
+  HostListener,
+  OnInit,
+  ViewChild,
+} from '@angular/core';
 import { UserDTO } from '../../../models/user-dto';
-import { Router } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { UserService } from '../../../services/user.service';
 import { forkJoin } from 'rxjs';
+import { SocialMediaDTO } from '../../../models/socialmedia-dto';
+import { Description } from '../../../models/description';
+import { Movie } from '../../../models/movie';
+import { Show } from '../../../models/show';
+import { Book } from '../../../models/book';
+import { Game } from '../../../models/game';
+import { Album } from '../../../models/album';
 import { AuthenticationService } from '../../../services/authentication.service';
-import { ConfirmationService, MenuItem } from 'primeng/api';
+import { ConfirmationService, MenuItem, MessageService } from 'primeng/api';
 import { Menu } from 'primeng/menu';
 
 @Component({
@@ -17,6 +30,7 @@ export class HeaderComponent implements OnInit {
   userid = parseInt(<string>localStorage.getItem('forum_user_id'));
   input: string = '';
   user!: UserDTO;
+  images!: string;
   isLoaded = false;
   items: MenuItem[] | undefined;
   @ViewChild('menu', { static: false }) menu: Menu | undefined;
@@ -105,12 +119,15 @@ export class HeaderComponent implements OnInit {
       this.loggenInItems();
 
       const getUser$ = this.userService.getUser(this.userid);
+      const getImage$ = this.userService.getImage(this.userid);
 
       forkJoin({
         user: getUser$,
+        images: getImage$,
       }).subscribe(
-        (results: { user: UserDTO }) => {
+        (results: { user: UserDTO; images: Blob }) => {
           this.user = results.user;
+          this.images = URL.createObjectURL(results.images);
           this.isLoaded = true;
         },
         (error) => {

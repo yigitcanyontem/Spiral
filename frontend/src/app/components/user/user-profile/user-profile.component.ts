@@ -36,6 +36,7 @@ export class UserProfileComponent implements OnInit {
   albums!: Album[];
 
   socialMedia!: SocialMediaDTO;
+  images!: string;
   description!: Description;
 
   constructor(
@@ -76,6 +77,7 @@ export class UserProfileComponent implements OnInit {
     const getFavAlbums$ = this.userService.getFavAlbums(this.userid);
     const getFavBooks$ = this.userService.getFavBooks(this.userid);
     const getFavGames$ = this.userService.getFavGames(this.userid);
+    const getImage$ = this.userService.getImage(this.userid);
 
     forkJoin({
       user: getUser$,
@@ -86,6 +88,7 @@ export class UserProfileComponent implements OnInit {
       books: getFavBooks$,
       games: getFavGames$,
       albums: getFavAlbums$,
+      images: getImage$,
     }).subscribe(
       (results: {
         user: UserDTO;
@@ -96,6 +99,7 @@ export class UserProfileComponent implements OnInit {
         books: Book[];
         games: FavGameDto[];
         albums: Album[];
+        images: Blob;
       }) => {
         this.user = results.user;
         this.socialMedia = results.socialMedia;
@@ -105,6 +109,7 @@ export class UserProfileComponent implements OnInit {
         this.books = results.books;
         this.games = results.games;
         this.albums = results.albums;
+        this.images = URL.createObjectURL(results.images);
         this.isLoaded = true;
         this.getSingleResultsForGames();
       },

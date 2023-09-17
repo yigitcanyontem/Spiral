@@ -64,6 +64,7 @@ export class SearchResultsComponent implements OnInit {
         users: Users[];
       }) => {
         this.users = results.users;
+        this.getUserProfilePictures();
         this.movies = results.movies;
         this.books = results.books;
         this.shows = results.shows;

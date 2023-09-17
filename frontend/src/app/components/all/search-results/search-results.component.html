@@ -152,7 +152,11 @@
           <a href="/user/{{ user.id }}" target="_blank" rel="bookmark">
             <div class="card d-flex flex-row pointer gap-2 mb-1">
               <div class="flex-column">
-                <img src="assets/avatar.svg" alt="" class="card-image" />
+                <img
+                  [src]="userProfilePicturesMap.get(user.id)"
+                  alt=""
+                  class="card-image"
+                />
               </div>
               <div
                 class="flex-column align-items-center justify-content-center"
