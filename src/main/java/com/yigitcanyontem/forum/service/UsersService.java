@@ -115,34 +115,36 @@ public class UsersService {
     }
 
      public List<String> uploadPicture(MultipartFile file, Integer id){
-        if (file.isEmpty()) {
-            return List.of("No file selected");
-        }
-        try {
-            byte[] bytes = file.getBytes();
-
-            String filePath = "photos/" + id+".jpg";
-            File serverFile = new File(filePath);
-
-            FileUtils.writeByteArrayToFile(serverFile, bytes);
-
-            return List.of("File uploaded successfully");
-        } catch (IOException e) {
-            e.printStackTrace();
-            return List.of("Error uploading file");
-        }
+//        if (file.isEmpty()) {
+//            return List.of("No file selected");
+//        }
+//        try {
+//            byte[] bytes = file.getBytes();
+//
+//            String filePath = "photos/" + id+".jpg";
+//            File serverFile = new File(filePath);
+//
+//            FileUtils.writeByteArrayToFile(serverFile, bytes);
+//
+//            return List.of("File uploaded successfully");
+//        } catch (IOException e) {
+//            e.printStackTrace();
+//            return List.of("Error uploading file");
+//        }
+         return null;
     }
 
     public Resource getImage(Integer imageName) {
-        String imagePath = "photos/" + imageName + ".jpg";
-        File imageFile = new File(imagePath);
-        Resource resource = new FileSystemResource(imageFile);
-
-        if (!resource.exists()) {
-            imagePath = "photos/default.jpg";
-            imageFile = new File(imagePath);
-            resource = new FileSystemResource(imageFile);
-        }
-        return resource;
+        return null;
+//        String imagePath = "photos/" + imageName + ".jpg";
+//        File imageFile = new File(imagePath);
+//        Resource resource = new FileSystemResource(imageFile);
+//
+//        if (!resource.exists()) {
+//            imagePath = "photos/default.jpg";
+//            imageFile = new File(imagePath);
+//            resource = new FileSystemResource(imageFile);
+//        }
+//        return resource;
     }
 }
