@@ -109,5 +109,11 @@
         </div>
       </div>
     </div>
+    <p-paginator
+      (onPageChange)="onPageChange($event)"
+      [rows]="pageSize"
+      [totalRecords]="totalItems"
+      [rowsPerPageOptions]="[10, 20, 30]"
+    ></p-paginator>
   </div>
 </ng-container>

@@ -6,6 +6,8 @@ import { EntertainmentType } from '../../../enums/entertainment-type';
 import { Review } from '../../../models/review';
 import { ReactionType } from '../../../enums/reaction-type';
 import { ConfirmationService, MessageService } from 'primeng/api';
+import { PaginatorState } from 'primeng/paginator';
+import { Subject, takeUntil } from 'rxjs';
 
 @Component({
   selector: 'app-user-reviews',
@@ -18,7 +20,16 @@ export class UserReviewsComponent implements OnInit {
     <string>this.activatedRoute.snapshot.paramMap.get('userid'),
   );
   usersid = <string>localStorage.getItem('forum_user_id');
-
+  pageNumber!: number;
+  pageSize: number = 10;
+  sort: string = 'id';
+  direction: string = 'ASC';
+  rating = null;
+  edit_frm: boolean = false;
+  review_edit_id!: number;
+  totalItems!: number;
+  isLoaded = false;
+  reviews!: Review[];
   own_reviews = this.userid === parseInt(this.usersid);
 
   constructor(
@@ -30,16 +41,9 @@ export class UserReviewsComponent implements OnInit {
     private messageService: MessageService,
   ) {}
 
-  pageNumber: number = 0;
-  pageSize: number = 10;
-  sort: string = 'id';
-  direction: string = 'ASC';
-  rating = null;
-  edit_frm: boolean = false;
-  review_edit_id!: number;
-  totalpages!: number;
-  isLoaded = false;
-  reviews!: Review[];
+  ngOnInit(): void {
+    this.onGetReviewsByUser();
+  }
 
   upvote(id: number) {
     if (this.usersid == undefined || isNaN(Number(this.usersid))) {
@@ -120,9 +124,10 @@ export class UserReviewsComponent implements OnInit {
         this.direction,
         this.rating,
       )
+      .pipe(takeUntil(this.ngUnsubscribe))
       .subscribe((value) => {
         this.reviews = value.reviews;
-        this.totalpages = value.totalPages;
+        this.totalItems = value.totalItems;
         if (this.review_edit_id != undefined) {
           this.edit_frm = false;
         }
@@ -135,9 +140,6 @@ export class UserReviewsComponent implements OnInit {
     this.edit_frm = !this.edit_frm;
   }
 
-  ngOnInit(): void {
-    this.onGetReviewsByUser();
-  }
   confirmDelete(event: Event, id: number) {
     this.confirmationService.confirm({
       target: event.target as EventTarget,
@@ -157,4 +159,29 @@ export class UserReviewsComponent implements OnInit {
   }
   protected readonly EntertainmentType = EntertainmentType;
   protected readonly parseInt = parseInt;
+
+  onPageChange($event: PaginatorState) {
+    if ($event.page != null) {
+      this.pageNumber = $event.page;
+    }
+
+    if ($event.rows != null) {
+      this.pageSize = $event.rows;
+    }
+
+    this.ngUnsubscribe.next();
+    this.onGetReviewsByUser();
+    window.scroll({
+      top: 0,
+      left: 0,
+      behavior: 'smooth',
+    });
+  }
+
+  public ngOnDestroy(): void {
+    this.ngUnsubscribe.next();
+    this.ngUnsubscribe.complete();
+  }
+
+  protected ngUnsubscribe: Subject<void> = new Subject<void>();
 }

@@ -1,6 +1,5 @@
 package com.yigitcanyontem.forum.model.review;
 
-import com.yigitcanyontem.forum.entity.Review;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.NoArgsConstructor;
@@ -12,7 +11,7 @@ import java.util.List;
 @AllArgsConstructor
 public class PaginatedReviewDTO {
     private List<ReviewDTO> reviews;
-    private int totalPages;
+    private long totalItems;
 
     public List<ReviewDTO> getReviews() {
         return reviews;
@@ -22,11 +21,11 @@ public class PaginatedReviewDTO {
         this.reviews = reviews;
     }
 
-    public int getTotalPages() {
-        return totalPages;
+    public long getTotalItems() {
+        return totalItems;
     }
 
-    public void setTotalPages(int totalPages) {
-        this.totalPages = totalPages;
+    public void setTotalItems(long totalItems) {
+        this.totalItems = totalItems;
     }
 }

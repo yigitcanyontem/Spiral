@@ -1,7 +1,6 @@
-import {Review} from "./review";
+import { Review } from './review';
 
 export interface PaginatedReviewDTO {
   reviews: Review[];
-  totalPages: number;
+  totalItems: number;
 }
-

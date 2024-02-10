@@ -34,7 +34,7 @@ public class ReviewService {
         }
         return new PaginatedReviewDTO(
                 reviewPage.getContent().stream().map(reviewDTOMapper).toList(),
-                reviewPage.getTotalPages()
+                reviewPage.getTotalElements()
         );
     }
     public PaginatedReview getReviewsByEntertainment(EntertainmentType entertainmentType, String entertainmentId, int pageNumber, int pageSize, String sort, String direction, @Min(1) @Max(5) Integer rating){

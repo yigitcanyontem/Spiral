@@ -43,6 +43,7 @@ import { TabMenuModule } from 'primeng/tabmenu';
 import { TabViewModule } from 'primeng/tabview';
 import { MenuModule } from 'primeng/menu';
 import { ConfirmDialogModule } from 'primeng/confirmdialog';
+import { PaginatorModule } from 'primeng/paginator';
 
 @NgModule({
   declarations: [
@@ -92,6 +93,7 @@ import { ConfirmDialogModule } from 'primeng/confirmdialog';
     TabViewModule,
     MenuModule,
     ConfirmDialogModule,
+    PaginatorModule,
   ],
   bootstrap: [AppComponent],
 })
