@@ -9,7 +9,7 @@
         <!-- Game Image -->
         <div class="flex-column">
           <img
-            [src]="this.game.original_url"
+            [src]="this.game.original_url + random"
             class="poster"
             alt="Profile Image"
           />
@@ -67,7 +67,7 @@
               [containerStyle]="{ 'max-width': '640px' }"
             >
               <ng-template pTemplate="item" let-item>
-                <img [src]="item" alt="" class="item" />
+                <img [src]="item + random" alt="" class="item" />
               </ng-template>
             </p-galleria>
           </div>

@@ -34,8 +34,8 @@ public class GameService {
     String singleurlend = "/?api_key=giantbomb_api_key&format=json";
     String searchurlstart = "https://www.giantbomb.com/api/search/?api_key=giantbomb_api_key&format=json&query=";
     String searchurlend = "&resources=game";
-    private RestTemplate restTemplate = new RestTemplate();
-    private ObjectMapper objectMapper = new ObjectMapper();
+    private final RestTemplate restTemplate = new RestTemplate();
+    private final ObjectMapper objectMapper = new ObjectMapper();
 
     private final FavGameRepository favGameRepository;
 
@@ -50,6 +50,7 @@ public class GameService {
         String url = searchurlstart+title+searchurlend;
 
         final HttpGet request = new HttpGet(url);
+        request.addHeader("User-Agent", "spiral");
 
         String response = httpClient.execute(request, new BasicHttpClientResponseHandler());
 
@@ -88,43 +89,12 @@ public class GameService {
     }
 
 
-    /*public List<Game> getGameDTOsByUser(List<FavGame> favlist) throws ExecutionException, InterruptedException, JsonProcessingException {
-        List<CompletableFuture<String>> urlList = new ArrayList<>();
-        for (FavGame game:favlist){
-            urlList.add(CompletableFuture.supplyAsync(() -> restTemplate.getForObject(singleurlstart+game.getGameid()+singleurlend,String.class)));
-        }
-
-        CompletableFuture<Void> combinedFuture = CompletableFuture.allOf(urlList.toArray(new CompletableFuture[0]));
-        combinedFuture.get();
-
-        try {
-            combinedFuture.get();
-        } catch (Exception e) {
-            throw e;
-        }
-
-        List<Game> games = new ArrayList<>();
-
-        for (CompletableFuture<String> future : urlList) {
-            try {
-                Game game = new Game();
-                JsonNode list = objectMapper.readTree(future.get()).findValue("results");
-                game.setId(list.get("guid").asText());
-                game.setName(list.get("name").asText());
-                game.setOriginal_url(list.get("image").get("original_url").asText());
-                games.add(game);
-            } catch (Exception e) {
-                throw e;
-            }
-        }
-        return games;
-    }*/
-
     public Game getSingleGameById(String gameid) throws IOException {
         singleurlend = singleurlend.replaceAll("giantbomb_api_key",giantbomb_api_key);
         String url = singleurlstart+gameid+singleurlend;
 
         final HttpGet request = new HttpGet(url);
+        request.addHeader("User-Agent", "spiral");
 
         String executed = httpClient.execute(request, new BasicHttpClientResponseHandler());
 
@@ -187,79 +157,5 @@ public class GameService {
         game.setSimilar_games(similar.findValuesAsText("name"));
         return game;
     }
-
-    /*
-    * public Game getSingleGameById(String gameid) throws IOException, ExecutionException, InterruptedException {
-        singleurlend = singleurlend.replaceAll("giantbomb_api_key",giantbomb_api_key);
-        String url = singleurlstart+gameid+singleurlend;
-
-        final HttpGet request = new HttpGet(url);
-
-        String executed = httpClient.execute(request, new BasicHttpClientResponseHandler());
-
-        JsonNode response = objectMapper.readTree(executed).findValue("results");
-        String id = response.get("guid").asText();
-        Game game = new Game();
-        game.setId(id);
-        game.setName(response.get("name").asText());
-        game.setReleaseDate(response.get("original_release_date").asText());
-        game.setOriginal_url(response.get("image").get("original_url").asText());
-        game.setIcon_url(response.get("image").get("icon_url").asText());
-        game.setScreen_large_url(response.get("image").get("screen_large_url").asText());
-        game.setDeck(response.get("deck").asText());
-        game.setFavorite_count(favGameRepository.countFavGamesByGameid(id));
-
-        JsonNode platforms = response.get("platforms");
-        game.setPlatforms(platforms.findValuesAsText("name"));
-
-        JsonNode franchises = response.get("franchises");
-        game.setFranchises(franchises.findValuesAsText("name"));
-
-        JsonNode genres = response.get("genres");
-        game.setGenres(genres.findValuesAsText("name"));
-
-        JsonNode developers = response.get("developers");
-        game.setDevelopers(developers.findValuesAsText("name"));
-
-        JsonNode publishers = response.get("publishers");
-        game.setPublishers(publishers.findValuesAsText("name"));
-
-        List<Character> characters = new ArrayList<>();
-
-        JsonNode characterNode = response.get("characters");
-        List<String> urls = response.get("characters").findValuesAsText("api_detail_url").subList(0, 10);
-
-        CompletableFuture<String>[] completableFutures = new CompletableFuture[urls.size()];
-
-        for (int i = 0; i < urls.size(); i++) {
-            final int index = i;
-            completableFutures[i] = CompletableFuture.supplyAsync(() -> restTemplate.getForObject(urls.get(index), String.class));
-        }
-
-        CompletableFuture<Void> combinedFuture = CompletableFuture.allOf(completableFutures);
-        combinedFuture.get();
-
-        JsonNode[] jsonNodes = new JsonNode[completableFutures.length];
-
-        for (int i = 0; i < completableFutures.length; i++) {
-            jsonNodes[i] = objectMapper.readTree(completableFutures[i].get());
-            Character character = new Character();
-
-            character.setName(jsonNodes[i].get("id").asText());
-
-            JsonNode images = jsonNodes[i].get("image");
-
-            character.setMedium_url(images.get("original_url").asText());
-            character.setOriginal_url(images.get("medium_url").asText());
-
-            characters.add(character);
-        }
-
-        game.setCharacters(characters);
-        JsonNode similar = response.get("similar_games");
-        game.setSimilar_games(similar.findValuesAsText("name"));
-
-        return game;
-    }*/
 
 }

@@ -137,4 +137,7 @@ export class GameComponent implements OnInit {
       },
     );
   }
+
+  protected readonly Math = Math;
+  random: string = '?' + Math.random();
 }
