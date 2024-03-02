@@ -37,7 +37,7 @@
               <div>
                 <h6 class="">{{ this.movie.overview }}</h6>
                 <a
-                  href="{{ this.movie.imdb_url }}"
+                  routerLink="{{ this.movie.imdb_url }}"
                   target="_blank"
                   rel="noopener"
                   >imdb</a
@@ -93,7 +93,11 @@
                 actor.profile_path == 'https://image.tmdb.org/t/p/originalnull'
               "
             >
-              <a href="/crew/{{ actor.id }}" target="_blank" rel="bookmark">
+              <a
+                routerLink="/crew/{{ actor.id }}"
+                target="_blank"
+                rel="bookmark"
+              >
                 <img
                   *ngIf="actor.gender == 1"
                   src="assets/avatar-female.svg"
@@ -114,7 +118,11 @@
                 actor.profile_path != 'https://image.tmdb.org/t/p/originalnull'
               "
             >
-              <a href="/crew/{{ actor.id }}" target="_blank" rel="bookmark">
+              <a
+                routerLink="/crew/{{ actor.id }}"
+                target="_blank"
+                rel="bookmark"
+              >
                 <img
                   [src]="actor.profile_path"
                   class="crew-profile-image"
@@ -142,7 +150,11 @@
                 'https://image.tmdb.org/t/p/originalnull'
               "
             >
-              <a href="/crew/{{ director.id }}" target="_blank" rel="bookmark">
+              <a
+                routerLink="/crew/{{ director.id }}"
+                target="_blank"
+                rel="bookmark"
+              >
                 <img
                   *ngIf="director.gender == 1"
                   src="assets/avatar-female.svg"
@@ -164,7 +176,11 @@
                 'https://image.tmdb.org/t/p/originalnull'
               "
             >
-              <a href="/crew/{{ director.id }}" target="_blank" rel="bookmark">
+              <a
+                routerLink="/crew/{{ director.id }}"
+                target="_blank"
+                rel="bookmark"
+              >
                 <img
                   [src]="director.profile_path"
                   class="crew-profile-image"
@@ -188,7 +204,11 @@
                 writer.profile_path == 'https://image.tmdb.org/t/p/originalnull'
               "
             >
-              <a href="/crew/{{ writer.id }}" target="_blank" rel="bookmark">
+              <a
+                routerLink="/crew/{{ writer.id }}"
+                target="_blank"
+                rel="bookmark"
+              >
                 <img
                   *ngIf="writer.gender == 1"
                   src="assets/avatar-female.svg"
@@ -209,7 +229,11 @@
                 writer.profile_path != 'https://image.tmdb.org/t/p/originalnull'
               "
             >
-              <a href="/crew/{{ writer.id }}" target="_blank" rel="bookmark">
+              <a
+                routerLink="/crew/{{ writer.id }}"
+                target="_blank"
+                rel="bookmark"
+              >
                 <img
                   [src]="writer.profile_path"
                   class="crew-profile-image"

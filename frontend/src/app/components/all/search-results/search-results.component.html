@@ -14,7 +14,7 @@
           No Movies Found
         </h5>
         <div *ngFor="let movie of movies">
-          <a href="/movie/{{ movie.id }}" target="_blank" rel="bookmark">
+          <a routerLink="/movie/{{ movie.id }}" rel="bookmark">
             <div class="card d-flex flex-row pointer gap-2 mb-1">
               <div class="flex-column">
                 <img [src]="movie.poster_path" alt="" class="card-image" />
@@ -40,7 +40,7 @@
           No Shows Found
         </h5>
         <div *ngFor="let show of shows">
-          <a href="/show/{{ show.id }}" target="_blank" rel="bookmark">
+          <a routerLink="/show/{{ show.id }}" rel="bookmark">
             <div class="card d-flex flex-row pointer gap-2 mb-1">
               <div class="flex-column">
                 <img [src]="show.poster_path" alt="" class="card-image" />
@@ -68,7 +68,7 @@
           No Albums Found
         </h5>
         <div *ngFor="let album of albums">
-          <a href="/album/{{ album.mbid }}" target="_blank" rel="bookmark">
+          <a routerLink="/album/{{ album.mbid }}" rel="bookmark">
             <div class="card d-flex flex-row pointer gap-2 mb-1">
               <div class="flex-column">
                 <img [src]="album.image" alt="" class="card-image" />
@@ -94,7 +94,7 @@
           No Books Found
         </h5>
         <div *ngFor="let book of books">
-          <a href="/book/{{ book.id }}" target="_blank" rel="bookmark">
+          <a routerLink="/book/{{ book.id }}" rel="bookmark">
             <div
               class="card d-flex flex-row pointer gap-2 mb-1"
               routerLink="/book/{{ book.id }}"
@@ -123,10 +123,14 @@
           No Games Found
         </h5>
         <div *ngFor="let game of games">
-          <a href="/game/{{ game.id }}" target="_blank" rel="bookmark">
+          <a routerLink="/game/{{ game.id }}" rel="bookmark">
             <div class="card d-flex flex-row pointer gap-2 mb-1">
               <div class="flex-column">
-                <img [src]="game.original_url" alt="" class="card-image" />
+                <img
+                  [src]="game.original_url + random"
+                  alt=""
+                  class="card-image"
+                />
               </div>
               <div
                 class="flex-column align-items-center justify-content-center"
@@ -149,7 +153,7 @@
           No Users Found
         </h5>
         <div *ngFor="let user of users">
-          <a href="/user/{{ user.id }}" target="_blank" rel="bookmark">
+          <a routerLink="/user/{{ user.id }}" rel="bookmark">
             <div class="card d-flex flex-row pointer gap-2 mb-1">
               <div class="flex-column">
                 <img

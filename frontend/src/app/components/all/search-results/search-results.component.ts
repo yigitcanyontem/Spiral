@@ -18,7 +18,7 @@ import { UserService } from '../../../services/user.service';
 export class SearchResultsComponent implements OnInit {
   isLoaded = false;
   query = this.activatedRoute.snapshot.params['query'];
-
+  random: string = '?' + Math.random();
   shows: Show[] = [];
   movies: Movie[] = [];
   books: Book[] = [];

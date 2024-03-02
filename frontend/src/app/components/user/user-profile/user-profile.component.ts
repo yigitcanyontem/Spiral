@@ -20,6 +20,7 @@ import { FavGameDto } from '../../../models/fav-game-dto';
   styleUrls: ['./user-profile.component.scss'],
 })
 export class UserProfileComponent implements OnInit {
+  random: string = '?' + Math.random();
   userid = parseInt(
     <string>this.activatedRoute.snapshot.paramMap.get('userid'),
   );
