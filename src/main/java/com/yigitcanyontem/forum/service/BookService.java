@@ -3,12 +3,8 @@ package com.yigitcanyontem.forum.service;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.yigitcanyontem.forum.entity.FavAlbums;
 import com.yigitcanyontem.forum.entity.FavBooks;
-import com.yigitcanyontem.forum.entity.FavGame;
 import com.yigitcanyontem.forum.exceptions.SearchNotFoundException;
-import com.yigitcanyontem.forum.model.entertainment.Album;
-import com.yigitcanyontem.forum.model.entertainment.Game;
 import com.yigitcanyontem.forum.repository.FavBooksRepository;
 import com.yigitcanyontem.forum.model.entertainment.Book;
 import lombok.RequiredArgsConstructor;
@@ -17,7 +13,6 @@ import org.springframework.web.client.RestTemplate;
 
 import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.Collections;
 import java.util.List;
 import java.util.concurrent.CompletableFuture;
 import java.util.concurrent.ExecutionException;
@@ -55,7 +50,7 @@ public class BookService {
         return books;
     }
 
-    public List<Book> getGameDTOsByUser(List<FavBooks> favlist) throws ExecutionException, InterruptedException, JsonProcessingException {
+    public List<Book> getBookDTOsByUser(List<FavBooks> favlist) throws ExecutionException, InterruptedException, JsonProcessingException {
         List<CompletableFuture<String>> urlList = new ArrayList<>();
         for (FavBooks book:favlist){
             String url = "https://www.googleapis.com/books/v1/volumes/"+book.getBookid();

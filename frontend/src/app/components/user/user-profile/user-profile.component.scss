@@ -11,6 +11,11 @@
     transform: scale(1.06);
   };
 }
+.item-container{
+  width: fit-content;
+  padding:0;
+  overflow-x: hidden;
+}
 
 .list_container {
   max-width:100%;

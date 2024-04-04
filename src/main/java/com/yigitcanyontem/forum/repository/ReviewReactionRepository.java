@@ -1,6 +1,5 @@
 package com.yigitcanyontem.forum.repository;
 
-import com.yigitcanyontem.forum.entity.FavGame;
 import com.yigitcanyontem.forum.entity.Review;
 import com.yigitcanyontem.forum.entity.ReviewReaction;
 import com.yigitcanyontem.forum.entity.enums.ReactionType;

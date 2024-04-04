@@ -6,7 +6,6 @@ import { Observable } from 'rxjs';
 import { Book } from '../models/book';
 import { Users } from '../models/users';
 import { Movie } from '../models/movie';
-import { GameSearchDTO } from '../models/game-search-dto';
 import { HttpClient } from '@angular/common/http';
 
 @Injectable({
@@ -41,10 +40,5 @@ export class SearchService {
   getUserSearchResults(username: string): Observable<Users[]> {
     const url = `${this.backendUrl}/user/${username}`;
     return this.http.get<Users[]>(url);
-  }
-
-  getGameSearchResults(title: string): Observable<GameSearchDTO[]> {
-    const url = `${this.backendUrl}/game/${title}`;
-    return this.http.get<GameSearchDTO[]>(url);
   }
 }

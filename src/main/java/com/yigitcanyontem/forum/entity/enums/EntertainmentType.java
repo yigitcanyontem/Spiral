@@ -4,6 +4,5 @@ public enum EntertainmentType {
     MOVIE,
     SHOW,
     ALBUM,
-    BOOK,
-    GAME
+    BOOK
 }

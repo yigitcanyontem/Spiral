@@ -1,14 +1,13 @@
-import { ChangeDetectorRef, Component, OnInit } from '@angular/core';
-import { ActivatedRoute, Params } from '@angular/router';
-import { SearchService } from '../../../services/search.service';
-import { forkJoin, map } from 'rxjs';
-import { Movie } from '../../../models/movie';
-import { Show } from '../../../models/show';
-import { Users } from '../../../models/users';
-import { GameSearchDTO } from '../../../models/game-search-dto';
-import { Album } from '../../../models/album';
-import { Book } from '../../../models/book';
-import { UserService } from '../../../services/user.service';
+import {Component, OnInit} from '@angular/core';
+import {ActivatedRoute, Params} from '@angular/router';
+import {SearchService} from '../../../services/search.service';
+import {forkJoin, map} from 'rxjs';
+import {Movie} from '../../../models/movie';
+import {Show} from '../../../models/show';
+import {Users} from '../../../models/users';
+import {Album} from '../../../models/album';
+import {Book} from '../../../models/book';
+import {UserService} from '../../../services/user.service';
 
 @Component({
   selector: 'app-search-results',
@@ -23,7 +22,6 @@ export class SearchResultsComponent implements OnInit {
   movies: Movie[] = [];
   books: Book[] = [];
   albums: Album[] = [];
-  games: GameSearchDTO[] = [];
   users: Users[] = [];
 
   constructor(
@@ -45,14 +43,12 @@ export class SearchResultsComponent implements OnInit {
     const getBooks$ = this.searchService.getBookSearchResults(this.query);
     const getShows$ = this.searchService.getShowSearchResults(this.query);
     const getAlbums$ = this.searchService.getAlbumSearchResults(this.query);
-    const getGames$ = this.searchService.getGameSearchResults(this.query);
     const getUsers$ = this.searchService.getUserSearchResults(this.query);
     forkJoin({
       movies: getMovies$,
       books: getBooks$,
       shows: getShows$,
       albums: getAlbums$,
-      games: getGames$,
       users: getUsers$,
     }).subscribe(
       (results: {
@@ -60,7 +56,6 @@ export class SearchResultsComponent implements OnInit {
         books: Book[];
         shows: Show[];
         albums: Album[];
-        games: GameSearchDTO[];
         users: Users[];
       }) => {
         this.users = results.users;
@@ -69,8 +64,6 @@ export class SearchResultsComponent implements OnInit {
         this.books = results.books;
         this.shows = results.shows;
         this.albums = results.albums;
-        this.games = results.games;
-
         this.isLoaded = true;
       },
       (error) => {

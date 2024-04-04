@@ -15,7 +15,6 @@ import { UserProfileComponent } from './components/user/user-profile/user-profil
 import { UserReviewsComponent } from './components/user/user-reviews/user-reviews.component';
 import { MovieComponent } from './components/entertainment/movie/movie.component';
 import { BookComponent } from './components/entertainment/book/book.component';
-import { GameComponent } from './components/entertainment/game/game.component';
 import { ShowComponent } from './components/entertainment/show/show.component';
 import { AlbumComponent } from './components/entertainment/album/album.component';
 import { SpinnerComponent } from './components/layout/spinner/spinner.component';
@@ -57,7 +56,6 @@ import { PaginatorModule } from 'primeng/paginator';
     UserReviewsComponent,
     MovieComponent,
     BookComponent,
-    GameComponent,
     ShowComponent,
     AlbumComponent,
     SpinnerComponent,

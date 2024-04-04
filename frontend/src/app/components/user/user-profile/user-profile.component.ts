@@ -6,13 +6,10 @@ import { Movie } from '../../../models/movie';
 import { Show } from '../../../models/show';
 import { Album } from '../../../models/album';
 import { Book } from '../../../models/book';
-import { Game } from '../../../models/game';
 import { SocialMediaDTO } from '../../../models/socialmedia-dto';
 import { Description } from '../../../models/description';
 import { forkJoin } from 'rxjs';
 import { EntertainmentService } from '../../../services/entertainment.service';
-import { FavGame } from '../../../models/favGame';
-import { FavGameDto } from '../../../models/fav-game-dto';
 
 @Component({
   selector: 'app-user-profile',
@@ -33,7 +30,6 @@ export class UserProfileComponent implements OnInit {
   movies!: Movie[];
   shows!: Show[];
   books!: Book[];
-  games!: FavGameDto[];
   albums!: Album[];
 
   socialMedia!: SocialMediaDTO;
@@ -77,7 +73,6 @@ export class UserProfileComponent implements OnInit {
     const getFavShows$ = this.userService.getFavShows(this.userid);
     const getFavAlbums$ = this.userService.getFavAlbums(this.userid);
     const getFavBooks$ = this.userService.getFavBooks(this.userid);
-    const getFavGames$ = this.userService.getFavGames(this.userid);
     const getImage$ = this.userService.getImage(this.userid);
 
     forkJoin({
@@ -87,7 +82,6 @@ export class UserProfileComponent implements OnInit {
       movies: getFavMovies$,
       shows: getFavShows$,
       books: getFavBooks$,
-      games: getFavGames$,
       albums: getFavAlbums$,
       images: getImage$,
     }).subscribe(
@@ -98,7 +92,6 @@ export class UserProfileComponent implements OnInit {
         movies: Movie[];
         shows: Show[];
         books: Book[];
-        games: FavGameDto[];
         albums: Album[];
         images: Blob;
       }) => {
@@ -108,11 +101,9 @@ export class UserProfileComponent implements OnInit {
         this.movies = results.movies;
         this.shows = results.shows;
         this.books = results.books;
-        this.games = results.games;
         this.albums = results.albums;
         this.images = URL.createObjectURL(results.images);
         this.isLoaded = true;
-        this.getSingleResultsForGames();
       },
       (error) => {
         // Handle errors
@@ -120,11 +111,6 @@ export class UserProfileComponent implements OnInit {
     );
   }
 
-  getSingleResultsForGames() {
-    this.games.forEach((value) => {
-      this.entertainmentService.onGetGame(value.gameid).subscribe();
-    });
-  }
 
   scrollTop() {
     window.scroll(0, 0);

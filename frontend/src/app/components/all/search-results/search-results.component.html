@@ -116,36 +116,6 @@
       </p-tabPanel>
       <p-tabPanel [cache]="true">
         <ng-template pTemplate="header">
-          <i class="fi fi-rr-joystick"></i>
-          <span>Games</span>
-        </ng-template>
-        <h5 class="text-center" *ngIf="this.games.length == 0">
-          No Games Found
-        </h5>
-        <div *ngFor="let game of games">
-          <a routerLink="/game/{{ game.id }}" rel="bookmark">
-            <div class="card d-flex flex-row pointer gap-2 mb-1">
-              <div class="flex-column">
-                <img
-                  [src]="game.original_url + random"
-                  alt=""
-                  class="card-image"
-                />
-              </div>
-              <div
-                class="flex-column align-items-center justify-content-center"
-              >
-                <div>
-                  <h4>{{ game.name }}</h4>
-                  <h5 class="text-secondary">{{ game.releaseDate }}</h5>
-                </div>
-              </div>
-            </div>
-          </a>
-        </div>
-      </p-tabPanel>
-      <p-tabPanel [cache]="true">
-        <ng-template pTemplate="header">
           <i class="fi fi-rs-users"></i>
           <span>Users</span>
         </ng-template>

@@ -22,7 +22,6 @@ public class SearchController {
     private final BookService bookService;
     private final AlbumService albumService;
     private final MovieService movieService;
-    private final GameService gameService;
 
     @GetMapping("/movie/{title}")
     @Cacheable(value = "searched_movies", key = "'title-'+#title")
@@ -71,16 +70,6 @@ public class SearchController {
     public ResponseEntity<List<UserSearchDTO>> getUserSearchResults(@PathVariable String username) {
         try {
             return ResponseEntity.ok(usersService.usersList(username));
-        } catch (Exception e) {
-            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
-        }
-    }
-
-    @GetMapping("/game/{title}")
-    @Cacheable(value = "searched_games", key = "'title-'+#title")
-    public ResponseEntity<List<GameSearchDTO>> getGameSearchResults(@PathVariable String title) {
-        try {
-            return ResponseEntity.ok(gameService.getGameSearchResults(title));
         } catch (Exception e) {
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
         }

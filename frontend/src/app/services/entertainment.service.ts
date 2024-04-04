@@ -1,13 +1,12 @@
 import { Injectable } from '@angular/core';
 import {environment} from "../environment/environment";
-import {HttpClient, HttpHeaders} from "@angular/common/http";
+import {HttpClient} from "@angular/common/http";
 import {Observable} from "rxjs";
 import {CrewMember} from "../models/crew-member";
 import {Book} from "../models/book";
 import {Album} from "../models/album";
 import {Movie} from "../models/movie";
 import {Show} from "../models/show";
-import {Game} from "../models/game";
 
 @Injectable({
   providedIn: 'root'
@@ -27,10 +26,6 @@ export class EntertainmentService {
 
   onGetMovie(id:number): Observable<Movie>{
     return this.http.get<Movie>(this.backendUrl+`/movie/${id}`);
-  }
-
-  onGetGame(id:string): Observable<Game>{
-    return this.http.get<Game>(this.backendUrl+`/game/${id}`);
   }
 
   onGetAlbum(id:string): Observable<Album>{

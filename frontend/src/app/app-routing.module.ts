@@ -5,7 +5,6 @@ import { RegisterComponent } from './components/authentication/register/register
 import { UserProfileComponent } from './components/user/user-profile/user-profile.component';
 import { MovieComponent } from './components/entertainment/movie/movie.component';
 import { ShowComponent } from './components/entertainment/show/show.component';
-import { GameComponent } from './components/entertainment/game/game.component';
 import { AlbumComponent } from './components/entertainment/album/album.component';
 import { BookComponent } from './components/entertainment/book/book.component';
 import { UserUpdateComponent } from './components/user/user-update/user-update.component';
@@ -22,7 +21,6 @@ const routes: Routes = [
   { path: 'update', component: UserUpdateComponent },
   { path: 'movie/:id', component: MovieComponent },
   { path: 'show/:id', component: ShowComponent },
-  { path: 'game/:id', component: GameComponent },
   { path: 'album/:id', component: AlbumComponent },
   { path: 'book/:id', component: BookComponent },
   { path: 'crew/:id', component: CrewMembersComponent },

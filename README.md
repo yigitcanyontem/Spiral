@@ -1,10 +1,10 @@
 # Spiral - Your Ultimate Media Hub
 
-Spiral is a feature-rich, full-stack web application that provides a comprehensive platform for discovering, organizing, and engaging with various forms of media content. With Spiral, you can search for movies, shows, games, books, and albums, favorite them, write reviews, and interact with the community through upvotes and downvotes on reviews.
+Spiral is a feature-rich, full-stack web application that provides a comprehensive platform for discovering, organizing, and engaging with various forms of media content. With Spiral, you can search for movies, shows, books, and albums, favorite them, write reviews, and interact with the community through upvotes and downvotes on reviews.
 
 ## Features
 
-- **Multi-Media Search:** Easily search for movies, TV shows, games, books, and albums within a single platform.
+- **Multi-Media Search:** Easily search for movies, TV shows, books, and albums within a single platform.
 - **User Profiles:** Create and manage your user profile to curate your favorite media items.
 - **Review System:** Share your thoughts and opinions by writing reviews for the content you've experienced.
 - **Community Interaction:** Engage with the Spiral community by upvoting or downvoting reviews.

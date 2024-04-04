@@ -35,12 +35,10 @@ public class UsersController {
     private final FavShowsService favShowsService;
     private final FavAlbumsService favAlbumsService;
     private final FavMovieService favMovieService;
-    private final FavGameService favGameService;
     private final TokenRepository tokenRepository;
     private final MovieService movieService;
     private final ShowService showService;
     private final AlbumService albumService;
-    private final GameService gameService;
     private final BookService bookService;
 
 
@@ -163,17 +161,7 @@ public class UsersController {
     public ResponseEntity<List<Book>> getFavBooks(@PathVariable Integer id) {
         try {
             List<FavBooks> bookids = favBooksService.findByUserId(getCustomer(id).getBody());
-            return ResponseEntity.ok(bookService.getGameDTOsByUser(bookids));
-        } catch (Exception e) {
-            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
-        }
-    }
-
-    @GetMapping("/favgames/{id}")
-    @Cacheable(value = "favgames", key = "'id-' + #id")
-    public ResponseEntity<List<FavGameDTO>> getFavGames(@PathVariable Integer id) {
-        try {
-            return ResponseEntity.ok(favGameService.findByUserId(id));
+            return ResponseEntity.ok(bookService.getBookDTOsByUser(bookids));
         } catch (Exception e) {
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
         }
@@ -196,22 +184,6 @@ public class UsersController {
         }
     }
 
-    @PutMapping("/favgames")
-    @Caching(evict = {
-            @CacheEvict(value = "favgames", key = "'id-' + #favGameCreateDTO.usersid"),
-            @CacheEvict(value = "games", key = "'game-' + #favGameCreateDTO.gameid")
-    })
-    public ResponseEntity<?> saveFavGames(@RequestBody FavGameCreateDTO favGameCreateDTO,@RequestHeader (name="Authorization") String token) {
-        if (!userValid(favGameCreateDTO.getUsersid(),token)){
-            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
-        }
-        try {
-            favGameService.saveFavGame(favGameCreateDTO);
-            return ResponseEntity.ok().build();
-        } catch (Exception e) {
-            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
-        }
-    }
 
     @PutMapping("/favshows/{usersid}/{showid}")
     @Caching(evict = {
@@ -332,23 +304,6 @@ public class UsersController {
         }
     }
 
-    @DeleteMapping("/favgames/delete/{usersid}/{gameid}")
-    @Caching(evict = {
-            @CacheEvict(value = "favgames", key = "'id-' + #usersid"),
-            @CacheEvict(value = "games", key = "'game-' + #gameid")
-    })
-    public ResponseEntity<?> deleteFavGames(@PathVariable Integer usersid, @PathVariable String gameid,@RequestHeader (name="Authorization") String token) {
-        if (!userValid(usersid,token)){
-            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
-        }
-        try {
-            favGameService.deleteUserFavGameById(Objects.requireNonNull(getCustomer(usersid).getBody()), gameid);
-            return ResponseEntity.status(HttpStatus.OK).build();
-        } catch (Exception e) {
-            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
-        }
-    }
-
     @GetMapping("/favmovie/check/{usersid}/{movieid}")
     public ResponseEntity<Boolean> checkFavoritedMovie(@PathVariable Integer usersid, @PathVariable Integer movieid) {
         try {
@@ -384,18 +339,6 @@ public class UsersController {
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
         }
     }
-
-    @GetMapping("/favgames/check/{usersid}/{gameid}")
-    public ResponseEntity<Boolean> checkFavoritedGames(@PathVariable Integer usersid, @PathVariable String gameid) {
-        try {
-            return ResponseEntity.ok(favGameService.checkFavoritedGames(usersid, gameid));
-        } catch (Exception e) {
-            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
-        }
-    }
-
-
-
 
     @PostMapping("/upload/{id}")
     @CacheEvict(value = "images", key = "'id-' + #id")

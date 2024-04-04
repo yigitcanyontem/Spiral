@@ -1,24 +1,11 @@
-import {
-  ChangeDetectorRef,
-  Component,
-  HostListener,
-  OnInit,
-  ViewChild,
-} from '@angular/core';
-import { UserDTO } from '../../../models/user-dto';
-import { ActivatedRoute, Router } from '@angular/router';
-import { UserService } from '../../../services/user.service';
-import { forkJoin } from 'rxjs';
-import { SocialMediaDTO } from '../../../models/socialmedia-dto';
-import { Description } from '../../../models/description';
-import { Movie } from '../../../models/movie';
-import { Show } from '../../../models/show';
-import { Book } from '../../../models/book';
-import { Game } from '../../../models/game';
-import { Album } from '../../../models/album';
-import { AuthenticationService } from '../../../services/authentication.service';
-import { ConfirmationService, MenuItem, MessageService } from 'primeng/api';
-import { Menu } from 'primeng/menu';
+import {Component, HostListener, OnInit, ViewChild,} from '@angular/core';
+import {UserDTO} from '../../../models/user-dto';
+import {Router} from '@angular/router';
+import {UserService} from '../../../services/user.service';
+import {forkJoin} from 'rxjs';
+import {AuthenticationService} from '../../../services/authentication.service';
+import {ConfirmationService, MenuItem} from 'primeng/api';
+import {Menu} from 'primeng/menu';
 
 @Component({
   selector: 'app-header',

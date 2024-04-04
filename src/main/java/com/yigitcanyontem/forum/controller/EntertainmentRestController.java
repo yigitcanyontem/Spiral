@@ -4,6 +4,7 @@ import com.fasterxml.jackson.core.JsonProcessingException;
 import com.yigitcanyontem.forum.entity.Country;
 import com.yigitcanyontem.forum.model.entertainment.*;
 import com.yigitcanyontem.forum.service.*;
+import lombok.RequiredArgsConstructor;
 import org.springframework.cache.annotation.Cacheable;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -17,20 +18,12 @@ import java.util.List;
 
 @RestController
 @RequestMapping("/api/v1/entertainment")
+@RequiredArgsConstructor
 public class EntertainmentRestController {
     private final ShowService showService;
     private final BookService bookService;
     private final AlbumService albumService;
     private final MovieService movieService;
-    private final GameService gameService;
-
-    public EntertainmentRestController(ShowService showService, BookService bookService, AlbumService albumService, MovieService movieService, GameService gameService) {
-        this.showService = showService;
-        this.bookService = bookService;
-        this.albumService = albumService;
-        this.movieService = movieService;
-        this.gameService = gameService;
-    }
 
     @GetMapping("/show/{showid}")
     @Cacheable(value = "shows", key = "'show-' + #showid")
@@ -69,15 +62,7 @@ public class EntertainmentRestController {
         }
     }
 
-    @GetMapping("/game/{gameid}")
-    @Cacheable(value = "games", key = "'game-' + #gameid")
-    public ResponseEntity<Game> getSingleGameById(@PathVariable String gameid) {
-        try {
-            return ResponseEntity.ok(gameService.getSingleGameById(gameid));
-        } catch (Exception e) {
-            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
-        }
-    }
+
     @GetMapping("/crew/{id}")
     @Cacheable(value = "crew", key = "'crew-' + #id")
     public ResponseEntity<CrewMember> getSingleCrewMemberById(@PathVariable Integer id) {
