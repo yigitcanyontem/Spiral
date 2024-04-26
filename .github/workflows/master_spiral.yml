@@ -27,8 +27,8 @@ jobs:
       - name: Upload artifact for deployment job
         uses: actions/upload-artifact@v3
         with:
-          name: forum
-          path: '${{ github.workspace }}/target/*.war'
+          name: spiral
+          path: '${{ github.workspace }}/target/spiral-0.0.1-SNAPSHOT.jar'
 
   deploy:
     runs-on: ubuntu-latest
@@ -43,7 +43,7 @@ jobs:
       - name: Download artifact from build job
         uses: actions/download-artifact@v3
         with:
-          name: forum
+          name: spiral
       
       - name: Login to Azure
         uses: azure/login@v1
